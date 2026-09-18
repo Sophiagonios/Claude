@@ -1,0 +1,849 @@
+<title>Antenniste 91</title>
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#F5F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#EEF2F6;
+    --ink:#0E1B2A;
+    --ink-soft:#3E4A5A;
+    --muted:#5B6472;
+    --line:#DDE3EA;
+    --primary:#0F3D63;
+    --primary-dark:#0A2C48;
+    --primary-tint:#E5EEF5;
+    --sky:#2AA9E0;
+    --accent:#FF6A2B;
+    --accent-dark:#DE5620;
+    --accent-tint:#FFE9DD;
+    --success:#1C9A73;
+    --shadow: 0 20px 50px -25px rgba(14,27,42,.35);
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B1420;
+      --surface:#101C2C;
+      --surface-2:#152436;
+      --ink:#EAF0F6;
+      --ink-soft:#C3CEDA;
+      --muted:#8CA0B4;
+      --line:#233346;
+      --primary:#5CACE6;
+      --primary-dark:#3E86C0;
+      --primary-tint:#16283C;
+      --sky:#5CC4EE;
+      --accent:#FF8A55;
+      --accent-dark:#FF6A2B;
+      --accent-tint:#3A2417;
+      --success:#3FC49A;
+      --shadow: 0 20px 50px -25px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B1420;
+    --surface:#101C2C;
+    --surface-2:#152436;
+    --ink:#EAF0F6;
+    --ink-soft:#C3CEDA;
+    --muted:#8CA0B4;
+    --line:#233346;
+    --primary:#5CACE6;
+    --primary-dark:#3E86C0;
+    --primary-tint:#16283C;
+    --sky:#5CC4EE;
+    --accent:#FF8A55;
+    --accent-dark:#FF6A2B;
+    --accent-tint:#3A2417;
+    --success:#3FC49A;
+    --shadow: 0 20px 50px -25px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    padding-inline:0;
+  }
+  h1,h2,h3,.disp{
+    font-family:'Big Shoulders Display',system-ui,sans-serif;
+    font-weight:800;
+    letter-spacing:.2px;
+    text-transform:uppercase;
+    line-height:.98;
+    text-wrap:balance;
+    color:var(--ink);
+  }
+  .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; letter-spacing:.02em; }
+  a{ color:inherit; }
+  img,svg{ max-width:100%; }
+  .wrap{
+    max-width:1180px;
+    margin-inline:auto;
+    padding-inline:max(16px, calc((100vw - 1180px)/2 + 16px));
+  }
+  section{ padding-block: clamp(48px,7vw,96px); }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:var(--accent-dark);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-tint);
+  }
+  .ph{
+    border-bottom:2px dashed var(--accent);
+    color:var(--accent-dark);
+    font-weight:700;
+    white-space:nowrap;
+    cursor:help;
+  }
+
+  /* ---------- top strip ---------- */
+  .topstrip{
+    background:var(--primary-dark);
+    color:#EAF2FA;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+  }
+  .topstrip .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-block:8px; gap:12px; flex-wrap:wrap;
+  }
+  .topstrip .zone{ display:flex; align-items:center; gap:7px; opacity:.9; }
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+    background:color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  header.site .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-block:13px; gap:20px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-weight:800; }
+  .logo .disp{ font-size:22px; letter-spacing:.5px; }
+  .logo small{ display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; font-weight:600; }
+  nav.main{ display:flex; gap:28px; font-size:14.5px; font-weight:600; }
+  nav.main a{ text-decoration:none; color:var(--ink-soft); }
+  nav.main a:hover{ color:var(--primary); }
+  .header-actions{ display:flex; align-items:center; gap:12px; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    border-radius:999px; font-weight:700; font-size:15px;
+    padding:13px 24px; text-decoration:none; border:1px solid transparent;
+    cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn-call{
+    background:var(--accent); color:#fff;
+    box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+  .btn-call:hover{ background:var(--accent-dark); }
+  .btn-ghost{
+    background:transparent; color:var(--primary); border-color:var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--primary); }
+  .btn-light{ background:var(--surface); color:var(--primary); }
+  .btn-outline-inv{ background:transparent; color:#fff; border-color:rgba(255,255,255,.55); }
+  .btn-outline-inv:hover{ border-color:#fff; }
+  .btn-sm{ padding:9px 16px; font-size:13.5px; }
+  .btn svg{ width:18px; height:18px; flex:none; }
+
+  header.site .btn-call{ display:none; }
+  @media (min-width:860px){ header.site .btn-call{ display:inline-flex; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:
+      radial-gradient(1100px 480px at 85% -10%, var(--primary-tint), transparent 60%),
+      var(--bg);
+    padding-block: clamp(40px,6vw,72px) clamp(56px,7vw,88px);
+  }
+  .hero .grid{
+    display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center;
+  }
+  @media (max-width:920px){ .hero .grid{ grid-template-columns:1fr; gap:40px; } }
+
+  .toggle{
+    display:inline-flex; padding:4px; background:var(--surface-2); border-radius:999px;
+    border:1px solid var(--line); margin-block:18px 22px;
+  }
+  .toggle button{
+    border:none; background:transparent; padding:9px 18px; border-radius:999px;
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600;
+    letter-spacing:.05em; text-transform:uppercase; color:var(--muted); cursor:pointer;
+  }
+  .toggle button[aria-pressed="true"]{ background:var(--primary); color:#fff; }
+
+  .hero h1{ font-size:clamp(34px,4.6vw,58px); margin-block:0 16px; }
+  .hero p.lead{ font-size:18px; color:var(--ink-soft); max-width:52ch; margin-block:0 26px; }
+  .audience-panel[hidden]{ display:none; }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:32px; }
+
+  .trustrow{ display:flex; gap:26px; flex-wrap:wrap; }
+  .trustrow .item{ display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:600; color:var(--ink-soft); }
+  .trustrow svg{ width:19px; height:19px; color:var(--success); flex:none; }
+
+  .hero-art{
+    position:relative; aspect-ratio:1/1; border-radius:var(--radius-lg);
+    background:linear-gradient(155deg, var(--primary) 0%, var(--primary-dark) 78%);
+    overflow:hidden; box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-art .rings{ position:absolute; inset:0; }
+  .hero-art .badge{
+    position:absolute; left:20px; bottom:20px; right:20px;
+    background:color-mix(in srgb, var(--ink) 32%, transparent);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:var(--radius-md); padding:14px 16px;
+    color:#fff; display:flex; align-items:center; gap:12px;
+  }
+  .hero-art .badge .mono{ font-size:11.5px; color:#BFE0F7; }
+  .hero-art .badge strong{ display:block; font-size:15px; }
+
+  /* ---------- services ---------- */
+  .services-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:40px; }
+  @media (max-width:980px){ .services-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .services-grid{ grid-template-columns:1fr; } }
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:26px 22px; display:flex; flex-direction:column; gap:12px;
+  }
+  .icon-tile{
+    width:48px; height:48px; border-radius:12px; background:var(--primary-tint);
+    color:var(--primary); display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .icon-tile svg{ width:24px; height:24px; }
+  .card h3{ font-size:19px; margin:2px 0 0; text-transform:none; letter-spacing:0; }
+  .card p{ color:var(--muted); font-size:14.5px; margin:0; flex:1; }
+  .card .go{ font-size:13.5px; font-weight:700; color:var(--primary); display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
+  .card .go svg{ width:15px; height:15px; }
+
+  .section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .section-head h2{ font-size:clamp(26px,3.2vw,38px); margin:8px 0 0; }
+  .section-head p{ color:var(--muted); max-width:56ch; margin:10px 0 0; }
+
+  /* ---------- why us ---------- */
+  .why-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; margin-top:40px; }
+  @media (max-width:980px){ .why-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .why-grid{ grid-template-columns:1fr; } }
+  .why-item{ display:flex; flex-direction:column; gap:10px; }
+  .why-item .icon-tile{ background:var(--accent-tint); color:var(--accent-dark); }
+  .why-item h4{ font-size:16px; margin:0; text-transform:none; letter-spacing:0; font-family:'Manrope'; font-weight:800; }
+  .why-item p{ font-size:14px; color:var(--muted); margin:0; }
+
+  .band-alt{ background:var(--surface-2); }
+
+  /* ---------- process ---------- */
+  .process{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:44px; counter-reset:step; }
+  @media (max-width:900px){ .process{ grid-template-columns:1fr; gap:28px; } }
+  .step{ position:relative; padding-right:26px; }
+  .step:not(:last-child)::after{
+    content:""; position:absolute; top:22px; right:0; width:22px; height:1px;
+    background:repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 11px);
+  }
+  @media (max-width:900px){ .step:not(:last-child)::after{ display:none; } }
+  .step .num{
+    font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; color:var(--accent-dark);
+    display:flex; align-items:center; gap:8px; margin-bottom:12px;
+  }
+  .step .num::before{ content:""; width:26px; height:1px; background:var(--accent); }
+  .step h4{ font-size:17px; margin:0 0 8px; text-transform:none; letter-spacing:0; font-weight:800; }
+  .step p{ font-size:14px; color:var(--muted); margin:0; }
+
+  /* ---------- audiences ---------- */
+  .audience-split{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:40px; }
+  @media (max-width:860px){ .audience-split{ grid-template-columns:1fr; } }
+  .aud-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:30px 28px; display:flex; flex-direction:column; gap:16px;
+  }
+  .aud-card.pro{ background:linear-gradient(165deg, var(--primary) 0%, var(--primary-dark) 100%); color:#fff; border-color:transparent; }
+  .aud-card h3{ font-size:24px; text-transform:none; letter-spacing:0; margin:0; }
+  .aud-card ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
+  .aud-card li{ display:flex; align-items:flex-start; gap:10px; font-size:14.5px; }
+  .aud-card:not(.pro) li{ color:var(--ink-soft); }
+  .aud-card.pro li{ color:#EAF2FA; }
+  .aud-card li svg{ width:17px; height:17px; flex:none; margin-top:2px; color:var(--success); }
+  .aud-card.pro li svg{ color:#8FE0C2; }
+  .aud-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
+
+  /* ---------- zone ---------- */
+  .zone-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-top:36px; }
+  @media (max-width:900px){ .zone-grid{ grid-template-columns:1fr; } }
+  .chips{ display:flex; flex-wrap:wrap; gap:9px; margin-top:18px; }
+  .chip{
+    font-size:13px; font-weight:600; padding:7px 13px; border-radius:999px;
+    background:var(--surface-2); border:1px solid var(--line); color:var(--ink-soft);
+  }
+  .radar{ position:relative; aspect-ratio:1/1; border-radius:50%; max-width:340px; margin-inline:auto;
+    background:radial-gradient(circle at center, var(--primary-tint), transparent 70%); }
+  .radar svg{ width:100%; height:100%; }
+
+  /* ---------- reviews ---------- */
+  .reviews-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:36px; }
+  @media (max-width:900px){ .reviews-grid{ grid-template-columns:1fr; } }
+  .review{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:22px; }
+  .stars{ display:flex; gap:3px; color:var(--accent); margin-bottom:12px; }
+  .stars svg{ width:16px; height:16px; }
+  .review p{ font-size:14.5px; color:var(--ink-soft); margin:0 0 14px; }
+  .review .who{ font-size:12.5px; font-weight:700; color:var(--muted); display:flex; align-items:center; gap:8px; }
+  .review .who .ph{ font-weight:600; }
+
+  .rating-strip{ display:flex; align-items:center; gap:14px; margin-top:26px; font-size:14px; color:var(--ink-soft); }
+  .rating-strip .stars{ margin:0; }
+
+  /* ---------- faq ---------- */
+  .faq{ max-width:820px; margin-top:36px; display:flex; flex-direction:column; gap:12px; }
+  details{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:4px 20px; }
+  summary{ cursor:pointer; padding:16px 0; font-weight:700; font-size:15.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  summary::-webkit-details-marker{ display:none; }
+  summary .chev{ width:20px; height:20px; flex:none; color:var(--primary); transition:transform .2s ease; }
+  details[open] summary .chev{ transform:rotate(180deg); }
+  details p{ margin:0 0 18px; color:var(--muted); font-size:14.5px; }
+
+  /* ---------- final cta ---------- */
+  .final-cta{
+    background:linear-gradient(155deg, var(--primary-dark), var(--primary));
+    color:#fff; text-align:center; border-radius:var(--radius-lg);
+    padding:clamp(40px,6vw,64px) clamp(20px,5vw,60px); margin-block:0;
+  }
+  .final-cta h2{ color:#fff; font-size:clamp(28px,4vw,42px); margin:10px 0 14px; }
+  .final-cta p{ color:#CFE2F2; max-width:52ch; margin:0 auto 30px; font-size:16px; }
+  .final-cta .eyebrow{ color:#BFE0F7; }
+  .final-cta .eyebrow::before{ background:#BFE0F7; box-shadow:0 0 0 4px rgba(191,224,247,.25); }
+  .final-cta .ph{ color:#fff; border-color:#fff; }
+
+  /* ---------- footer ---------- */
+  footer{ background:var(--primary-dark); color:#CFE2F2; padding-block:56px 90px; }
+  footer .fgrid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:36px; }
+  @media (max-width:860px){ footer .fgrid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ footer .fgrid{ grid-template-columns:1fr; } }
+  footer h5{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:#8FB6D6; margin:0 0 14px; }
+  footer ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; font-size:14px; }
+  footer a{ text-decoration:none; color:#DCEAF5; }
+  footer a:hover{ text-decoration:underline; }
+  footer .logo .disp{ color:#fff; }
+  footer .logo small{ color:#8FB6D6; }
+  footer p.tag{ font-size:13.5px; color:#9FC0DC; max-width:34ch; margin:14px 0 0; }
+  .footer-bottom{ border-top:1px solid rgba(255,255,255,.12); margin-top:44px; padding-top:20px;
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12.5px; color:#8FB6D6; }
+  footer .ph{ color:#FFB388; border-color:#FFB388; }
+
+  /* ---------- mobile sticky call bar ---------- */
+  .sticky-call{
+    position:fixed; left:0; right:0; bottom:0; z-index:50;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+    background:var(--surface); border-top:1px solid var(--line);
+    box-shadow:0 -12px 30px -20px rgba(0,0,0,.4);
+  }
+  .sticky-call .btn-call{ width:100%; }
+  @media (min-width:860px){ .sticky-call{ display:none; } }
+  @media (max-width:859px){ body{ padding-bottom:72px; } }
+
+  .draft-tag{
+    position:fixed; top:calc(10px + env(safe-area-inset-top,0px)); left:10px; z-index:60;
+    background:var(--ink); color:var(--bg); font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    padding:6px 10px; border-radius:999px; opacity:.85;
+  }
+</style>
+
+<div class="draft-tag">Brouillon de refonte — pas le site en ligne</div>
+
+<div class="topstrip">
+  <div class="wrap">
+    <span class="zone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Intervention à domicile &amp; en établissement — Essonne (91)
+    </span>
+    <span>Lun–Sam · 8h–19h — Urgences sur demande</span>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="10" fill="var(--primary)"/>
+        <path d="M20 27V13" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M20 13l-5 4M20 13l5 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14 20a8.5 8.5 0 0 1 12 0" stroke="#8FE0FF" stroke-width="2" stroke-linecap="round"/>
+        <path d="M11 17a12.5 12.5 0 0 1 18 0" stroke="#8FE0FF" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      </svg>
+      <div>
+        <span class="disp">Antenniste 91</span>
+        <small class="ph" title="Nom commercial / raison sociale à confirmer">Nom à confirmer</small>
+      </div>
+    </div>
+    <nav class="main">
+      <a href="#services">Services</a>
+      <a href="#zone">Zone d'intervention</a>
+      <a href="#avis">Avis</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-call" href="tel:0000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        <span class="ph" title="Numéro à renseigner">Appeler — 01 XX XX XX XX</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <span class="eyebrow">Antenne · Parabole · Starlink · Vidéosurveillance</span>
+
+          <div class="toggle" role="group" aria-label="Je suis...">
+            <button type="button" id="tab-part" aria-pressed="true">Particulier</button>
+            <button type="button" id="tab-pro" aria-pressed="false">Professionnel</button>
+          </div>
+
+          <div class="audience-panel" id="panel-part">
+            <h1>Un signal qui tient,<br>sans les allers-retours.</h1>
+            <p class="lead">Antenne TV, parabole, Starlink ou caméra de surveillance : un technicien intervient chez vous en Essonne, diagnostique le problème et vous explique ce qu'il a fait — sans jargon.</p>
+          </div>
+          <div class="audience-panel" id="panel-pro" hidden>
+            <h1>Vos sites équipés et suivis<br>par un seul interlocuteur.</h1>
+            <p class="lead">Hôtels, commerces, collectivités : diagnostic, devis et installation d'antennes, Starlink ou vidéosurveillance, coordonnés sur un ou plusieurs établissements en Essonne.</p>
+          </div>
+
+          <div class="hero-ctas">
+            <a class="btn btn-call" href="tel:0000000000">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+              <span class="ph" title="Numéro à renseigner">01 XX XX XX XX</span>
+            </a>
+            <a class="btn btn-ghost" href="#contact">Devis gratuit en 24h</a>
+          </div>
+
+          <div class="trustrow">
+            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Devis gratuit</span>
+            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Intervention rapide</span>
+            <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Réglages expliqués sur place</span>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <svg viewBox="0 0 300 300" class="rings" aria-hidden="true">
+            <circle cx="230" cy="70" r="46" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>
+            <circle cx="230" cy="70" r="80" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1.5"/>
+            <circle cx="230" cy="70" r="114" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1.5"/>
+            <g transform="translate(150,150)">
+              <path d="M0 -55 v90" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+              <path d="M0 -55 l-24 20 M0 -55 l24 20" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+              <path d="M-30 -25 a42 42 0 0 1 60 0" stroke="#8FE0FF" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <path d="M-46 -40 a64 64 0 0 1 92 0" stroke="#8FE0FF" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".6"/>
+              <path d="M-62 -55 a86 86 0 0 1 124 0" stroke="#8FE0FF" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".32"/>
+              <rect x="-42" y="35" width="84" height="8" rx="4" fill="rgba(255,255,255,.25)"/>
+            </g>
+          </svg>
+          <div class="badge">
+            <div class="mono">EN DIRECT</div>
+            <strong>Signal rétabli — 0 coupure</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Ce que nous installons</span>
+          <h2>Quatre métiers, un seul technicien.</h2>
+        </div>
+        <p>De l'antenne râteau à la vidéosurveillance connectée, chaque intervention est diagnostiquée avant devis — pas de matériel superflu.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="card">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V8"/><path d="M12 8 5 3M12 8l7-5"/><path d="M7 13a7 7 0 0 1 10 0"/></svg></div>
+          <h3>Antenne TV &amp; TNT</h3>
+          <p>Pose, orientation, remplacement de câble ou d'antenne défectueuse. Multiplex complet, sans coupure ni pixellisation.</p>
+          <a class="go" href="#contact">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="card">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><path d="M4 15a12 12 0 0 1 16-11"/><path d="M2 9a17 17 0 0 1 20-6"/></svg></div>
+          <h3>Parabole &amp; Satellite</h3>
+          <p>Installation et réglage de parabole (bouquets FR &amp; internationaux), remise en service après tempête ou déménagement.</p>
+          <a class="go" href="#contact">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="card">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="7" height="7" rx="1.5"/><path d="M9 11V8a3 3 0 0 1 3-3"/><path d="M15 7a7 7 0 0 1 5 5"/><path d="M18 4a11 11 0 0 1 6 6"/></svg></div>
+          <h3>Internet Starlink</h3>
+          <p>Étude de dégagement du ciel, pose du kit, fixation au mât ou en façade, mise en réseau du foyer ou de l'établissement.</p>
+          <a class="go" href="#contact">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="card">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></div>
+          <h3>Vidéosurveillance</h3>
+          <p>Caméras intérieures/extérieures, consultation à distance sur smartphone, enregistrement local ou sur cloud.</p>
+          <a class="go" href="#contact">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Pourquoi nous</span>
+          <h2>Ce qui change, concrètement.</h2>
+        </div>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h4>Diagnostic avant devis</h4>
+          <p>On identifie la vraie cause (signal, câblage, positionnement) avant de proposer une solution — pas de matériel vendu par réflexe.</p>
+        </div>
+        <div class="why-item">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v5c0 4.5 3.4 7.8 8 9 4.6-1.2 8-4.5 8-9V7l-8-4Z"/></svg></div>
+          <h4>Devis clair, prix fixé</h4>
+          <p>Un prix annoncé avant intervention, détaillé poste par poste. Ce qui est écrit est ce qui est facturé.</p>
+        </div>
+        <div class="why-item">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M8 15h4"/></svg></div>
+          <h4>Explications sur place</h4>
+          <p>Le technicien vous montre les réglages effectués et répond aux questions avant de partir — rien de laissé "en l'état".</p>
+        </div>
+        <div class="why-item">
+          <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h4>Suivi après installation</h4>
+          <p>Un problème après la pose ? Un seul numéro à composer, un technicien qui connaît déjà votre installation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Déroulé</span>
+          <h2>Trois étapes, un seul passage.</h2>
+        </div>
+      </div>
+      <div class="process">
+        <div class="step">
+          <div class="num">01 · Appel</div>
+          <h4>Diagnostic par téléphone</h4>
+          <p>Vous décrivez le problème ou le projet, on identifie ce qui est probablement en cause et le matériel nécessaire.</p>
+        </div>
+        <div class="step">
+          <div class="num">02 · Devis</div>
+          <h4>Prix annoncé, sans surprise</h4>
+          <p>Devis gratuit transmis avant intervention. Rien n'est engagé tant qu'il n'est pas validé.</p>
+        </div>
+        <div class="step">
+          <div class="num">03 · Pose</div>
+          <h4>Installation &amp; réglages</h4>
+          <p>Intervention sur site, tests en direct (chaînes, débit, image caméra) avant de repartir.</p>
+        </div>
+        <div class="step">
+          <div class="num">04 · Suivi</div>
+          <h4>Garantie &amp; SAV</h4>
+          <p>Un contact direct en cas de souci après la pose, sans repasser par un standard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Pour qui</span>
+          <h2>Particuliers &amp; professionnels.</h2>
+        </div>
+      </div>
+      <div class="audience-split">
+        <div class="aud-card">
+          <span class="tag">Maison individuelle</span>
+          <h3>Particuliers</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Perte de chaînes, image pixellisée ou neige à l'écran</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Installation Starlink en zone mal couverte par la fibre</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Caméra pour surveiller l'entrée ou le jardin à distance</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Remise en service après tempête ou déménagement</li>
+          </ul>
+          <a class="btn btn-ghost" style="align-self:flex-start" href="#contact">Décrire mon besoin</a>
+        </div>
+        <div class="aud-card pro">
+          <span class="tag">Hôtels · Commerces · Collectivités</span>
+          <h3>Professionnels</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Antenne collective ou multiplex TV pour chambres/salles</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Connexion Starlink de secours ou principale multi-sites</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Vidéosurveillance des accès, parkings et zones sensibles</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Un interlocuteur unique pour plusieurs établissements</li>
+          </ul>
+          <a class="btn btn-light" style="align-self:flex-start" href="#contact">Demander un devis pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="zone">
+    <div class="wrap">
+      <div class="zone-grid">
+        <div>
+          <span class="eyebrow">Zone d'intervention</span>
+          <h2 style="font-size:clamp(26px,3.2vw,38px); margin:8px 0 0;">Essonne (91) et communes limitrophes.</h2>
+          <p style="color:var(--muted); margin-top:12px;">Déplacement inclus dans le devis pour les communes ci-dessous. <span class="ph" title="Liste à ajuster selon votre rayon réel d'intervention">liste à confirmer</span>.</p>
+          <div class="chips">
+            <span class="chip">Évry-Courcouronnes</span>
+            <span class="chip">Corbeil-Essonnes</span>
+            <span class="chip">Massy</span>
+            <span class="chip">Palaiseau</span>
+            <span class="chip">Étampes</span>
+            <span class="chip">Savigny-sur-Orge</span>
+            <span class="chip">Sainte-Geneviève-des-Bois</span>
+            <span class="chip">Draveil</span>
+            <span class="chip">Brétigny-sur-Orge</span>
+            <span class="chip">Longjumeau</span>
+            <span class="chip">+ Essonne (91)</span>
+          </div>
+        </div>
+        <div class="radar">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="30" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+            <circle cx="100" cy="100" r="90" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+            <line x1="10" y1="100" x2="190" y2="100" stroke="var(--line)" stroke-width="1"/>
+            <line x1="100" y1="10" x2="100" y2="190" stroke="var(--line)" stroke-width="1"/>
+            <circle cx="100" cy="100" r="5" fill="var(--accent)"/>
+            <circle cx="128" cy="70" r="3.5" fill="var(--primary)"/>
+            <circle cx="62" cy="122" r="3.5" fill="var(--primary)"/>
+            <circle cx="140" cy="130" r="3.5" fill="var(--primary)"/>
+            <circle cx="75" cy="65" r="3.5" fill="var(--primary)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis" class="band-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Avis clients</span>
+          <h2>Ce qu'en disent les clients.</h2>
+        </div>
+      </div>
+      <div class="rating-strip">
+        <span class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+        </span>
+        <span><span class="ph" title="À connecter à votre fiche Google Business">Note Google : X,X/5 — XX avis</span></span>
+      </div>
+      <div class="reviews-grid">
+        <div class="review">
+          <div class="stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          </div>
+          <p class="ph" title="Exemple à remplacer par un vrai avis">« Exemple d'avis — à remplacer par un vrai retour client. »</p>
+          <div class="who"><span class="ph" title="Nom + ville réels à renseigner">Prénom, Ville</span></div>
+        </div>
+        <div class="review">
+          <div class="stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          </div>
+          <p class="ph" title="Exemple à remplacer par un vrai avis">« Exemple d'avis — à remplacer par un vrai retour client. »</p>
+          <div class="who"><span class="ph" title="Nom + ville réels à renseigner">Prénom, Ville</span></div>
+        </div>
+        <div class="review">
+          <div class="stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2Z"/></svg>
+          </div>
+          <p class="ph" title="Exemple à remplacer par un vrai avis">« Exemple d'avis — à remplacer par un vrai retour client. »</p>
+          <div class="who"><span class="ph" title="Nom + ville réels à renseigner">Prénom, Ville</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Questions fréquentes</span>
+          <h2>Avant d'appeler.</h2>
+        </div>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>Combien coûte une installation d'antenne TV ou d'une parabole ?
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <p>Le prix dépend de la configuration du toit, du câblage existant et du nombre de prises à raccorder. Un devis gratuit est établi après un diagnostic rapide, avant toute intervention.</p>
+        </details>
+        <details>
+          <summary>Faut-il une autorisation pour installer une parabole en copropriété ?
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <p>En résidence collective, une déclaration au syndic ou à la mairie peut être nécessaire selon la visibilité de l'installation depuis la voie publique. Nous vous indiquons la marche à suivre selon votre cas avant la pose.</p>
+        </details>
+        <details>
+          <summary>Vendez-vous le kit Starlink ou seulement l'installation ?
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <p class="ph" title="À préciser selon votre offre réelle">Réponse à préciser : installation seule, ou installation + fourniture du kit.</p>
+        </details>
+        <details>
+          <summary>Quel est le délai d'intervention en Essonne ?
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <p class="ph" title="À préciser selon vos délais réels">Délai moyen à préciser (ex. 24 à 48h selon les secteurs et l'urgence).</p>
+        </details>
+        <details>
+          <summary>Puis-je consulter les images de ma caméra à distance ?
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <p>Oui, les caméras installées peuvent être consultées en direct depuis une application sur smartphone, avec notifications en cas de détection de mouvement selon le modèle choisi.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="final-cta">
+        <span class="eyebrow">Prêt à commencer</span>
+        <h2>Un appel suffit pour lancer le diagnostic.</h2>
+        <p>Décrivez votre besoin, obtenez un créneau et un devis gratuit — sans engagement.</p>
+        <a class="btn btn-call" href="tel:0000000000" style="font-size:17px; padding:16px 30px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          <span class="ph" title="Numéro à renseigner">Appeler — 01 XX XX XX XX</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="logo" style="margin-bottom:14px;">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="10" fill="#fff" fill-opacity=".12"/>
+            <path d="M20 27V13" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M20 13l-5 4M20 13l5 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 20a8.5 8.5 0 0 1 12 0" stroke="#8FE0FF" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <span class="disp">Antenniste 91</span>
+            <small class="ph">Raison sociale à confirmer</small>
+          </div>
+        </div>
+        <p class="tag">Antenne TV, parabole, Starlink et vidéosurveillance pour particuliers et professionnels en Essonne.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Antenne TV &amp; TNT</a></li>
+          <li><a href="#services">Parabole &amp; satellite</a></li>
+          <li><a href="#services">Starlink</a></li>
+          <li><a href="#services">Vidéosurveillance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Entreprise</h5>
+        <ul>
+          <li><a href="#zone">Zone d'intervention</a></li>
+          <li><a href="#avis">Avis clients</a></li>
+          <li><a href="#faq">Questions fréquentes</a></li>
+          <li><a href="#contact">Devis gratuit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><span class="ph">01 XX XX XX XX</span></li>
+          <li><span class="ph">contact@antenniste91.fr</span></li>
+          <li><span class="ph">Adresse à confirmer, 91XXX</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="y"></span> <span class="ph">Raison sociale</span> — SIRET <span class="ph">à compléter</span></span>
+      <span><a href="#">Mentions légales</a> · <a href="#">Politique de confidentialité</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-call">
+  <a class="btn btn-call" href="tel:0000000000">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+    Appeler maintenant
+  </a>
+</div>
+
+<script>
+(function(){
+  try{ document.getElementById('y').textContent = new Date().getFullYear(); }catch(e){}
+
+  var tabPart = document.getElementById('tab-part');
+  var tabPro = document.getElementById('tab-pro');
+  var panelPart = document.getElementById('panel-part');
+  var panelPro = document.getElementById('panel-pro');
+
+  function show(which){
+    var isPart = which === 'part';
+    panelPart.hidden = !isPart;
+    panelPro.hidden = isPart;
+    tabPart.setAttribute('aria-pressed', String(isPart));
+    tabPro.setAttribute('aria-pressed', String(!isPart));
+  }
+  tabPart.addEventListener('click', function(){ show('part'); });
+  tabPro.addEventListener('click', function(){ show('pro'); });
+})();
+</script>
