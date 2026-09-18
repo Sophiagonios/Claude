@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "paper", "name": "Papier", "color": "#F5F4F0" },
+        { "slug": "ink", "name": "Encre (noir)", "color": "#0B0C0E" },
+        { "slug": "accent", "name": "Accent signal", "color": "#17E6B4" },
+        { "slug": "text", "name": "Texte", "color": "#15171A" },
+        { "slug": "text-soft", "name": "Texte atténué", "color": "#565C63" },
+        { "slug": "on-dark", "name": "Texte sur fond sombre", "color": "#F4F5F3" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "slug": "display",
+          "name": "Titres",
+          "fontFamily": "'Big Shoulders Display', system-ui, sans-serif"
+        },
+        {
+          "slug": "body",
+          "name": "Texte",
+          "fontFamily": "'Manrope', system-ui, sans-serif"
+        },
+        {
+          "slug": "mono",
+          "name": "Mono",
+          "fontFamily": "'IBM Plex Mono', ui-monospace, monospace"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "760px",
+      "wideSize": "1220px"
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#F5F4F0",
+      "text": "#15171A"
+    },
+    "typography": {
+      "fontFamily": "'Manrope', system-ui, sans-serif"
+    },
+    "elements": {
+      "button": {
+        "color": {
+          "background": "#17E6B4",
+          "text": "#04231B"
+        },
+        "border": {
+          "radius": "999px"
+        }
+      },
+      "heading": {
+        "typography": {
+          "fontFamily": "'Big Shoulders Display', system-ui, sans-serif",
+          "textTransform": "uppercase",
+          "fontWeight": "800"
+        }
+      }
+    }
+  }
+}
