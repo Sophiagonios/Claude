@@ -19,10 +19,42 @@ function antenniste91_html_block( $html ) {
 	return "<!-- wp:html -->\n" . $html . "\n<!-- /wp:html -->\n\n";
 }
 
-function antenniste91_heading_block( $text, $level = 2, $class = '' ) {
+function antenniste91_heading_block( $text, $level = 2, $class = '', $id = '' ) {
 	$class_attr = $class ? ' class="' . esc_attr( $class ) . '"' : '';
+	$id_attr    = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 	$json       = $class ? ',"className":"' . esc_attr( $class ) . '"' : '';
-	return "<!-- wp:heading {\"level\":$level$json} -->\n<h$level$class_attr>$text</h$level>\n<!-- /wp:heading -->\n\n";
+	return "<!-- wp:heading {\"level\":$level$json} -->\n<h$level$id_attr$class_attr>$text</h$level>\n<!-- /wp:heading -->\n\n";
+}
+
+/** Tinted, left-bordered intro box — a pull-quote style opener, not a plain paragraph. */
+function antenniste91_callout_block( $text ) {
+	return antenniste91_html_block( '<div class="callout"><p>' . $text . '</p></div>' );
+}
+
+/** 2-column grid of small bordered cards with a check dot, instead of a plain bullet list. */
+function antenniste91_card_list_block( $items ) {
+	$html = '<div class="signal-grid">';
+	foreach ( $items as $item ) {
+		$html .= '<div class="signal-card"><span class="dot"></span><p>' . $item . '</p></div>';
+	}
+	$html .= '</div>';
+	return antenniste91_html_block( $html );
+}
+
+/** Placeholder photo blocks (1 or 2 across) so the page has visual breathing room before real photos arrive. */
+function antenniste91_photo_placeholder_block( $captions ) {
+	$cols = count( $captions ) >= 2 ? 2 : 1;
+	$html = '<div class="photo-grid cols-' . $cols . '">';
+	foreach ( $captions as $caption ) {
+		$html .= '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — ' . esc_html( $caption ) . '</span></div>';
+	}
+	$html .= '</div>';
+	return antenniste91_html_block( $html );
+}
+
+/** Highlighted price callout, distinct from the rest of the prose. */
+function antenniste91_price_box_block( $text ) {
+	return antenniste91_html_block( '<div class="price-box"><div class="icon">€</div><p>' . $text . '</p></div>' );
 }
 
 function antenniste91_paragraph_block( $text, $class = '' ) {
@@ -206,18 +238,31 @@ function antenniste91_content_home() {
 	return $c;
 }
 
+/** Fixed table-of-contents entries — identical structure across all 4 service pages. */
+function antenniste91_service_toc() {
+	return array(
+		array( '#signes', 'Les signes à surveiller' ),
+		array( '#inclus', "Ce qui est inclus" ),
+		array( '#methode', 'Notre méthode' ),
+		array( '#prix', 'Le prix' ),
+		array( '#faq', 'Questions fréquentes' ),
+	);
+}
+
 function antenniste91_service_page( $args ) {
-	$c  = antenniste91_paragraph_block( $args['hook'] );
-	$c .= antenniste91_heading_block( 'Les signes qui indiquent qu\'il est temps d\'appeler', 3 );
-	$c .= antenniste91_list_block( $args['signs'] );
-	$c .= antenniste91_heading_block( 'Ce qui est compris dans l\'intervention', 3 );
-	$c .= antenniste91_list_block( $args['included'] );
-	$c .= antenniste91_heading_block( 'Notre façon de faire', 3 );
+	$c  = antenniste91_callout_block( $args['hook'] );
+	$c .= antenniste91_heading_block( 'Les signes qui indiquent qu\'il est temps d\'appeler', 3, '', 'signes' );
+	$c .= antenniste91_card_list_block( $args['signs'] );
+	$c .= antenniste91_photo_placeholder_block( array( $args['photo1'] ) );
+	$c .= antenniste91_heading_block( 'Ce qui est compris dans l\'intervention', 3, '', 'inclus' );
+	$c .= antenniste91_card_list_block( $args['included'] );
+	$c .= antenniste91_heading_block( 'Notre méthode', 3, '', 'methode' );
 	$c .= antenniste91_paragraph_block( $args['process'] );
-	$c .= antenniste91_heading_block( 'Le prix', 3 );
-	$c .= antenniste91_paragraph_block( $args['pricing'] );
+	$c .= antenniste91_heading_block( 'Le prix', 3, '', 'prix' );
+	$c .= antenniste91_price_box_block( $args['pricing'] );
+	$c .= antenniste91_photo_placeholder_block( array( 'avant l\'intervention', 'après l\'intervention' ) );
 	if ( ! empty( $args['faq'] ) ) {
-		$c .= antenniste91_heading_block( 'Questions fréquentes', 3 );
+		$c .= antenniste91_heading_block( 'Questions fréquentes', 3, '', 'faq' );
 		foreach ( $args['faq'] as $q ) {
 			$c .= antenniste91_details_block( $q['q'], $q['a'] );
 		}
@@ -243,6 +288,7 @@ function antenniste91_content_service_antenne() {
 			),
 			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
+			'photo1'   => 'antenne en cours de réglage sur toiture',
 			'faq'      => array(
 				array(
 					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
@@ -275,6 +321,7 @@ function antenniste91_content_service_parabole() {
 			),
 			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal — pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du support à poser, de la hauteur d'intervention et du nombre de récepteurs à raccorder. Il est annoncé avant toute pose.",
+			'photo1'   => 'parabole fixée et alignée en façade',
 			'faq'      => array(
 				array(
 					'q' => "Faut-il une autorisation pour installer une parabole en copropriété ?",
@@ -303,6 +350,7 @@ function antenniste91_content_service_starlink() {
 			),
 			'process'  => "Une étude de dégagement du ciel précède toujours la pose : c'est elle qui détermine si l'installation tiendra dans le temps. Le kit est ensuite fixé durablement, câblé proprement, et le réseau testé en votre présence.",
 			'pricing'  => "L'installation est facturée indépendamment du kit Starlink. Un devis est transmis après l'étude de dégagement, avant toute pose.",
+			'photo1'   => 'kit Starlink fixé en toiture',
 			'faq'      => array(
 				array(
 					'q' => "Fournissez-vous le kit Starlink ou seulement l'installation ?",
@@ -335,6 +383,7 @@ function antenniste91_content_service_video() {
 			),
 			'process'  => "Après une visite ou un échange pour définir les zones sensibles, les caméras sont positionnées pour couvrir l'essentiel sans multiplier le matériel. L'application de consultation à distance est configurée et testée avec vous avant la fin de l'intervention.",
 			'pricing'  => "Le tarif dépend du nombre de caméras, de la complexité du câblage et du mode d'enregistrement choisi. Il est annoncé avant la pose, jamais après.",
+			'photo1'   => 'caméra extérieure installée près d\'une entrée',
 			'faq'      => array(
 				array(
 					'q' => "Puis-je consulter les images à distance depuis mon téléphone ?",
@@ -424,6 +473,101 @@ function antenniste91_content_contact() {
 	$c .= antenniste91_heading_block( 'Formulaire de contact', 3 );
 	$c .= antenniste91_paragraph_block( '<span class="ph">Ce site n\'a pas encore de formulaire actif — il faut brancher un plugin de formulaire (ex. Contact Form 7 ou WPForms) pour en avoir un qui envoie réellement les messages. En attendant, le téléphone et l\'email ci-dessus restent les moyens de contact fiables.</span>' );
 	return $c;
+}
+
+function antenniste91_blog_posts() {
+	$posts = array();
+
+	$posts[] = array(
+		'slug'    => 'antenne-tv-perd-signal-hiver',
+		'title'   => "Pourquoi mon antenne TV perd-elle le signal en hiver ?",
+		'excerpt' => "Vent, gel, givre : les chutes de signal TV sont plus fréquentes en hiver. Voici les causes les plus courantes et comment les repérer avant d'appeler.",
+		'content' =>
+			antenniste91_paragraph_block( "Chaque hiver, le même constat revient chez de nombreux foyers d'Essonne : la télévision « saute » davantage, certaines chaînes disparaissent, l'image se pixellise. Ce n'est pas une coïncidence — le froid et le vent fragilisent des installations qui tenaient très bien le reste de l'année." )
+			. antenniste91_heading_block( "Le vent déplace l'antenne, même légèrement", 2 )
+			. antenniste91_paragraph_block( "Une antenne orientée au degré près peut perdre une partie du signal après plusieurs jours de vent fort. Le désalignement est parfois invisible à l'œil nu depuis le sol, mais suffisant pour faire chuter la réception." )
+			. antenniste91_heading_block( "Le gel et le givre sur les câbles et connecteurs", 2 )
+			. antenniste91_paragraph_block( "L'humidité qui s'infiltre dans une prise ou un connecteur mal protégé gèle et se dilate, ce qui abîme progressivement la connexion. C'est une cause fréquente de pannes qui apparaissent « sans raison » en période de gel." )
+			. antenniste91_heading_block( "Comment savoir si c'est votre antenne ou votre télévision ?", 2 )
+			. antenniste91_card_list_block(
+				array(
+					"Le problème touche toutes les télévisions du logement : c'est rarement le téléviseur",
+					"Le souci apparaît surtout par mauvais temps : c'est probablement l'antenne ou le câblage extérieur",
+					"Une seule prise est concernée : le souci est souvent localisé sur cette ligne précise",
+				)
+			)
+			. antenniste91_paragraph_block( "Dans le doute, un diagnostic reste la façon la plus rapide de trancher — c'est justement ce qu'on propose avant toute réparation." )
+			. antenniste91_button_block( "Voir la page Antenne TV & TNT →", home_url( '/services/antenne-tv/' ), 'outline-navy' ),
+	);
+
+	$posts[] = array(
+		'slug'    => 'autorisation-parabole-satellite',
+		'title'   => "Faut-il une autorisation pour installer une parabole satellite ?",
+		'excerpt' => "En maison individuelle ou en copropriété, les règles ne sont pas les mêmes. Voici ce qu'il faut vérifier avant de poser une parabole.",
+		'content' =>
+			antenniste91_paragraph_block( "La question revient souvent, en particulier en copropriété ou en secteur protégé : peut-on installer une parabole librement, ou faut-il une autorisation au préalable ?" )
+			. antenniste91_heading_block( "En maison individuelle", 2 )
+			. antenniste91_paragraph_block( "En règle générale, aucune autorisation n'est nécessaire tant que l'installation reste sur votre propriété et respecte les règles locales d'urbanisme. Dans une zone classée ou protégée, la mairie peut cependant imposer des restrictions — un point à vérifier avant la pose." )
+			. antenniste91_heading_block( "En copropriété", 2 )
+			. antenniste91_paragraph_block( "La règle de base : chaque copropriétaire a le droit de recevoir la télévision par satellite, mais l'installation doit respecter le règlement de copropriété et, si elle est visible depuis la voie publique, peut nécessiter une déclaration au syndic." )
+			. antenniste91_callout_block( "En cas de doute, on vous indique la marche à suivre selon votre configuration avant toute intervention — mieux vaut vérifier que démonter une parabole mal placée." )
+			. antenniste91_button_block( "Voir la page Parabole & satellite →", home_url( '/services/parabole-satellite/' ), 'outline-navy' ),
+	);
+
+	$posts[] = array(
+		'slug'    => 'starlink-essonne-vaut-le-coup',
+		'title'   => "Starlink en Essonne : dans quels cas ça vaut vraiment le coup ?",
+		'excerpt' => "Starlink n'est pas réservé aux zones isolées. Voici les situations où l'investissement se justifie vraiment.",
+		'content' =>
+			antenniste91_paragraph_block( "Starlink a d'abord été pensé pour les zones rurales sans fibre. Mais en Essonne, on le pose de plus en plus souvent pour des raisons différentes." )
+			. antenniste91_heading_block( "Les trois cas les plus fréquents", 2 )
+			. antenniste91_card_list_block(
+				array(
+					"Aucune offre fibre ou ADSL satisfaisante n'est disponible à l'adresse",
+					"Une connexion de secours est nécessaire pour un usage professionnel critique",
+					"Un déménagement récent dans une zone où la fibre n'est pas encore déployée",
+				)
+			)
+			. antenniste91_heading_block( "Ce qui détermine si ça va fonctionner : le ciel, pas la distance", 2 )
+			. antenniste91_paragraph_block( "Contrairement à une idée reçue, ce n'est pas la localisation géographique qui pose problème en Essonne, mais le dégagement du ciel autour du bâtiment — arbres, toitures voisines, reliefs proches. C'est pour cette raison qu'une étude précède toujours la pose." )
+			. antenniste91_button_block( "Voir la page Internet Starlink →", home_url( '/services/starlink/' ), 'outline-navy' ),
+	);
+
+	$posts[] = array(
+		'slug'    => 'videosurveillance-domicile-ce-quil-faut-savoir',
+		'title'   => "Vidéosurveillance à domicile : ce qu'il faut savoir avant d'installer",
+		'excerpt' => "Nombre de caméras, enregistrement, vie privée du voisinage : les questions à se poser avant d'équiper sa maison.",
+		'content' =>
+			antenniste91_paragraph_block( "Installer des caméras chez soi semble simple sur le papier — en pratique, quelques choix mal anticipés peuvent rendre l'installation inutile ou, pire, problématique sur le plan légal." )
+			. antenniste91_heading_block( "Ne filmez pas la voie publique ni le jardin du voisin", 2 )
+			. antenniste91_paragraph_block( "Une caméra orientée sur l'espace privé d'un tiers ou sur la rue peut poser un problème légal, même installée de bonne foi. Le positionnement se réfléchit avant la pose, pas après une plainte." )
+			. antenniste91_heading_block( "Combien de caméras sont vraiment nécessaires ?", 2 )
+			. antenniste91_paragraph_block( "Plus n'est pas toujours mieux. Une entrée principale et un accès secondaire bien couverts valent souvent mieux que cinq caméras mal positionnées. C'est l'objet du diagnostic initial : couvrir l'essentiel sans multiplier le matériel — et le coût — sans raison." )
+			. antenniste91_heading_block( "Cloud ou enregistrement local ?", 2 )
+			. antenniste91_card_list_block(
+				array(
+					"Le stockage local évite un abonnement mensuel mais dépend d'un support physique à protéger",
+					"Le cloud sécurise les images hors du logement mais implique un coût récurrent",
+				)
+			)
+			. antenniste91_button_block( "Voir la page Vidéosurveillance →", home_url( '/services/videosurveillance/' ), 'outline-navy' ),
+	);
+
+	$posts[] = array(
+		'slug'    => 'copropriete-reparation-antenne-collective',
+		'title'   => "Copropriété : qui doit payer la réparation de l'antenne collective ?",
+		'excerpt' => "Panne sur l'antenne d'un immeuble : à qui revient la prise en charge, et comment agir sans attendre l'assemblée générale ?",
+		'content' =>
+			antenniste91_paragraph_block( "Quand l'antenne collective d'un immeuble tombe en panne, la question du « qui paie » arrive presque aussi vite que la perte de signal." )
+			. antenniste91_heading_block( "Un élément commun, une charge commune", 2 )
+			. antenniste91_paragraph_block( "L'antenne collective fait en général partie des parties communes : sa réparation relève donc de la copropriété, financée par les charges, et non d'un copropriétaire en particulier." )
+			. antenniste91_heading_block( "Faut-il attendre l'assemblée générale ?", 2 )
+			. antenniste91_paragraph_block( "Pas nécessairement. Une panne totale de réception peut relever de l'urgence, permettant au syndic de faire intervenir un professionnel sans attendre le prochain vote — à condition de pouvoir justifier la nécessité de l'intervention." )
+			. antenniste91_callout_block( "On peut établir un diagnostic et un devis rapidement, pour donner au syndic les éléments nécessaires à sa décision." )
+			. antenniste91_button_block( "Demander un diagnostic →", home_url( '/contact/' ), 'outline-navy' ),
+	);
+
+	return $posts;
 }
 
 function antenniste91_content_mentions_legales() {

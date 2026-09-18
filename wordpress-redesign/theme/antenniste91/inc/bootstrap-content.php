@@ -33,6 +33,25 @@ function antenniste91_upsert_page( $slug, $title, $content, $parent_id = 0 ) {
 	);
 }
 
+function antenniste91_seed_blog_posts() {
+	foreach ( antenniste91_blog_posts() as $post ) {
+		$existing = get_page_by_path( $post['slug'], OBJECT, 'post' );
+		if ( $existing ) {
+			continue;
+		}
+		wp_insert_post(
+			array(
+				'post_title'   => $post['title'],
+				'post_name'    => $post['slug'],
+				'post_excerpt' => $post['excerpt'],
+				'post_content' => $post['content'],
+				'post_status'  => 'publish',
+				'post_type'    => 'post',
+			)
+		);
+	}
+}
+
 function antenniste91_bootstrap() {
 	if ( get_option( 'antenniste91_bootstrapped' ) ) {
 		return;
@@ -61,6 +80,8 @@ function antenniste91_bootstrap() {
 	if ( $blog ) {
 		update_option( 'page_for_posts', $blog );
 	}
+
+	antenniste91_seed_blog_posts();
 
 	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $blog, $faq, $contact ) );
 

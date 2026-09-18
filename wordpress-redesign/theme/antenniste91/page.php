@@ -22,11 +22,28 @@ while ( have_posts() ) :
 		</div>
 	</div>
 
-	<div class="wrap section-pad">
-		<div class="entry-content is-wide">
-			<?php the_content(); ?>
+	<?php $service_slugs = array( 'antenne-tv', 'parabole-satellite', 'starlink', 'videosurveillance' ); ?>
+	<?php if ( in_array( get_post_field( 'post_name' ), $service_slugs, true ) ) : ?>
+		<div class="wrap section-pad">
+			<div class="page-layout">
+				<aside class="toc">
+					<span class="toc-label">Sur cette page</span>
+					<?php foreach ( antenniste91_service_toc() as $item ) : ?>
+						<a href="<?php echo esc_url( $item[0] ); ?>"><?php echo esc_html( $item[1] ); ?></a>
+					<?php endforeach; ?>
+				</aside>
+				<div class="entry-content is-wide">
+					<?php the_content(); ?>
+				</div>
+			</div>
 		</div>
-	</div>
+	<?php else : ?>
+		<div class="wrap section-pad">
+			<div class="entry-content is-wide">
+				<?php the_content(); ?>
+			</div>
+		</div>
+	<?php endif; ?>
 	<?php
 endwhile;
 ?>
