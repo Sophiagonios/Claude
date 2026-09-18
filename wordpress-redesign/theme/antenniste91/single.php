@@ -30,9 +30,9 @@ endwhile;
 	<h2>Un appel suffit pour lancer le diagnostic.</h2>
 	<p>Décrivez votre besoin, obtenez un créneau et un devis gratuit — sans engagement.</p>
 	<div class="hero-ctas">
-		<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">Appeler — <?php echo antenniste91_phone_display(); ?></a>
+		<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">Appeler maintenant</a>
 	</div>
-	<p style="margin-top:16px;"><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" style="color:#CFDDE8; font-size:13.5px; text-decoration:underline;">ou décrivez votre besoin par écrit →</a></p>
+	<p style="margin-top:16px; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
 </div>
 
 <?php

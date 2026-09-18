@@ -77,6 +77,26 @@ function antenniste91_inline_scripts() {
 			tabPart.addEventListener('click', function(){ show('part'); });
 			tabPro.addEventListener('click', function(){ show('pro'); });
 		}
+
+		var toggle = document.getElementById('theme-toggle');
+		if ( toggle ) {
+			var sun = toggle.querySelector('.icon-sun');
+			var moon = toggle.querySelector('.icon-moon');
+			function paint(theme){
+				var isDark = theme === 'dark';
+				sun.hidden = isDark;
+				moon.hidden = !isDark;
+				toggle.setAttribute('aria-label', isDark ? 'Passer en mode clair' : 'Passer en mode sombre');
+			}
+			paint( document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light' );
+			toggle.addEventListener('click', function(){
+				var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+				if ( next === 'dark' ) { document.documentElement.setAttribute('data-theme', 'dark'); }
+				else { document.documentElement.removeAttribute('data-theme'); }
+				try { localStorage.setItem('antenniste91_theme', next); } catch(e) {}
+				paint(next);
+			});
+		}
 	})();
 	</script>
 	<?php

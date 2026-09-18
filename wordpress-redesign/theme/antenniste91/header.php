@@ -3,6 +3,14 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<script>
+	(function(){
+		try {
+			var t = localStorage.getItem('antenniste91_theme');
+			if ( t === 'dark' ) { document.documentElement.setAttribute('data-theme', 'dark'); }
+		} catch(e) {}
+	})();
+	</script>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -31,9 +39,13 @@
 		<?php antenniste91_render_desktop_nav( antenniste91_get_menu_tree( 'primary' ) ); ?>
 
 		<div class="hdr-actions">
+			<button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer en mode sombre">
+				<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 3v2.2M12 18.8V21M4.5 12H3M21 12h-1.5M6.3 6.3 5 5M19 19l-1.3-1.3M6.3 17.7 5 19M19 5l-1.3 1.3"/></svg>
+				<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+			</button>
 			<a class="btn btn-call btn-devis" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
-				Appeler — <?php echo antenniste91_phone_display(); ?>
+				Appeler maintenant
 			</a>
 			<button class="hamburger" id="mnav-open" aria-label="Ouvrir le menu" aria-expanded="false">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -56,7 +68,7 @@
 		<div class="mcta">
 			<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
-				Appeler — <?php echo antenniste91_phone_display(); ?>
+				Appeler maintenant
 			</a>
 		</div>
 	</div>

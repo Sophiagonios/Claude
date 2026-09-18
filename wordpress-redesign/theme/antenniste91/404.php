@@ -43,7 +43,7 @@ get_header();
 	<h2>Un appel suffit pour lancer le diagnostic.</h2>
 	<div class="hero-ctas">
 		<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
-			Appeler — <?php echo antenniste91_phone_display(); ?>
+			Appeler maintenant
 		</a>
 	</div>
 </div>

@@ -96,7 +96,7 @@ function antenniste91_customize_register( $wp_customize ) {
 		),
 		'antenniste91_hero_title_pro' => array(
 			'label'   => __( 'Héro — titre (professionnels)', 'antenniste91' ),
-			'default' => __( 'L\'interlocuteur unique pour équiper vos établissements.', 'antenniste91' ),
+			'default' => __( 'Installateur antenne, Starlink et vidéosurveillance pour vos établissements en Essonne.', 'antenniste91' ),
 			'type'    => 'textarea',
 		),
 		'antenniste91_hero_lead_pro' => array(

@@ -33,7 +33,7 @@ get_header();
 						Appeler maintenant
 					</a>
 				</div>
-				<p style="margin:-6px 0 26px;"><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" style="color:#CFDDE8; font-size:13.5px; text-decoration:underline;">ou décrivez votre besoin par écrit →</a></p>
+				<p style="margin:-6px 0 26px; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
 
 				<ul class="checklist">
 					<li>Un conseil clair, même sans engagement</li>

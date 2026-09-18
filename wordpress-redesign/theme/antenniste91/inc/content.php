@@ -57,6 +57,33 @@ function antenniste91_price_box_block( $text ) {
 	return antenniste91_html_block( '<div class="price-box"><div class="icon">€</div><p>' . $text . '</p></div>' );
 }
 
+/**
+ * "Explore the [device]" style showcase: a large illustration centered in a
+ * soft glow, flanked by feature call-outs — the product-page treatment the
+ * plain bullet lists were missing.
+ */
+function antenniste91_showcase_block( $illustration_svg, $features ) {
+	$check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+	$left  = array_slice( $features, 0, 2 );
+	$right = array_slice( $features, 2, 2 );
+
+	$col = function( $items, $class ) use ( $check ) {
+		$out = '<div class="showcase-feat ' . $class . '">';
+		foreach ( $items as $f ) {
+			$out .= '<div class="item"><span class="ico">' . $check . '</span><span><h4>' . $f[0] . '</h4><p>' . $f[1] . '</p></span></div>';
+		}
+		$out .= '</div>';
+		return $out;
+	};
+
+	$html = '<div class="showcase" id="inclus"><div class="showcase-grid">'
+		. $col( $left, 'showcase-col-left' )
+		. '<div class="showcase-illust"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' . $illustration_svg . '</svg></div>'
+		. $col( $right, 'showcase-col-right' )
+		. '</div></div>';
+	return antenniste91_html_block( $html );
+}
+
 function antenniste91_paragraph_block( $text, $class = '' ) {
 	$class_attr = $class ? ' class="' . esc_attr( $class ) . '"' : '';
 	$json       = $class ? ' {"className":"' . esc_attr( $class ) . '"}' : '';
@@ -148,19 +175,41 @@ function antenniste91_chunk_process() {
 }
 
 function antenniste91_chunk_audience() {
+	$icon_tv     = '<rect x="3" y="5" width="18" height="12" rx="2"/><rect x="8" y="19" width="8" height="2" rx="1"/><rect x="6.3" y="1.8" width="2" height="4.4" rx="1" transform="rotate(-25 7.3 4)"/><rect x="15.7" y="1.8" width="2" height="4.4" rx="1" transform="rotate(25 16.7 4)"/>';
+	$icon_star   = '<rect x="5" y="2" width="14" height="9" rx="2" transform="rotate(-15 12 6.5)"/><rect x="11" y="12" width="2" height="7" rx="1"/><rect x="8" y="19" width="8" height="2" rx="1"/>';
+	$icon_cam    = '<rect x="2" y="7" width="14" height="10" rx="3"/><circle cx="9" cy="12" r="2.8" fill="var(--navy-tint)"/><path d="M16 10.5 22 7v10l-6-3.5Z"/>';
+	$icon_house  = '<path d="M12 3 3 10v11h6v-6h6v6h6V10Z"/>';
+	$icon_person = '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7Z"/>';
+
+	$particulier_items = array(
+		array( $icon_tv, "Chaînes qui sautent, image pixellisée ou neige à l'écran" ),
+		array( $icon_star, "Zone mal desservie par la fibre : installation Starlink" ),
+		array( $icon_cam, "Caméra pour surveiller l'entrée ou le jardin à distance" ),
+		array( $icon_house, "Remise en service après tempête ou déménagement" ),
+	);
+	$pro_items = array(
+		array( $icon_tv, "Antenne collective ou multiplex TV pour chambres et salles communes" ),
+		array( $icon_star, "Starlink principal ou de secours sur un ou plusieurs sites" ),
+		array( $icon_cam, "Vidéosurveillance des accès, parkings et zones sensibles" ),
+		array( $icon_person, "Un interlocuteur unique pour vos devis-cadres et marchés" ),
+	);
+
+	$render_list = function( $items ) {
+		$out = '<ul class="feature-list">';
+		foreach ( $items as $item ) {
+			$out .= '<li><span class="ico"><svg viewBox="0 0 24 24" fill="currentColor">' . $item[0] . '</svg></span><span>' . $item[1] . '</span></li>';
+		}
+		$out .= '</ul>';
+		return $out;
+	};
+
 	$html = '<div class="audience-split">'
-		. '<div class="aud-card"><span class="tag">Maison individuelle</span><h3>Particuliers</h3><ul class="check-list">'
-		. '<li>Chaînes qui sautent, image pixellisée ou neige à l\'écran</li>'
-		. '<li>Zone mal desservie par la fibre : installation Starlink</li>'
-		. '<li>Caméra pour surveiller l\'entrée ou le jardin à distance</li>'
-		. '<li>Remise en service après tempête ou déménagement</li>'
-		. '</ul><br/><a class="btn btn-ghost" href="' . esc_url( home_url( '/contact/' ) ) . '">Décrire mon besoin</a></div>'
-		. '<div class="aud-card pro"><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3><ul class="check-list">'
-		. '<li>Antenne collective ou multiplex TV pour chambres et salles communes</li>'
-		. '<li>Starlink principal ou de secours sur un ou plusieurs sites</li>'
-		. '<li>Vidéosurveillance des accès, parkings et zones sensibles</li>'
-		. '<li>Un interlocuteur unique pour vos devis-cadres et marchés</li>'
-		. '</ul><br/><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
+		. '<div class="aud-card"><span class="tag">Maison individuelle</span><h3>Particuliers</h3>'
+		. $render_list( $particulier_items )
+		. '<br/><a class="btn btn-ghost" href="' . esc_url( home_url( '/contact/' ) ) . '">Décrire mon besoin</a></div>'
+		. '<div class="aud-card pro"><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3>'
+		. $render_list( $pro_items )
+		. '<br/><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
 		. '</div>';
 	return antenniste91_html_block( $html );
 }
@@ -192,7 +241,7 @@ function antenniste91_chunk_zone_chips() {
 function antenniste91_content_home() {
 	$c  = antenniste91_html_block( '<span class="eyebrow">Ce que nous installons</span>' );
 	$c .= antenniste91_heading_block( 'Quatre métiers, un seul technicien.' );
-	$c .= antenniste91_paragraph_block( "De l'antenne râteau à la vidéosurveillance connectée, chaque intervention est diagnostiquée avant devis." );
+	$c .= antenniste91_paragraph_block( "Installateur antenne TV, parabole satellite, Starlink et vidéosurveillance en Essonne (91) : de l'antenne râteau à la caméra connectée, chaque intervention est diagnostiquée avant devis, pour particuliers, professionnels et collectivités." );
 	$c .= antenniste91_chunk_services_grid();
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Pourquoi nous</span>' );
@@ -232,7 +281,7 @@ function antenniste91_content_home() {
 	$c .= antenniste91_button_block( 'Voir toutes les questions →', home_url( '/faq/' ), 'outline-navy' );
 
 	$c .= antenniste91_html_block(
-		'<div class="inner-cta" style="margin-top:0;"><span class="eyebrow inv">Prêt à commencer</span><h2>Un appel suffit pour lancer le diagnostic.</h2><p>Décrivez votre besoin, obtenez un créneau et un devis gratuit — sans engagement.</p><div class="hero-ctas" style="justify-content:center;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler — ' . antenniste91_phone_display() . '</a></div><p style="margin-top:16px;"><a href="' . esc_url( home_url( '/contact/' ) ) . '" style="color:#CFDDE8; font-size:13.5px; text-decoration:underline;">ou décrivez votre besoin par écrit →</a></p></div>'
+		'<div class="inner-cta" style="margin-top:0;"><span class="eyebrow inv">Prêt à commencer</span><h2>Un appel suffit pour lancer le diagnostic.</h2><p>Devis gratuit, sans engagement.</p><div class="hero-ctas" style="justify-content:center;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div></div>'
 	);
 
 	return $c;
@@ -249,13 +298,22 @@ function antenniste91_service_toc() {
 	);
 }
 
+function antenniste91_service_illustration( $key ) {
+	$illustrations = array(
+		'antenne'  => '<path d="M50 90V40"/><path d="M50 40 40 30M50 40l10-10"/><path d="M32 55a18 18 0 0 1 36 0"/><path d="M22 45a28 28 0 0 1 56 0" opacity=".55"/><path d="M14 37a36 36 0 0 1 72 0" opacity=".3"/><path d="M38 90h24"/>',
+		'parabole' => '<path d="M15 65C15 38 37 17 64 15"/><path d="M22 65 15 65"/><path d="M64 15 84 32"/><circle cx="84" cy="32" r="3.5" fill="currentColor" stroke="none"/><path d="M40 78 60 65"/><path d="M40 78v12M30 90h20"/>',
+		'starlink' => '<rect x="22" y="10" width="56" height="34" rx="6" transform="rotate(-12 50 27)"/><path d="M30 20l40 6M28 30l40 6" transform="rotate(-12 50 27)" opacity=".5"/><path d="M50 46v34"/><path d="M34 90h32"/>',
+		'camera'   => '<rect x="15" y="35" width="52" height="34" rx="10"/><circle cx="41" cy="52" r="11"/><circle cx="41" cy="52" r="4" fill="currentColor" stroke="none"/><path d="M67 45 88 33v38l-21-12"/><path d="M25 35V25a6 6 0 0 1 6-6h10"/>',
+	);
+	return isset( $illustrations[ $key ] ) ? $illustrations[ $key ] : '';
+}
+
 function antenniste91_service_page( $args ) {
 	$c  = antenniste91_callout_block( $args['hook'] );
+	$c .= antenniste91_showcase_block( antenniste91_service_illustration( $args['illustration'] ), $args['included'] );
 	$c .= antenniste91_heading_block( 'Les signes qui indiquent qu\'il est temps d\'appeler', 3, '', 'signes' );
 	$c .= antenniste91_card_list_block( $args['signs'] );
 	$c .= antenniste91_photo_placeholder_block( array( $args['photo1'] ) );
-	$c .= antenniste91_heading_block( 'Ce qui est compris dans l\'intervention', 3, '', 'inclus' );
-	$c .= antenniste91_card_list_block( $args['included'] );
 	$c .= antenniste91_heading_block( 'Notre méthode', 3, '', 'methode' );
 	$c .= antenniste91_paragraph_block( $args['process'] );
 	$c .= antenniste91_heading_block( 'Le prix', 3, '', 'prix' );
@@ -281,13 +339,14 @@ function antenniste91_content_service_antenne() {
 				"L'antenne a été endommagée par le vent ou une tempête",
 			),
 			'included' => array(
-				'Diagnostic complet de la réception (antenne, câblage, amplificateur, répartiteur)',
-				"Réparation, réorientation ou remplacement de l'antenne si nécessaire",
-				'Vérification de toutes les prises TV concernées',
-				'Test des chaînes en direct avant la fin de la visite',
+				array( 'Diagnostic complet', 'Antenne, câblage, amplificateur et répartiteur vérifiés.' ),
+				array( 'Réparation ciblée', "Réorientation ou remplacement de l'antenne si nécessaire." ),
+				array( 'Toutes les prises testées', 'Chaque prise TV concernée est vérifiée.' ),
+				array( 'Test en direct', 'Les chaînes sont contrôlées avant la fin de la visite.' ),
 			),
 			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
+			'illustration' => 'antenne',
 			'photo1'   => 'antenne en cours de réglage sur toiture',
 			'faq'      => array(
 				array(
@@ -314,13 +373,14 @@ function antenniste91_content_service_parabole() {
 				"Un déménagement nécessite une nouvelle installation",
 			),
 			'included' => array(
-				"Choix et fixation du support adapté à la façade ou au toit",
-				"Réglage précis de l'orientation (azimut, élévation, polarisation)",
-				"Raccordement et test des bouquets reçus",
-				'Passage des câbles propre et protégé des intempéries',
+				array( 'Support adapté', 'Fixation choisie selon la façade ou le toit.' ),
+				array( 'Réglage au millimètre', "Azimut, élévation et polarisation ajustés." ),
+				array( 'Bouquets testés', 'Chaque chaîne reçue est vérifiée sur place.' ),
+				array( 'Câblage protégé', 'Passage propre, à l\'abri des intempéries.' ),
 			),
 			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal — pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du support à poser, de la hauteur d'intervention et du nombre de récepteurs à raccorder. Il est annoncé avant toute pose.",
+			'illustration' => 'parabole',
 			'photo1'   => 'parabole fixée et alignée en façade',
 			'faq'      => array(
 				array(
@@ -343,13 +403,14 @@ function antenniste91_content_service_starlink() {
 				"Vous avez déjà le kit mais l'installation ne tient pas ou coupe",
 			),
 			'included' => array(
-				"Étude du dégagement du ciel et repérage du meilleur emplacement",
-				"Fixation durable du kit (mât, façade ou toiture)",
-				"Passage de câble propre jusqu'au routeur",
-				'Mise en réseau du foyer ou de l\'établissement (Wi-Fi, câblage existant)',
+				array( 'Étude du ciel', 'Repérage du meilleur emplacement avant tout.' ),
+				array( 'Fixation durable', 'Mât, façade ou toiture, selon la configuration.' ),
+				array( 'Câblage propre', "Passage soigné jusqu'au routeur." ),
+				array( 'Réseau mis en service', "Wi-Fi et câblage existant raccordés." ),
 			),
 			'process'  => "Une étude de dégagement du ciel précède toujours la pose : c'est elle qui détermine si l'installation tiendra dans le temps. Le kit est ensuite fixé durablement, câblé proprement, et le réseau testé en votre présence.",
 			'pricing'  => "L'installation est facturée indépendamment du kit Starlink. Un devis est transmis après l'étude de dégagement, avant toute pose.",
+			'illustration' => 'starlink',
 			'photo1'   => 'kit Starlink fixé en toiture',
 			'faq'      => array(
 				array(
@@ -376,13 +437,14 @@ function antenniste91_content_service_video() {
 				"Vous voulez consulter les images depuis votre smartphone, où que vous soyez",
 			),
 			'included' => array(
-				"Étude des zones à couvrir et choix du nombre de caméras adapté",
-				'Pose de caméras intérieures et/ou extérieures',
-				'Configuration de la consultation à distance sur smartphone',
-				"Réglage de l'enregistrement (local ou cloud, selon votre choix)",
+				array( 'Zones étudiées', 'Nombre de caméras adapté aux besoins réels.' ),
+				array( 'Pose intérieure/extérieure', 'Caméras positionnées selon les accès sensibles.' ),
+				array( 'Application configurée', 'Consultation à distance prête sur votre smartphone.' ),
+				array( 'Enregistrement réglé', 'Local ou cloud, selon votre choix.' ),
 			),
 			'process'  => "Après une visite ou un échange pour définir les zones sensibles, les caméras sont positionnées pour couvrir l'essentiel sans multiplier le matériel. L'application de consultation à distance est configurée et testée avec vous avant la fin de l'intervention.",
 			'pricing'  => "Le tarif dépend du nombre de caméras, de la complexité du câblage et du mode d'enregistrement choisi. Il est annoncé avant la pose, jamais après.",
+			'illustration' => 'camera',
 			'photo1'   => 'caméra extérieure installée près d\'une entrée',
 			'faq'      => array(
 				array(
