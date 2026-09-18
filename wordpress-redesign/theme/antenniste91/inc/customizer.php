@@ -21,7 +21,7 @@ function antenniste91_customize_register( $wp_customize ) {
 	$fields = array(
 		'antenniste91_company_name' => array(
 			'label'   => __( 'Nom commercial / raison sociale', 'antenniste91' ),
-			'default' => 'Antenniste 91',
+			'default' => 'France Technique Antenne',
 			'type'    => 'text',
 		),
 		'antenniste91_phone' => array(
@@ -86,22 +86,22 @@ function antenniste91_customize_register( $wp_customize ) {
 		),
 		'antenniste91_hero_title_part' => array(
 			'label'   => __( 'Héro — titre (particuliers)', 'antenniste91' ),
-			'default' => __( 'Un signal qui tient, sans les allers-retours.', 'antenniste91' ),
+			'default' => __( 'Votre expert antenne, Starlink et vidéosurveillance en Essonne.', 'antenniste91' ),
 			'type'    => 'textarea',
 		),
 		'antenniste91_hero_lead_part' => array(
 			'label'   => __( 'Héro — texte (particuliers)', 'antenniste91' ),
-			'default' => __( 'Antenne TV, parabole, Starlink ou caméra de surveillance : un technicien intervient chez vous en Essonne, diagnostique le problème et vous explique ce qu\'il a fait.', 'antenniste91' ),
+			'default' => __( 'Un seul technicien, qualifié sur les quatre métiers, pour répondre à toutes vos questions : diagnostic clair, solution expliquée en français, et un contact direct si besoin après la pose. Vous n\'êtes jamais seul face au problème.', 'antenniste91' ),
 			'type'    => 'textarea',
 		),
 		'antenniste91_hero_title_pro' => array(
 			'label'   => __( 'Héro — titre (professionnels)', 'antenniste91' ),
-			'default' => __( 'Vos sites équipés et suivis par un seul interlocuteur.', 'antenniste91' ),
+			'default' => __( 'L\'interlocuteur unique pour équiper vos établissements.', 'antenniste91' ),
 			'type'    => 'textarea',
 		),
 		'antenniste91_hero_lead_pro' => array(
 			'label'   => __( 'Héro — texte (professionnels)', 'antenniste91' ),
-			'default' => __( 'Hôtels, commerces, collectivités : diagnostic, devis et installation coordonnés sur un ou plusieurs établissements en Essonne.', 'antenniste91' ),
+			'default' => __( 'Hôtels, commerces, collectivités : un seul expert pour cadrer le besoin, chiffrer et coordonner l\'installation sur un ou plusieurs sites — avec la réactivité et le sérieux qu\'exige un cahier des charges professionnel.', 'antenniste91' ),
 			'type'    => 'textarea',
 		),
 	);
