@@ -25,13 +25,38 @@ function antenniste91_customize_register( $wp_customize ) {
 			'type'    => 'text',
 		),
 		'antenniste91_phone' => array(
-			'label'   => __( 'Numéro de téléphone (format tel: — ex. 0123456789)', 'antenniste91' ),
-			'default' => '',
+			'label'   => __( 'Numéro de téléphone (format tel: — ex. 0663806197)', 'antenniste91' ),
+			'default' => '0663806197',
 			'type'    => 'text',
 		),
 		'antenniste91_phone_display' => array(
-			'label'   => __( 'Numéro affiché (ex. 01 23 45 67 89)', 'antenniste91' ),
-			'default' => __( '01 XX XX XX XX', 'antenniste91' ),
+			'label'   => __( 'Numéro affiché (ex. 06 63 80 61 97)', 'antenniste91' ),
+			'default' => '06 63 80 61 97',
+			'type'    => 'text',
+		),
+		'antenniste91_google_rating' => array(
+			'label'   => __( 'Note Google (ex. 4.9)', 'antenniste91' ),
+			'default' => '4.9',
+			'type'    => 'text',
+		),
+		'antenniste91_google_review_count' => array(
+			'label'   => __( 'Nombre d\'avis Google (laisser vide si inconnu)', 'antenniste91' ),
+			'default' => '',
+			'type'    => 'text',
+		),
+		'antenniste91_stat_installs' => array(
+			'label'   => __( 'Nombre d\'installations réalisées (laisser vide pour masquer)', 'antenniste91' ),
+			'default' => '',
+			'type'    => 'text',
+		),
+		'antenniste91_stat_years' => array(
+			'label'   => __( 'Années d\'expérience (laisser vide pour masquer)', 'antenniste91' ),
+			'default' => '',
+			'type'    => 'text',
+		),
+		'antenniste91_stat_delay' => array(
+			'label'   => __( 'Délai moyen d\'intervention (ex. 24h — laisser vide pour masquer)', 'antenniste91' ),
+			'default' => '',
 			'type'    => 'text',
 		),
 		'antenniste91_email' => array(
@@ -113,5 +138,23 @@ function antenniste91_phone_href() {
 }
 
 function antenniste91_phone_display() {
-	return esc_html( get_theme_mod( 'antenniste91_phone_display', __( '01 XX XX XX XX', 'antenniste91' ) ) );
+	return esc_html( get_theme_mod( 'antenniste91_phone_display', '06 63 80 61 97' ) );
+}
+
+function antenniste91_google_rating() {
+	return esc_html( get_theme_mod( 'antenniste91_google_rating', '4.9' ) );
+}
+
+/** Returns "128 avis" if a count is set, otherwise "avis vérifiés" — never a fabricated number. */
+function antenniste91_review_count_label() {
+	$count = get_theme_mod( 'antenniste91_google_review_count', '' );
+	if ( $count ) {
+		/* translators: %s: number of reviews */
+		return sprintf( __( 'sur %s avis', 'antenniste91' ), esc_html( $count ) );
+	}
+	return __( 'avis clients vérifiés', 'antenniste91' );
+}
+
+function antenniste91_stat( $key ) {
+	return esc_html( get_theme_mod( 'antenniste91_stat_' . $key, '' ) );
 }
