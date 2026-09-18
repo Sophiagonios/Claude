@@ -160,7 +160,7 @@ function antenniste91_chunk_audience() {
 		. '<li>Starlink principal ou de secours sur un ou plusieurs sites</li>'
 		. '<li>Vidéosurveillance des accès, parkings et zones sensibles</li>'
 		. '<li>Un interlocuteur unique pour vos devis-cadres et marchés</li>'
-		. '</ul><br/><a class="btn btn-call" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
+		. '</ul><br/><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
 		. '</div>';
 	return antenniste91_html_block( $html );
 }
@@ -232,7 +232,7 @@ function antenniste91_content_home() {
 	$c .= antenniste91_button_block( 'Voir toutes les questions →', home_url( '/faq/' ), 'outline-navy' );
 
 	$c .= antenniste91_html_block(
-		'<div class="inner-cta" style="margin-top:0;"><span class="eyebrow inv">Prêt à commencer</span><h2>Un appel suffit pour lancer le diagnostic.</h2><p>Décrivez votre besoin, obtenez un créneau et un devis gratuit — sans engagement.</p><div class="hero-ctas" style="justify-content:center;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler — ' . antenniste91_phone_display() . '</a><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Devis gratuit</a></div></div>'
+		'<div class="inner-cta" style="margin-top:0;"><span class="eyebrow inv">Prêt à commencer</span><h2>Un appel suffit pour lancer le diagnostic.</h2><p>Décrivez votre besoin, obtenez un créneau et un devis gratuit — sans engagement.</p><div class="hero-ctas" style="justify-content:center;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler — ' . antenniste91_phone_display() . '</a></div><p style="margin-top:16px;"><a href="' . esc_url( home_url( '/contact/' ) ) . '" style="color:#CFDDE8; font-size:13.5px; text-decoration:underline;">ou décrivez votre besoin par écrit →</a></p></div>'
 	);
 
 	return $c;
@@ -470,8 +470,8 @@ function antenniste91_content_contact() {
 		'<div class="audience-split"><div class="aud-card"><span class="tag">Par téléphone</span><h3>' . antenniste91_phone_display() . '</h3><p>Lun–Sam · 8h–19h</p><br/><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 		. '<div class="aud-card"><span class="tag">Par email</span><h3 class="ph">email à renseigner</h3><p>Réponse sous 24 à 48h ouvrées.</p></div></div>'
 	);
-	$c .= antenniste91_heading_block( 'Formulaire de contact', 3 );
-	$c .= antenniste91_paragraph_block( '<span class="ph">Ce site n\'a pas encore de formulaire actif — il faut brancher un plugin de formulaire (ex. Contact Form 7 ou WPForms) pour en avoir un qui envoie réellement les messages. En attendant, le téléphone et l\'email ci-dessus restent les moyens de contact fiables.</span>' );
+	$c .= antenniste91_heading_block( 'Ou décrivez votre besoin par écrit', 3 );
+	$c .= antenniste91_paragraph_block( "Le formulaire ci-dessous envoie directement un email — sans passer par un plugin tiers." );
 	return $c;
 }
 
@@ -568,6 +568,49 @@ function antenniste91_blog_posts() {
 	);
 
 	return $posts;
+}
+
+function antenniste91_content_confidentialite() {
+	$c  = antenniste91_paragraph_block( "Cette page explique quelles données sont collectées sur ce site, pourquoi, et comment les faire modifier ou supprimer." );
+	$c .= antenniste91_heading_block( 'Responsable du traitement', 2 );
+	$c .= antenniste91_paragraph_block( '<span class="ph">Raison sociale à compléter</span> — contact : ' . antenniste91_phone_display() . ', <span class="ph">email à compléter</span>.' );
+	$c .= antenniste91_heading_block( 'Quelles données sont collectées', 2 );
+	$c .= antenniste91_list_block(
+		array(
+			"Les informations transmises volontairement via le formulaire de contact (nom, téléphone, email, message)",
+			"Des données de navigation techniques nécessaires au bon fonctionnement du site (voir la section Cookies)",
+		)
+	);
+	$c .= antenniste91_heading_block( 'Pourquoi ces données sont collectées', 2 );
+	$c .= antenniste91_paragraph_block( "Uniquement pour répondre à votre demande (devis, question, rappel). Ces informations ne sont ni revendues, ni transmises à des tiers à des fins commerciales." );
+	$c .= antenniste91_heading_block( 'Durée de conservation', 2 );
+	$c .= antenniste91_paragraph_block( "Les demandes de contact sont conservées le temps nécessaire au traitement de votre demande, puis supprimées, sauf obligation légale de conservation plus longue (facturation, comptabilité)." );
+	$c .= antenniste91_heading_block( 'Cookies', 2 );
+	$c .= antenniste91_paragraph_block( "Ce site utilise des cookies strictement nécessaires à son fonctionnement, et, uniquement si vous y consentez via le bandeau affiché lors de votre première visite, un outil de mesure d'audience. Vous pouvez modifier votre choix à tout moment en effaçant les cookies de votre navigateur." );
+	$c .= antenniste91_heading_block( 'Vos droits', 2 );
+	$c .= antenniste91_paragraph_block( "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données. Pour l'exercer, contactez-nous aux coordonnées ci-dessus. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr)." );
+	$c .= antenniste91_heading_block( 'Hébergement', 2 );
+	$c .= antenniste91_paragraph_block( 'Les données transitant par ce site sont hébergées par <span class="ph">Ionos — à confirmer</span>.' );
+	$c .= antenniste91_paragraph_block( '<span class="ph">Cette page doit être relue et validée avec un professionnel du droit avant mise en ligne.</span>' );
+	return $c;
+}
+
+function antenniste91_content_cgu() {
+	$c  = antenniste91_paragraph_block( "Les présentes conditions générales d'utilisation régissent l'accès et l'usage de ce site." );
+	$c .= antenniste91_heading_block( "Objet du site", 2 );
+	$c .= antenniste91_paragraph_block( "Ce site présente les services de " . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . " (antenne TV, parabole, Starlink, vidéosurveillance) et permet de demander un devis ou de prendre contact. Les informations qu'il contient (tarifs indicatifs, délais) sont données à titre général et confirmées au cas par cas lors du diagnostic." );
+	$c .= antenniste91_heading_block( "Propriété intellectuelle", 2 );
+	$c .= antenniste91_paragraph_block( "Les textes, images, logo et éléments graphiques de ce site sont la propriété de " . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . ", sauf mention contraire, et ne peuvent être reproduits sans autorisation." );
+	$c .= antenniste91_heading_block( "Disponibilité du site", 2 );
+	$c .= antenniste91_paragraph_block( "Le site est accessible 24h/24, sauf interruption pour maintenance ou cas de force majeure. Aucune garantie de disponibilité continue n'est apportée." );
+	$c .= antenniste91_heading_block( "Liens externes", 2 );
+	$c .= antenniste91_paragraph_block( "Ce site peut contenir des liens vers des sites tiers. Nous ne sommes pas responsables de leur contenu." );
+	$c .= antenniste91_heading_block( "Droit applicable", 2 );
+	$c .= antenniste91_paragraph_block( "Les présentes conditions sont soumises au droit français. En cas de litige, une solution amiable sera recherchée avant toute action judiciaire." );
+	$c .= antenniste91_heading_block( "Modification des CGU", 2 );
+	$c .= antenniste91_paragraph_block( "Ces conditions peuvent être mises à jour à tout moment ; la version en vigueur est celle publiée sur cette page." );
+	$c .= antenniste91_paragraph_block( '<span class="ph">Cette page doit être relue et validée avec un professionnel du droit avant mise en ligne.</span>' );
+	return $c;
 }
 
 function antenniste91_content_mentions_legales() {

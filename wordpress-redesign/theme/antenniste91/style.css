@@ -17,7 +17,7 @@ Text Domain: antenniste91
   --card:#FFFFFF;
   --text:#16202B;
   --text-soft:#48545F;
-  --muted:#6E7883;
+  --muted:#5A6470;
   --line:#DEE3E8;
 
   --navy:#123A5E;
@@ -26,6 +26,7 @@ Text Domain: antenniste91
 
   --accent:#F5A623;
   --accent-dark:#D6890F;
+  --accent-text:#96590A;
   --accent-tint:#FCEBCB;
 
   --success:#2F7D5B;
@@ -41,6 +42,7 @@ Text Domain: antenniste91
    ========================================================= */
 *{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
+[id]{ scroll-margin-top: 110px; }
 body{ background:var(--paper); color:var(--text); font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.6; margin:0; }
 h1,h2,h3,.disp{ font-family:'Archivo',system-ui,sans-serif; font-weight:800; letter-spacing:-.01em; line-height:1.1; color:var(--text); }
 h2{ font-size:clamp(24px,2.9vw,34px); }
@@ -64,7 +66,7 @@ img{ max-width:100%; height:auto; display:block; }
 .site-header .wrap{ display:flex; align-items:center; justify-content:space-between; padding-block:13px; gap:16px; }
 .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
 .brand img{ max-height:40px; width:auto; }
-.brand .logo-mark{ display:flex; align-items:center; justify-content:center; height:38px; padding-inline:12px; border:1.5px dashed var(--accent-dark); border-radius:8px; color:var(--accent-dark); font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; }
+.brand .logo-mark{ display:flex; align-items:center; justify-content:center; height:38px; padding-inline:12px; border:1.5px dashed var(--accent-text); border-radius:8px; color:var(--accent-text); font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; }
 .brand .name{ font-family:'Archivo'; font-weight:800; font-size:19px; color:var(--text); }
 .brand small{ display:block; font-size:10.5px; color:var(--muted); }
 
@@ -88,7 +90,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 
 @media (max-width:900px){
   ul.main{ display:none; }
-  .hdr-actions .btn-outline-cb, .hdr-actions .btn-devis{ display:none; }
+  .hdr-actions .btn-devis{ display:none; }
   .hamburger{ display:flex; }
 }
 
@@ -139,7 +141,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 /* =========================================================
    6) Editable content sections (block content)
    ========================================================= */
-.eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--accent-dark); display:inline-flex; align-items:center; gap:8px; }
+.eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--accent-text); display:inline-flex; align-items:center; gap:8px; }
 .eyebrow::before{ content:""; width:6px;height:6px;border-radius:50%; background:var(--accent); }
 .eyebrow.inv{ color:#F3D9AE; }
 .eyebrow.inv::before{ background:var(--accent); }
@@ -208,7 +210,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 .signal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1.4em; }
 @media (max-width:560px){ .signal-grid{ grid-template-columns:1fr; } }
 .signal-card{ display:flex; gap:10px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
-.signal-card .dot{ width:20px; height:20px; border-radius:50%; background:var(--accent-tint); color:var(--accent-dark); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex:none; margin-top:1px; }
+.signal-card .dot{ width:20px; height:20px; border-radius:50%; background:var(--accent-tint); color:var(--accent-text); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex:none; margin-top:1px; }
 .signal-card .dot::before{ content:"✓"; }
 .signal-card p{ margin:0; font-size:14.5px; color:var(--text-soft); }
 
@@ -280,7 +282,18 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 @media (max-width:859px){ body{ padding-bottom:72px; } }
 
 /* =========================================================
-   9) Blog (single / archive)
+   9) Cookie consent banner
+   ========================================================= */
+.cookie-banner{ position:fixed; left:0; right:0; bottom:0; z-index:70; padding:16px; }
+.cookie-banner[hidden]{ display:none; }
+.cookie-banner-box{ max-width:720px; margin-inline:auto; background:var(--navy-dark); color:#fff; border-radius:14px; padding:18px 20px; box-shadow:0 20px 44px -20px rgba(0,0,0,.5); display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between; }
+.cookie-banner-box p{ margin:0; font-size:13.5px; color:#D6E2EC; flex:1 1 260px; }
+.cookie-banner-box a{ color:#fff; text-decoration:underline; }
+.cookie-banner-actions{ display:flex; gap:10px; flex:none; }
+.cookie-banner-actions .btn-ghost{ background:transparent !important; color:#fff !important; border-color:rgba(255,255,255,.35) !important; }
+
+/* =========================================================
+   10) Blog (single / archive)
    ========================================================= */
 .post-list{ display:flex; flex-direction:column; gap:28px; max-width:760px; margin-inline:auto; }
 .post-list article{ border-bottom:1px solid var(--line); padding-bottom:28px; }

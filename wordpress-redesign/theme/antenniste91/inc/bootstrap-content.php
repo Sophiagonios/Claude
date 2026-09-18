@@ -69,6 +69,8 @@ function antenniste91_bootstrap() {
 	$faq         = antenniste91_upsert_page( 'faq', 'Questions fréquentes', antenniste91_content_faq() );
 	$contact     = antenniste91_upsert_page( 'contact', 'Contact', antenniste91_content_contact() );
 	$mentions    = antenniste91_upsert_page( 'mentions-legales', 'Mentions légales', antenniste91_content_mentions_legales() );
+	$confidentialite = antenniste91_upsert_page( 'politique-de-confidentialite', 'Politique de confidentialité', antenniste91_content_confidentialite() );
+	$cgu         = antenniste91_upsert_page( 'cgu', "Conditions générales d'utilisation", antenniste91_content_cgu() );
 	$blog        = antenniste91_upsert_page( 'blog', 'Blog', '' );
 	$accueil     = antenniste91_upsert_page( 'accueil', 'Accueil', antenniste91_content_home() );
 

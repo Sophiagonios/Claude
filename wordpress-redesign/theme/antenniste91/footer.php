@@ -8,7 +8,7 @@
 					<?php if ( has_custom_logo() ) : ?>
 						<?php the_custom_logo(); ?>
 					<?php else : ?>
-						<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/logo.png' ); ?>" alt="" style="height:34px; width:auto;">
+						<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/logo.png' ); ?>" alt="<?php echo esc_attr( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ); ?>" style="height:34px; width:auto;">
 					<?php endif; ?>
 				</a>
 				<p class="tag">Antenne TV, parabole, Starlink et vidéosurveillance pour particuliers, professionnels et collectivités en Essonne.</p>
@@ -46,7 +46,11 @@
 				<?php echo esc_html( get_theme_mod( 'antenniste91_company_name', 'Antenniste 91' ) ); ?>
 				<?php $siret = get_theme_mod( 'antenniste91_siret', '' ); if ( $siret ) : ?>— SIRET <?php echo esc_html( $siret ); ?><?php endif; ?>
 			</span>
-			<span><a href="<?php echo esc_url( home_url( '/mentions-legales/' ) ); ?>">Mentions légales</a></span>
+			<span>
+				<a href="<?php echo esc_url( home_url( '/mentions-legales/' ) ); ?>">Mentions légales</a> ·
+				<a href="<?php echo esc_url( home_url( '/politique-de-confidentialite/' ) ); ?>">Confidentialité</a> ·
+				<a href="<?php echo esc_url( home_url( '/cgu/' ) ); ?>">CGU</a>
+			</span>
 		</div>
 	</div>
 </footer>

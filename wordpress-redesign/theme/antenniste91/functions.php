@@ -85,4 +85,8 @@ add_action( 'wp_footer', 'antenniste91_inline_scripts' );
 
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/nav.php';
+require get_template_directory() . '/inc/seo.php';
+require get_template_directory() . '/inc/contact-form.php';
+require get_template_directory() . '/inc/security.php';
+require get_template_directory() . '/inc/cookie-consent.php';
 require get_template_directory() . '/inc/bootstrap-content.php';
