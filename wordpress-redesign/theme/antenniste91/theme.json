@@ -19,7 +19,7 @@
         { "slug": "mono", "name": "Mono", "fontFamily": "'IBM Plex Mono', ui-monospace, monospace" }
       ]
     },
-    "layout": { "contentSize": "760px", "wideSize": "1180px" }
+    "layout": { "contentSize": "760px", "wideSize": "1240px" }
   },
   "styles": {
     "color": { "background": "#FFFFFF", "text": "#16202B" },

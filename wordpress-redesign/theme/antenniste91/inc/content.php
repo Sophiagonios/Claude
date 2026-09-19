@@ -299,11 +299,13 @@ function antenniste91_service_toc() {
 }
 
 function antenniste91_service_illustration( $key ) {
+	// Silhouettes littérales (antenne râteau, parabole vue de profil, panneau Starlink, caméra tourelle) —
+	// pensées pour être reconnaissables au premier coup d'œil, pas juste décoratives.
 	$illustrations = array(
-		'antenne'  => '<path d="M50 90V40"/><path d="M50 40 40 30M50 40l10-10"/><path d="M32 55a18 18 0 0 1 36 0"/><path d="M22 45a28 28 0 0 1 56 0" opacity=".55"/><path d="M14 37a36 36 0 0 1 72 0" opacity=".3"/><path d="M38 90h24"/>',
-		'parabole' => '<path d="M15 65C15 38 37 17 64 15"/><path d="M22 65 15 65"/><path d="M64 15 84 32"/><circle cx="84" cy="32" r="3.5" fill="currentColor" stroke="none"/><path d="M40 78 60 65"/><path d="M40 78v12M30 90h20"/>',
-		'starlink' => '<rect x="22" y="10" width="56" height="34" rx="6" transform="rotate(-12 50 27)"/><path d="M30 20l40 6M28 30l40 6" transform="rotate(-12 50 27)" opacity=".5"/><path d="M50 46v34"/><path d="M34 90h32"/>',
-		'camera'   => '<rect x="15" y="35" width="52" height="34" rx="10"/><circle cx="41" cy="52" r="11"/><circle cx="41" cy="52" r="4" fill="currentColor" stroke="none"/><path d="M67 45 88 33v38l-21-12"/><path d="M25 35V25a6 6 0 0 1 6-6h10"/>',
+		'antenne'  => '<path d="M12 50H88"/><path d="M20 30V70"/><path d="M30 36V64"/><path d="M40 40V60"/><path d="M50 43V57"/><path d="M60 45V55"/><path d="M70 47V53"/><path d="M50 50V86"/><path d="M40 86H60"/>',
+		'parabole' => '<ellipse cx="42" cy="42" rx="30" ry="22" transform="rotate(-18 42 42)"/><path d="M42 42 76 24"/><circle cx="76" cy="24" r="4" fill="currentColor" stroke="none"/><path d="M42 64V88"/><path d="M28 88H56"/>',
+		'starlink' => '<rect x="20" y="8" width="54" height="32" rx="5" transform="rotate(-14 47 24)"/><path d="M50 42V86"/><path d="M34 86H66"/>',
+		'camera'   => '<rect x="12" y="32" width="50" height="32" rx="9"/><circle cx="37" cy="48" r="10"/><circle cx="37" cy="48" r="3.5" fill="currentColor" stroke="none"/><path d="M62 40 86 26v44l-24-14Z"/><path d="M22 32V22a6 6 0 0 1 6-6h8"/>',
 	);
 	return isset( $illustrations[ $key ] ) ? $illustrations[ $key ] : '';
 }
