@@ -81,6 +81,15 @@ function antenniste91_avant_apres_block( $before, $after, $caption = '' ) {
 	return antenniste91_html_block( $html );
 }
 
+/** Données partagées (accueil + page antenne-tv) pour le comparateur avant/après antenne. */
+function antenniste91_antenne_avant_apres_data() {
+	return array(
+		'before'  => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Antenne râteau installée en toiture, avant le réglage fin' ),
+		'after'   => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Antenne UHF/VHF réorientée et fixée en toiture, après réglage' ),
+		'caption' => 'Faites glisser pour comparer : réglage et réorientation d\'une antenne de toit.',
+	);
+}
+
 /** Highlighted price callout, distinct from the rest of the prose. */
 function antenniste91_price_box_block( $text ) {
 	return antenniste91_html_block( '<div class="price-box"><div class="icon">€</div><p>' . $text . '</p></div>' );
@@ -192,46 +201,26 @@ function antenniste91_chunk_services_grid() {
 	return antenniste91_html_block( $html );
 }
 
+/** "Pourquoi nous choisir" : une seule section concrète (pas deux qui se répètent), avec les 4 points qui répondent vraiment à la question côté client. */
 function antenniste91_chunk_expertise() {
-	$icon_diag   = '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>';
-	$icon_prix   = '<path d="M3 11V6a2 2 0 0 1 2-2h5l11 11-7 7L3 11Z"/><circle cx="8" cy="8" r="1.2" fill="currentColor" stroke="none"/>';
-	$icon_chat   = '<path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.6-.8L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.4 8.4 0 0 1 12.6 3a8.5 8.5 0 0 1 8.4 8.5Z"/>';
-	$icon_repeat = '<path d="M17 2.1 21 6l-4 3.9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 21.9 3 18l4-3.9"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>';
+	$icon_diag    = '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>';
+	$icon_prix    = '<path d="M3 11V6a2 2 0 0 1 2-2h5l11 11-7 7L3 11Z"/><circle cx="8" cy="8" r="1.2" fill="currentColor" stroke="none"/>';
+	$icon_install = '<path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3Z"/>';
+	$icon_garantie = '<path d="M12 3 4.5 6v6c0 5 3.3 8.4 7.5 9 4.2-.6 7.5-4 7.5-9V6L12 3Z"/><path d="m9 12 2 2 4-4"/>';
 	$items = array(
-		array( $icon_diag,   'Un vrai diagnostic avant le devis', "La cause exacte identifiée avant toute proposition, vous savez toujours pourquoi vous payez." ),
-		array( $icon_prix,   'Un prix qui ne bouge pas', "Le montant annoncé au téléphone est celui de la facture, sans surprise le jour de l'intervention." ),
-		array( $icon_chat,   'Un expert qui prend le temps d\'expliquer', "Le technicien montre ce qu'il a fait et répond à toutes vos questions, simplement." ),
-		array( $icon_repeat, 'Toujours le même interlocuteur', "Une question après la pose ? Vous rappelez la même personne, qui connaît déjà votre installation." ),
+		array( $icon_diag,     'Diagnostic avant tout devis', "Vous décrivez la panne ou le projet, on cerne la cause probable, gratuitement et sans engagement." ),
+		array( $icon_prix,     'Prix ferme, sans surprise', "Un devis détaillé transmis avant intervention : rien n'est engagé tant qu'il n'est pas validé." ),
+		array( $icon_install,  'Installation testée devant vous', "Chaînes, débit ou image caméra vérifiés en direct avant que le technicien ne reparte." ),
+		array( $icon_garantie, 'Garantie &amp; SAV inclus', "Une question après la pose ? Le même technicien répond, il connaît déjà votre installation." ),
 	);
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html = '<div class="whyus-band"><div class="whyus-grid">'
-		. '<div class="whyus-photo">'
-		. '<img src="' . esc_url( $assets_uri . 'starlink-mur.jpg' ) . '" alt="Antenne Starlink installée sur un mur, en hauteur" loading="lazy">'
-		. '<div class="whyus-photo-sub"><img src="' . esc_url( $assets_uri . 'camera-interieure.png' ) . '" alt="Caméra de vidéosurveillance intérieure" loading="lazy"></div>'
-		. '</div>'
+		. '<div class="whyus-photo"><img src="' . esc_url( $assets_uri . 'starlink-mur.jpg' ) . '" alt="Antenne Starlink installée sur un mur, en hauteur" loading="lazy"></div>'
 		. '<div class="whyus-cards">';
 	foreach ( $items as $item ) {
 		$html .= '<div class="whyus-card"><div class="whyus-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $item[0] . '</svg></div><h4>' . $item[1] . '</h4><p>' . $item[2] . '</p></div>';
 	}
 	$html .= '</div></div></div>';
-	return antenniste91_html_block( $html );
-}
-
-function antenniste91_chunk_process() {
-	$steps = array(
-		array( 'Diagnostic par téléphone', "Vous décrivez la panne ou le projet, on cerne ce qui est probablement en cause, gratuitement." ),
-		array( 'Prix ferme, sans surprise', "Un devis détaillé transmis avant intervention. Rien n'est engagé tant qu'il n'est pas validé." ),
-		array( 'Installation &amp; tests', "Chaînes, débit ou image caméra testés en direct avant que le technicien ne reparte." ),
-		array( 'Garantie &amp; SAV', "Un contact direct en cas de question après la pose : vous ne repartez pas de zéro." ),
-	);
-	$assets_uri = get_template_directory_uri() . '/assets/photos/';
-	$last = count( $steps ) - 1;
-	$html = '<div class="process-grid"><div class="process-list">';
-	foreach ( $steps as $i => $step ) {
-		$line_class = $i < $last ? ' has-line' : '';
-		$html .= '<div class="process-step' . $line_class . '"><span class="process-num">' . ( $i + 1 ) . '</span><div><h4>' . $step[0] . '</h4><p>' . $step[1] . '</p></div></div>';
-	}
-	$html .= '</div><div class="process-photo"><img src="' . esc_url( $assets_uri . 'starlink-toit.jpg' ) . '" alt="Installation en toiture par France Technique Antenne" loading="lazy"></div></div>';
 	return antenniste91_html_block( $html );
 }
 
@@ -353,10 +342,13 @@ function antenniste91_content_home() {
 	);
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Pourquoi nous</span>' );
-	$c .= antenniste91_heading_block( 'Ce qui change, concrètement.' );
+	$c .= antenniste91_heading_block( 'Pourquoi choisir ' . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . ' ?' );
 	$c .= antenniste91_chunk_expertise();
 
-	$c .= antenniste91_chunk_process();
+	$c .= antenniste91_html_block( '<span class="eyebrow">Nos interventions</span>' );
+	$c .= antenniste91_heading_block( 'Avant / après.' );
+	$aa = antenniste91_antenne_avant_apres_data();
+	$c .= antenniste91_avant_apres_block( $aa['before'], $aa['after'], $aa['caption'] );
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Pour qui</span>' );
 	$c .= antenniste91_heading_block( 'Particuliers &amp; professionnels.' );
@@ -376,22 +368,6 @@ function antenniste91_content_home() {
 	$c .= antenniste91_heading_block( "Ce qu'en disent les clients." );
 	$c .= antenniste91_chunk_reviews_teaser();
 	$c .= antenniste91_button_block( 'Voir tous les avis →', home_url( '/avis-clients/' ), 'outline-navy' );
-
-	$c .= antenniste91_html_block( '<span class="eyebrow">Questions fréquentes</span>' );
-	$c .= antenniste91_heading_block( "Avant d'appeler." );
-	$c .= antenniste91_details_block(
-		"Combien coûte une installation d'antenne TV ou d'une parabole ?",
-		"Le prix dépend de la configuration du toit, du câblage existant et du nombre de prises à raccorder. Un devis gratuit est établi après un diagnostic rapide, avant toute intervention."
-	);
-	$c .= antenniste91_details_block(
-		"Quel est le délai d'intervention en Essonne ?",
-		"Le délai dépend de votre secteur et de l'urgence de la demande. Appelez-nous, on vous donne un créneau réaliste au téléphone."
-	);
-	$c .= antenniste91_details_block(
-		"Intervenez-vous pour des collectivités ou des marchés publics ?",
-		"Oui. Contactez-nous pour évoquer vos besoins (devis-cadre, multi-sites, facturation administrative)."
-	);
-	$c .= antenniste91_button_block( 'Voir toutes les questions →', home_url( '/faq/' ), 'outline-navy' );
 
 	$c .= antenniste91_html_block(
 		antenniste91_final_cta_html( 'Prêt à commencer', 'Un appel suffit pour lancer le diagnostic.', 'Devis gratuit, sans engagement.' )
@@ -496,12 +472,9 @@ function antenniste91_content_service_antenne() {
 			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
 			'illustration' => 'antenne',
-			'photo1'   => 'antenne en cours de réglage sur toiture',
-			'avant_apres' => array(
-				'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Antenne râteau installée en toiture, avant le réglage fin' ),
-				'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Antenne UHF/VHF réorientée et fixée en toiture, après réglage' ),
-				'caption' => 'Faites glisser pour comparer : réglage et réorientation d\'une antenne de toit.',
-			),
+			'photo1'      => 'Antenne installée sur un toit en Essonne',
+			'photo1_real' => 'antenne-toit.jpg',
+			'avant_apres' => antenniste91_antenne_avant_apres_data(),
 			'faq'      => array(
 				array(
 					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
@@ -535,7 +508,8 @@ function antenniste91_content_service_parabole() {
 			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal, pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du support à poser, de la hauteur d'intervention et du nombre de récepteurs à raccorder. Il est annoncé avant toute pose.",
 			'illustration' => 'parabole',
-			'photo1'   => 'parabole fixée et alignée en façade',
+			'photo1'      => 'Parabole installée en toiture',
+			'photo1_real' => 'parabole-toit.jpg',
 			'faq'      => array(
 				array(
 					'q' => "Faut-il une autorisation pour installer une parabole en copropriété ?",
@@ -565,7 +539,8 @@ function antenniste91_content_service_starlink() {
 			'process'  => "Une étude de dégagement du ciel précède toujours la pose : c'est elle qui détermine si l'installation tiendra dans le temps. Le kit est ensuite fixé durablement, câblé proprement, et le réseau testé en votre présence.",
 			'pricing'  => "L'installation est facturée indépendamment du kit Starlink. Un devis est transmis après l'étude de dégagement, avant toute pose.",
 			'illustration' => 'starlink',
-			'photo1'   => 'kit Starlink fixé en toiture',
+			'photo1'      => 'Kit Starlink fixé en toiture',
+			'photo1_real' => 'starlink-toit.jpg',
 			'faq'      => array(
 				array(
 					'q' => "Fournissez-vous le kit Starlink ou seulement l'installation ?",
@@ -599,7 +574,8 @@ function antenniste91_content_service_video() {
 			'process'  => "Après une visite ou un échange pour définir les zones sensibles, les caméras sont positionnées pour couvrir l'essentiel sans multiplier le matériel. L'application de consultation à distance est configurée et testée avec vous avant la fin de l'intervention.",
 			'pricing'  => "Le tarif dépend du nombre de caméras, de la complexité du câblage et du mode d'enregistrement choisi. Il est annoncé avant la pose, jamais après.",
 			'illustration' => 'camera',
-			'photo1'   => 'caméra extérieure installée près d\'une entrée',
+			'photo1'      => 'Caméra de vidéosurveillance intérieure',
+			'photo1_real' => 'camera-interieure.png',
 			'faq'      => array(
 				array(
 					'q' => "Puis-je consulter les images à distance depuis mon téléphone ?",
@@ -633,7 +609,8 @@ function antenniste91_content_service_visiophone() {
 			'process'  => "Après un repérage de vos accès, la platine et le moniteur (ou l'application mobile) sont installés et raccordés. Chaque fonction (voir, parler, ouvrir à distance) est testée avec vous avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du nombre d'accès à équiper, du type de platine choisie et d'un éventuel couplage avec une alarme existante. Il est annoncé avant toute pose.",
 			'illustration' => 'visiophone',
-			'photo1'   => 'visiophone installé à l\'entrée d\'un pavillon',
+			'photo1'      => 'Visiophone installé près d\'une porte d\'entrée',
+			'photo1_real' => 'visiophone-entree.jpg',
 			'faq'      => array(
 				array(
 					'q' => "Puis-je ouvrir le portail depuis mon téléphone, même à l'extérieur ?",
