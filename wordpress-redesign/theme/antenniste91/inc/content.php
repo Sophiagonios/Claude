@@ -84,9 +84,9 @@ function antenniste91_avant_apres_block( $before, $after, $caption = '' ) {
 /** Données partagées (accueil + page antenne-tv) pour le comparateur avant/après antenne. */
 function antenniste91_antenne_avant_apres_data() {
 	return array(
-		'before'  => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Antenne râteau installée en toiture, avant le réglage fin' ),
-		'after'   => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Antenne UHF/VHF réorientée et fixée en toiture, après réglage' ),
-		'caption' => 'Faites glisser pour comparer : réglage et réorientation d\'une antenne de toit.',
+		'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Grande antenne râteau multi-éléments avant remplacement' ),
+		'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Petite antenne compacte installée en remplacement' ),
+		'caption' => 'Faites glisser pour comparer : remplacement par une antenne plus compacte, en toiture.',
 	);
 }
 
