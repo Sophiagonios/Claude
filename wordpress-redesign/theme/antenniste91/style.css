@@ -218,7 +218,10 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 .link-arrow{ align-self:flex-start; display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:var(--navy); text-decoration:none; transition:gap .2s ease; }
 .link-arrow:hover{ text-decoration:underline; }
 
-.whyus-band{ background:#0D0D0D; border:1px solid var(--line); border-radius:var(--radius-lg); padding:clamp(28px,4.5vw,48px); margin-top:30px; }
+/* Bande volontairement toujours sombre, quel que soit le thème choisi :
+   toutes ses couleurs sont donc figées (pas de var(--…) qui basculerait
+   en clair) pour ne jamais perdre le contraste texte/fond. */
+.whyus-band{ background:#0D0D0D; border:1px solid #2A2A2A; border-radius:var(--radius-lg); padding:clamp(28px,4.5vw,48px); margin-top:30px; }
 .whyus-grid{ display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:48px; align-items:center; }
 @media (max-width:860px){ .whyus-grid{ grid-template-columns:1fr; } }
 .whyus-photo{ aspect-ratio:4/5; border-radius:var(--radius-lg); overflow:hidden; }
@@ -226,8 +229,8 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 @media (max-width:860px){ .whyus-photo{ aspect-ratio:16/9; order:-1; } }
 .whyus-cards{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
 @media (max-width:480px){ .whyus-cards{ grid-template-columns:1fr; } }
-.whyus-card{ background:var(--paper-2); border:1px solid var(--line); border-radius:14px; padding:24px; }
-.whyus-icon{ width:56px; height:56px; border-radius:14px; background:var(--accent-tint); color:var(--accent); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.whyus-card{ background:#1C1C1C; border:1px solid #2A2A2A; border-radius:14px; padding:24px; }
+.whyus-icon{ width:56px; height:56px; border-radius:14px; background:#2E2213; color:#F5A623; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
 .whyus-icon svg{ width:26px; height:26px; }
 .whyus-card h4{ color:#fff; font-size:18px; margin:0 0 8px; font-weight:700; }
 .whyus-card p{ color:#C9C9C7; font-size:15px; line-height:1.5; margin:0; }
@@ -404,7 +407,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 .entry-content h3{ margin-top:1.3em; }
 .entry-content p{ color:var(--text-soft); }
 
-.inner-cta{ background:linear-gradient(165deg, #1C1409, #0F0D0A); color:#fff; border-radius:var(--radius-lg); padding:clamp(32px,5vw,52px); margin:clamp(40px,5vw,64px) 0 0; border:1px solid var(--line); text-align:center; }
+.inner-cta{ background:linear-gradient(165deg, #1C1409, #0F0D0A); color:#fff; border-radius:var(--radius-lg); padding:clamp(32px,5vw,52px); margin:clamp(40px,5vw,64px) 0 0; border:1px solid #2A2A2A; text-align:center; }
 .inner-cta .eyebrow.inv{ color:var(--accent); }
 .inner-cta h2{ color:#fff; font-size:clamp(24px,3vw,32px); margin:6px auto 12px; max-width:38ch; }
 .inner-cta p{ color:#D8D8D6; margin:0 auto 22px; max-width:52ch; }
