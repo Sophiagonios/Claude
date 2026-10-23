@@ -17,7 +17,7 @@ while ( have_posts() ) :
 	</div>
 
 	<div class="wrap section-pad">
-		<div class="entry-content">
+		<div class="entry-content is-wide">
 			<?php the_content(); ?>
 			<?php antenniste91_render_final_cta( 'Prêt à commencer', 'Un appel suffit pour lancer le diagnostic.', "Décrivez votre besoin, obtenez un créneau et un devis gratuit, sans engagement." ); ?>
 		</div>

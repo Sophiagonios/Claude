@@ -41,7 +41,10 @@ get_header();
 			</div>
 
 			<div class="hero-photo">
-				<div class="cap">Photo à ajouter : une intervention réelle (antenne, Starlink ou caméra posée)</div>
+				<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/antenne-toit.jpg' ); ?>" alt="Antenne installée sur un toit en Essonne" width="800" height="1000">
+				<div class="hero-photo-sub">
+					<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/parabole-toit.jpg' ); ?>" alt="Parabole satellite installée en toiture" width="400" height="300">
+				</div>
 			</div>
 		</div>
 	</div>
