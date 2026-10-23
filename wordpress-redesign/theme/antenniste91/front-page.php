@@ -53,13 +53,6 @@ get_header();
 	</div>
 </div>
 
-<div class="stats">
-	<div class="wrap">
-		<div class="stat"><span class="label">Diagnostic avant toute intervention</span></div>
-		<div class="stat"><span class="label">Particuliers, professionnels &amp; collectivités</span></div>
-	</div>
-</div>
-
 <?php
 while ( have_posts() ) :
 	the_post();

@@ -840,8 +840,6 @@ function antenniste91_render_final_cta( $eyebrow, $heading, $lead = '' ) {
 	?>
 	<div class="inner-cta">
 		<div class="inner-cta-visual">
-			<svg class="blob blob-1" viewBox="0 0 200 200" fill="currentColor"><path d="M48 16c34-14 90-8 118 24s28 84-4 112-88 30-122-2S14 30 48 16Z"/></svg>
-			<svg class="blob blob-2" viewBox="0 0 200 200" fill="currentColor"><path d="M60 10c40-18 110 2 128 46s-10 96-52 118-104 6-126-38S20 28 60 10Z"/></svg>
 			<div class="inner-cta-photo">
 				<img src="<?php echo esc_url( $assets_uri . 'alarme-pose.jpg' ); ?>" alt="Technicien France Technique Antenne en intervention" loading="lazy">
 			</div>
