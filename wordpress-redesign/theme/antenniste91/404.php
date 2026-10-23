@@ -35,10 +35,10 @@ get_header();
 				<p>Nous décrire votre besoin.</p>
 			</a>
 		</div>
+
+		<?php antenniste91_render_final_cta( "Besoin d'aide tout de suite ?", 'Un appel suffit pour lancer le diagnostic.' ); ?>
 	</div>
 </div>
-
-<?php antenniste91_render_final_cta( "Besoin d'aide tout de suite ?", 'Un appel suffit pour lancer le diagnostic.' ); ?>
 
 <?php
 get_footer();

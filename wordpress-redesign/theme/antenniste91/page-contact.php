@@ -69,13 +69,13 @@ while ( have_posts() ) :
 					<button type="submit" class="btn btn-call" style="align-self:flex-start;">Envoyer le message</button>
 				</div>
 			</form>
+
+			<?php antenniste91_render_final_cta( "Plus rapide qu'un formulaire", 'Un appel suffit pour lancer le diagnostic.' ); ?>
 		</div>
 	</div>
 	<?php
 endwhile;
 ?>
-
-<?php antenniste91_render_final_cta( "Plus rapide qu'un formulaire", 'Un appel suffit pour lancer le diagnostic.' ); ?>
 
 <?php
 get_footer();

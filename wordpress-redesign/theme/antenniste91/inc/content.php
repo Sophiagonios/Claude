@@ -64,29 +64,47 @@ function antenniste91_photo_block( $filename, $alt ) {
 	return antenniste91_html_block( $html );
 }
 
-/** Comparateur avant/après à curseur : une seule photo glisse pour révéler l'autre, comme sur la référence envoyée par la cliente. */
-function antenniste91_avant_apres_block( $before, $after, $caption = '' ) {
-	$uri = get_template_directory_uri() . '/assets/photos/';
-	$html = '<div class="ba-wrap">'
-		. '<div class="ba-slider">'
-		. '<img class="ba-img ba-after" src="' . esc_url( $uri . $after['file'] ) . '" alt="' . esc_attr( $after['alt'] ) . '" loading="lazy">'
-		. '<img class="ba-img ba-before" src="' . esc_url( $uri . $before['file'] ) . '" alt="' . esc_attr( $before['alt'] ) . '" loading="lazy">'
-		. '<span class="ba-tag ba-tag-before">Avant</span>'
-		. '<span class="ba-tag ba-tag-after">Après</span>'
-		. '<div class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>'
-		. '<input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Faire glisser pour comparer avant et après">'
-		. '</div>'
-		. ( $caption ? '<p class="ba-caption">' . esc_html( $caption ) . '</p>' : '' )
-		. '</div>';
+/**
+ * Comparateur avant/après à curseur : une seule photo glisse pour révéler
+ * l'autre. Prend une LISTE de paires (avant/après/légende) et les affiche
+ * dans un carrousel qu'on peut parcourir au doigt, à la souris ou avec les
+ * flèches, pour pouvoir en ajouter d'autres au fur et à mesure.
+ */
+function antenniste91_avant_apres_block( $items ) {
+	$uri  = get_template_directory_uri() . '/assets/photos/';
+	$html = '<div class="ba-carousel"><div class="ba-track">';
+	foreach ( $items as $item ) {
+		$before = $item['before'];
+		$after  = $item['after'];
+		$html .= '<div class="ba-wrap">'
+			. '<div class="ba-slider">'
+			. '<img class="ba-img ba-after" src="' . esc_url( $uri . $after['file'] ) . '" alt="' . esc_attr( $after['alt'] ) . '" loading="lazy">'
+			. '<img class="ba-img ba-before" src="' . esc_url( $uri . $before['file'] ) . '" alt="' . esc_attr( $before['alt'] ) . '" loading="lazy">'
+			. '<span class="ba-tag ba-tag-before">Avant</span>'
+			. '<span class="ba-tag ba-tag-after">Après</span>'
+			. '<div class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>'
+			. '<input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Faire glisser pour comparer avant et après">'
+			. '</div>'
+			. ( ! empty( $item['caption'] ) ? '<p class="ba-caption">' . esc_html( $item['caption'] ) . '</p>' : '' )
+			. '</div>';
+	}
+	$html .= '</div>';
+	if ( count( $items ) > 1 ) {
+		$html .= '<button type="button" class="ba-nav ba-prev" aria-label="Avant/après précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>';
+		$html .= '<button type="button" class="ba-nav ba-next" aria-label="Avant/après suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>';
+	}
+	$html .= '</div>';
 	return antenniste91_html_block( $html );
 }
 
-/** Données partagées (accueil + page antenne-tv) pour le comparateur avant/après antenne. */
-function antenniste91_antenne_avant_apres_data() {
+/** Données partagées (accueil + page antenne-tv) pour le(s) comparateur(s) avant/après antenne. */
+function antenniste91_antenne_avant_apres_items() {
 	return array(
-		'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Grande antenne râteau multi-éléments avant remplacement' ),
-		'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Petite antenne compacte installée en remplacement' ),
-		'caption' => 'Faites glisser pour comparer : remplacement par une antenne plus compacte, en toiture.',
+		array(
+			'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Grande antenne râteau multi-éléments avant remplacement' ),
+			'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Petite antenne compacte installée en remplacement' ),
+			'caption' => 'Remplacement par une antenne plus compacte, en toiture.',
+		),
 	);
 }
 
@@ -347,8 +365,7 @@ function antenniste91_content_home() {
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Nos interventions</span>' );
 	$c .= antenniste91_heading_block( 'Avant / après.' );
-	$aa = antenniste91_antenne_avant_apres_data();
-	$c .= antenniste91_avant_apres_block( $aa['before'], $aa['after'], $aa['caption'] );
+	$c .= antenniste91_avant_apres_block( antenniste91_antenne_avant_apres_items() );
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Pour qui</span>' );
 	$c .= antenniste91_heading_block( 'Particuliers &amp; professionnels.' );
@@ -443,7 +460,7 @@ function antenniste91_service_page( $args ) {
 	$c .= antenniste91_price_box_block( $args['pricing'] );
 	$c .= empty( $args['avant_apres'] )
 		? antenniste91_photo_placeholder_block( array( 'avant l\'intervention', 'après l\'intervention' ) )
-		: antenniste91_avant_apres_block( $args['avant_apres']['before'], $args['avant_apres']['after'], $args['avant_apres']['caption'] );
+		: antenniste91_avant_apres_block( $args['avant_apres'] );
 	if ( ! empty( $args['faq'] ) ) {
 		$c .= antenniste91_heading_block( 'Questions fréquentes', 3, '', 'faq' );
 		foreach ( $args['faq'] as $q ) {
@@ -474,7 +491,7 @@ function antenniste91_content_service_antenne() {
 			'illustration' => 'antenne',
 			'photo1'      => 'Antenne installée sur un toit en Essonne',
 			'photo1_real' => 'antenne-toit.jpg',
-			'avant_apres' => antenniste91_antenne_avant_apres_data(),
+			'avant_apres' => antenniste91_antenne_avant_apres_items(),
 			'faq'      => array(
 				array(
 					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
@@ -862,18 +879,14 @@ function antenniste91_content_mentions_legales() {
  * d'appel. Un seul helper pour ne pas répéter ce bloc dans 4 templates.
  */
 function antenniste91_final_cta_html( $eyebrow, $heading, $lead = '' ) {
-	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html  = '<div class="inner-cta">';
-	$html .= '<div class="inner-cta-visual"><div class="inner-cta-photo illustration">';
-	$html .= '<img src="' . esc_url( $assets_uri . 'cta-illustration.webp' ) . '" alt="Antenne, parabole et caméra connectées" loading="lazy">';
-	$html .= '</div></div>';
-	$html .= '<div><span class="eyebrow inv">' . esc_html( $eyebrow ) . '</span><h2>' . esc_html( $heading ) . '</h2>';
+	$html .= '<span class="eyebrow inv">' . esc_html( $eyebrow ) . '</span><h2>' . esc_html( $heading ) . '</h2>';
 	if ( $lead ) {
 		$html .= '<p>' . esc_html( $lead ) . '</p>';
 	}
 	$html .= '<div class="hero-ctas"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">';
 	$html .= '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.9.6.6 0 1.1.5 1.1 1.1v3.8c0 .6-.5 1.1-1.1 1.1C9.8 21.6 2.4 14.2 2.4 2.5c0-.6.5-1.1 1.1-1.1H7.3c.6 0 1.1.5 1.1 1.1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>';
-	$html .= 'Appeler maintenant</a></div></div></div>';
+	$html .= 'Appeler maintenant</a></div></div>';
 	return $html;
 }
 

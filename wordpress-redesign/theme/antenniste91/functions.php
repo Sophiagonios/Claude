@@ -125,6 +125,23 @@ function antenniste91_inline_scripts() {
 			range.addEventListener('input', update);
 			update();
 		});
+
+		/* Carrousel avant/après : flèches précédent/suivant qui font défiler
+		   d'une carte à la fois ; le défilement tactile (swipe) fonctionne
+		   nativement grâce au scroll-snap, sans JS. */
+		document.querySelectorAll('.ba-carousel').forEach(function(carousel){
+			var track = carousel.querySelector('.ba-track');
+			var prev = carousel.querySelector('.ba-prev');
+			var next = carousel.querySelector('.ba-next');
+			if ( ! track ) { return; }
+			function scrollByCard(dir){
+				var card = track.querySelector('.ba-wrap');
+				var amount = card ? card.getBoundingClientRect().width + 20 : track.clientWidth;
+				track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+			}
+			if ( prev ) { prev.addEventListener('click', function(){ scrollByCard(-1); }); }
+			if ( next ) { next.addEventListener('click', function(){ scrollByCard(1); }); }
+		});
 	})();
 	</script>
 	<?php

@@ -19,13 +19,12 @@ while ( have_posts() ) :
 	<div class="wrap section-pad">
 		<div class="entry-content">
 			<?php the_content(); ?>
+			<?php antenniste91_render_final_cta( 'Prêt à commencer', 'Un appel suffit pour lancer le diagnostic.', "Décrivez votre besoin, obtenez un créneau et un devis gratuit, sans engagement." ); ?>
 		</div>
 	</div>
 	<?php
 endwhile;
 ?>
-
-<?php antenniste91_render_final_cta( 'Prêt à commencer', 'Un appel suffit pour lancer le diagnostic.', "Décrivez votre besoin, obtenez un créneau et un devis gratuit, sans engagement." ); ?>
 
 <?php
 get_footer();
