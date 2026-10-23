@@ -27,7 +27,6 @@
 				<ul>
 					<li><a href="<?php echo esc_url( home_url( '/zone-intervention/' ) ); ?>">Zone d'intervention</a></li>
 					<li><a href="<?php echo esc_url( home_url( '/avis-clients/' ) ); ?>">Avis clients</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>">Questions fréquentes</a></li>
 					<li><a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">Blog</a></li>
 				</ul>
 			</div>

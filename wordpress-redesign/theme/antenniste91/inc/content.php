@@ -72,7 +72,7 @@ function antenniste91_photo_block( $filename, $alt ) {
  */
 function antenniste91_avant_apres_block( $items ) {
 	$uri  = get_template_directory_uri() . '/assets/photos/';
-	$html = '<div class="ba-carousel"><div class="ba-track">';
+	$html = '<div class="ba-grid">';
 	foreach ( $items as $item ) {
 		$before = $item['before'];
 		$after  = $item['after'];
@@ -85,13 +85,11 @@ function antenniste91_avant_apres_block( $items ) {
 			. '<div class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>'
 			. '<input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Faire glisser pour comparer avant et après">'
 			. '</div>'
-			. ( ! empty( $item['caption'] ) ? '<p class="ba-caption">' . esc_html( $item['caption'] ) . '</p>' : '' )
+			. '<p class="ba-caption">'
+			. ( ! empty( $item['title'] ) ? '<strong>' . esc_html( $item['title'] ) . '</strong>' : '' )
+			. ( ! empty( $item['caption'] ) ? '<span>' . esc_html( $item['caption'] ) . '</span>' : '' )
+			. '</p>'
 			. '</div>';
-	}
-	$html .= '</div>';
-	if ( count( $items ) > 1 ) {
-		$html .= '<button type="button" class="ba-nav ba-prev" aria-label="Avant/après précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>';
-		$html .= '<button type="button" class="ba-nav ba-next" aria-label="Avant/après suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>';
 	}
 	$html .= '</div>';
 	return antenniste91_html_block( $html );
@@ -101,6 +99,7 @@ function antenniste91_avant_apres_block( $items ) {
 function antenniste91_antenne_avant_apres_items() {
 	return array(
 		array(
+			'title'   => "Remplacement d'une antenne de toit",
 			'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Grande antenne râteau multi-éléments avant remplacement' ),
 			'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Petite antenne compacte installée en remplacement' ),
 			'caption' => 'Remplacement par une antenne plus compacte, en toiture.',
@@ -118,25 +117,20 @@ function antenniste91_price_box_block( $text ) {
  * soft glow, flanked by feature call-outs — the product-page treatment the
  * plain bullet lists were missing.
  */
-function antenniste91_showcase_block( $illustration_svg, $features ) {
-	$check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-	$left  = array_slice( $features, 0, 2 );
-	$right = array_slice( $features, 2, 2 );
-
-	$col = function( $items, $class ) use ( $check ) {
-		$out = '<div class="showcase-feat ' . $class . '">';
-		foreach ( $items as $f ) {
-			$out .= '<div class="item"><span class="ico">' . $check . '</span><span><h4>' . $f[0] . '</h4><p>' . $f[1] . '</p></span></div>';
-		}
-		$out .= '</div>';
-		return $out;
-	};
-
-	$html = '<div class="showcase" id="inclus"><div class="showcase-grid">'
-		. $col( $left, 'showcase-col-left' )
-		. '<div class="showcase-illust"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' . $illustration_svg . '</svg></div>'
-		. $col( $right, 'showcase-col-right' )
-		. '</div></div>';
+/** Grille de cartes à icône pour "Ce qui est inclus" sur les pages produits : même langage visuel que les cartes "Pourquoi nous" de l'accueil. */
+function antenniste91_feature_cards_block( $items ) {
+	$icons = array(
+		'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+		'<path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4L21 6l-3-3-3.3 3.3Z"/>',
+		'<polyline points="20 6 9 17 4 12"/>',
+		'<path d="M12 3 4.5 6v6c0 5 3.3 8.4 7.5 9 4.2-.6 7.5-4 7.5-9V6L12 3Z"/><path d="m9 12 2 2 4-4"/>',
+	);
+	$html = '<div class="feat-grid">';
+	foreach ( $items as $i => $item ) {
+		$icon = $icons[ $i % count( $icons ) ];
+		$html .= '<div class="feat-card"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $icon . '</svg></div><h4>' . $item[0] . '</h4><p>' . $item[1] . '</p></div>';
+	}
+	$html .= '</div>';
 	return antenniste91_html_block( $html );
 }
 
@@ -404,19 +398,6 @@ function antenniste91_service_toc() {
 	);
 }
 
-function antenniste91_service_illustration( $key ) {
-	// Silhouettes littérales (antenne râteau, parabole vue de profil, panneau Starlink, caméra tourelle) —
-	// pensées pour être reconnaissables au premier coup d'œil, pas juste décoratives.
-	$illustrations = array(
-		'antenne'  => '<path d="M12 50H88"/><path d="M20 30V70"/><path d="M30 36V64"/><path d="M40 40V60"/><path d="M50 43V57"/><path d="M60 45V55"/><path d="M70 47V53"/><path d="M50 50V86"/><path d="M40 86H60"/>',
-		'parabole' => '<ellipse cx="42" cy="42" rx="30" ry="22" transform="rotate(-18 42 42)"/><path d="M42 42 76 24"/><circle cx="76" cy="24" r="4" fill="currentColor" stroke="none"/><path d="M42 64V88"/><path d="M28 88H56"/>',
-		'starlink' => '<rect x="20" y="8" width="54" height="32" rx="5" transform="rotate(-14 47 24)"/><path d="M50 42V86"/><path d="M34 86H66"/>',
-		'camera'   => '<rect x="12" y="32" width="50" height="32" rx="9"/><circle cx="37" cy="48" r="10"/><circle cx="37" cy="48" r="3.5" fill="currentColor" stroke="none"/><path d="M62 40 86 26v44l-24-14Z"/><path d="M22 32V22a6 6 0 0 1 6-6h8"/>',
-		'visiophone' => '<rect x="32" y="10" width="36" height="78" rx="9"/><circle cx="50" cy="30" r="5" fill="currentColor" stroke="none"/><circle cx="50" cy="63" r="9"/><path d="M18 36a28 28 0 0 1 0 28" opacity=".55"/><path d="M10 26a42 42 0 0 1 0 48" opacity=".3"/>',
-	);
-	return isset( $illustrations[ $key ] ) ? $illustrations[ $key ] : '';
-}
-
 /**
  * Petits pictogrammes (24×24, trait) utilisés partout où une icône de
  * service apparaît en taille réduite — menu, cartes, listes. Même
@@ -448,7 +429,8 @@ function antenniste91_mini_icon( $key ) {
 
 function antenniste91_service_page( $args ) {
 	$c  = antenniste91_callout_block( $args['hook'] );
-	$c .= antenniste91_showcase_block( antenniste91_service_illustration( $args['illustration'] ), $args['included'] );
+	$c .= antenniste91_heading_block( 'Ce qui est inclus', 3, '', 'inclus' );
+	$c .= antenniste91_feature_cards_block( $args['included'] );
 	$c .= antenniste91_heading_block( 'Les signes qui indiquent qu\'il est temps d\'appeler', 3, '', 'signes' );
 	$c .= antenniste91_card_list_block( $args['signs'] );
 	$c .= empty( $args['photo1_real'] )
@@ -488,7 +470,6 @@ function antenniste91_content_service_antenne() {
 			),
 			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
-			'illustration' => 'antenne',
 			'photo1'      => 'Antenne installée sur un toit en Essonne',
 			'photo1_real' => 'antenne-toit.jpg',
 			'avant_apres' => antenniste91_antenne_avant_apres_items(),
@@ -524,7 +505,6 @@ function antenniste91_content_service_parabole() {
 			),
 			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal, pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du support à poser, de la hauteur d'intervention et du nombre de récepteurs à raccorder. Il est annoncé avant toute pose.",
-			'illustration' => 'parabole',
 			'photo1'      => 'Parabole installée en toiture',
 			'photo1_real' => 'parabole-toit.jpg',
 			'faq'      => array(
@@ -555,7 +535,6 @@ function antenniste91_content_service_starlink() {
 			),
 			'process'  => "Une étude de dégagement du ciel précède toujours la pose : c'est elle qui détermine si l'installation tiendra dans le temps. Le kit est ensuite fixé durablement, câblé proprement, et le réseau testé en votre présence.",
 			'pricing'  => "L'installation est facturée indépendamment du kit Starlink. Un devis est transmis après l'étude de dégagement, avant toute pose.",
-			'illustration' => 'starlink',
 			'photo1'      => 'Kit Starlink fixé en toiture',
 			'photo1_real' => 'starlink-toit.jpg',
 			'faq'      => array(
@@ -590,7 +569,6 @@ function antenniste91_content_service_video() {
 			),
 			'process'  => "Après une visite ou un échange pour définir les zones sensibles, les caméras sont positionnées pour couvrir l'essentiel sans multiplier le matériel. L'application de consultation à distance est configurée et testée avec vous avant la fin de l'intervention.",
 			'pricing'  => "Le tarif dépend du nombre de caméras, de la complexité du câblage et du mode d'enregistrement choisi. Il est annoncé avant la pose, jamais après.",
-			'illustration' => 'camera',
 			'photo1'      => 'Caméra de vidéosurveillance intérieure',
 			'photo1_real' => 'camera-interieure.png',
 			'faq'      => array(
@@ -625,7 +603,6 @@ function antenniste91_content_service_visiophone() {
 			),
 			'process'  => "Après un repérage de vos accès, la platine et le moniteur (ou l'application mobile) sont installés et raccordés. Chaque fonction (voir, parler, ouvrir à distance) est testée avec vous avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du nombre d'accès à équiper, du type de platine choisie et d'un éventuel couplage avec une alarme existante. Il est annoncé avant toute pose.",
-			'illustration' => 'visiophone',
 			'photo1'      => 'Visiophone installé près d\'une porte d\'entrée',
 			'photo1_real' => 'visiophone-entree.jpg',
 			'faq'      => array(
@@ -676,41 +653,6 @@ function antenniste91_chunk_reviews_teaser_raw() {
 		$html .= '<div class="reviews-pending"><p>Les avis Google s\'afficheront ici une fois le plugin d\'avis connecté (ex. « Reviews Feed for Google »), via Personnaliser &rarr; Coordonnées &amp; réglages.</p></div>';
 	}
 	return $html;
-}
-
-function antenniste91_content_faq() {
-	$groups = array(
-		'Général' => array(
-			array( 'q' => "Dans quelles communes intervenez-vous ?", 'a' => "Toute l'Essonne (91) et les communes limitrophes. Voir le détail sur la page Zone d'intervention." ),
-			array( 'q' => "Le devis est-il vraiment gratuit ?", 'a' => "Oui, systématiquement, et sans engagement de votre part." ),
-			array( 'q' => "Quel est le délai d'intervention ?", 'a' => '<span class="ph">Délai à préciser (ex. 24 à 48h selon les secteurs et l\'urgence).</span>' ),
-		),
-		'Antenne &amp; parabole' => array(
-			array( 'q' => "Combien coûte une réparation d'antenne ?", 'a' => "Cela dépend de la panne et de l'accès au toit. Le prix exact est annoncé après diagnostic, avant toute réparation." ),
-			array( 'q' => "Faut-il une autorisation pour une parabole en copropriété ?", 'a' => "Selon la visibilité depuis la voie publique, une déclaration au syndic ou à la mairie peut être nécessaire. On vous guide selon votre cas." ),
-		),
-		'Starlink' => array(
-			array( 'q' => "Fournissez-vous le kit Starlink ?", 'a' => '<span class="ph">Réponse à préciser : installation seule, ou installation + fourniture du kit.</span>' ),
-			array( 'q' => "Le dégagement du ciel est-il vraiment important ?", 'a' => "Oui, c'est le facteur numéro un pour la stabilité de la connexion. C'est pour cela qu'une étude précède systématiquement la pose." ),
-		),
-		'Vidéosurveillance' => array(
-			array( 'q' => "Puis-je voir les caméras depuis mon téléphone ?", 'a' => "Oui, via une application dédiée, avec notifications de mouvement selon le modèle choisi." ),
-			array( 'q' => "L'enregistrement se fait où ?", 'a' => "Localement ou sur le cloud, selon vos préférences et votre budget, on en discute avant la pose." ),
-		),
-		'Professionnels &amp; collectivités' => array(
-			array( 'q' => "Travaillez-vous avec des collectivités ?", 'a' => '<span class="ph">Réponse à préciser : références, devis-cadre, facturation administrative, etc.</span>' ),
-			array( 'q' => "Pouvez-vous intervenir sur plusieurs sites pour un même client ?", 'a' => "Oui, avec un interlocuteur unique pour coordonner les interventions et les devis." ),
-		),
-	);
-
-	$c = '';
-	foreach ( $groups as $title => $items ) {
-		$c .= antenniste91_heading_block( $title, 3 );
-		foreach ( $items as $item ) {
-			$c .= antenniste91_details_block( $item['q'], $item['a'] );
-		}
-	}
-	return $c;
 }
 
 function antenniste91_content_contact() {

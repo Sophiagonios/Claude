@@ -67,7 +67,6 @@ function antenniste91_bootstrap() {
 
 	$zone        = antenniste91_upsert_page( 'zone-intervention', "Zone d'intervention", antenniste91_content_zone() );
 	$avis        = antenniste91_upsert_page( 'avis-clients', 'Avis clients', antenniste91_content_avis() );
-	$faq         = antenniste91_upsert_page( 'faq', 'Questions fréquentes', antenniste91_content_faq() );
 	$contact     = antenniste91_upsert_page( 'contact', 'Contact', antenniste91_content_contact() );
 	$mentions    = antenniste91_upsert_page( 'mentions-legales', 'Mentions légales', antenniste91_content_mentions_legales() );
 	$confidentialite = antenniste91_upsert_page( 'politique-de-confidentialite', 'Politique de confidentialité', antenniste91_content_confidentialite() );
@@ -86,14 +85,14 @@ function antenniste91_bootstrap() {
 
 	antenniste91_seed_blog_posts();
 
-	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $faq, $contact ) );
+	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $contact ) );
 
 	update_option( 'antenniste91_bootstrapped', 1 );
 }
 add_action( 'after_switch_theme', 'antenniste91_bootstrap' );
 
 function antenniste91_create_primary_menu( $ids ) {
-	list( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $faq, $contact ) = $ids;
+	list( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $contact ) = $ids;
 
 	$menu_name = 'Menu principal';
 	$menu      = wp_get_nav_menu_object( $menu_name );
@@ -145,19 +144,6 @@ function antenniste91_create_primary_menu( $ids ) {
 				'menu-item-title'     => 'Blog',
 				'menu-item-object'    => 'page',
 				'menu-item-object-id' => $blog,
-				'menu-item-type'      => 'post_type',
-				'menu-item-status'    => 'publish',
-			)
-		);
-	}
-	if ( $faq ) {
-		wp_update_nav_menu_item(
-			$menu_id,
-			0,
-			array(
-				'menu-item-title'     => 'FAQ',
-				'menu-item-object'    => 'page',
-				'menu-item-object-id' => $faq,
 				'menu-item-type'      => 'post_type',
 				'menu-item-status'    => 'publish',
 			)

@@ -26,9 +26,9 @@ get_header();
 				<h3>Antenne TV &amp; TNT</h3>
 				<p>Voir ce service.</p>
 			</a>
-			<a class="card" style="text-decoration:none; display:block;" href="<?php echo esc_url( home_url( '/faq/' ) ); ?>">
-				<h3>Questions fréquentes</h3>
-				<p>Les réponses les plus demandées.</p>
+			<a class="card" style="text-decoration:none; display:block;" href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">
+				<h3>Blog</h3>
+				<p>Conseils antenne, Starlink et vidéosurveillance.</p>
 			</a>
 			<a class="card" style="text-decoration:none; display:block;" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">
 				<h3>Contact</h3>
