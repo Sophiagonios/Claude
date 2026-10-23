@@ -125,6 +125,38 @@ function antenniste91_inline_scripts() {
 			range.addEventListener('input', update);
 			update();
 		});
+
+		/* Sommaire des pages produits : barre de progression de lecture et
+		   lien actif selon la section visible, pour s'y retrouver sur une
+		   page longue. */
+		document.querySelectorAll( '.toc' ).forEach( function( toc ) {
+			var tocLinks = Array.prototype.slice.call( toc.querySelectorAll( 'a[href^="#"]' ) );
+			var tocSections = tocLinks.map( function( a ) {
+				return document.querySelector( a.getAttribute( 'href' ) );
+			} ).filter( Boolean );
+			var progressBar = toc.querySelector( '.toc-progress-bar' );
+			var entry = toc.closest( '.page-layout' ) ? toc.closest( '.page-layout' ).querySelector( '.entry-content' ) : null;
+			function updateToc() {
+				if ( progressBar && entry ) {
+					var rect = entry.getBoundingClientRect();
+					var total = entry.offsetHeight - window.innerHeight;
+					var scrolled = -rect.top;
+					var pct = total > 0 ? Math.min( 100, Math.max( 0, ( scrolled / total ) * 100 ) ) : 0;
+					progressBar.style.width = pct + '%';
+				}
+				var current = null;
+				tocSections.forEach( function( sec ) {
+					if ( sec.getBoundingClientRect().top <= 120 ) { current = sec; }
+				} );
+				tocLinks.forEach( function( a ) { a.classList.remove( 'active' ); } );
+				if ( current ) {
+					var activeLink = toc.querySelector( 'a[href="#' + current.id + '"]' );
+					if ( activeLink ) { activeLink.classList.add( 'active' ); }
+				}
+			}
+			window.addEventListener( 'scroll', updateToc, { passive: true } );
+			updateToc();
+		} );
 	})();
 	</script>
 	<?php

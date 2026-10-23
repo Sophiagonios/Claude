@@ -60,6 +60,7 @@ function antenniste91_bootstrap() {
 	$services_parent = antenniste91_upsert_page( 'services', 'Services', '' );
 
 	$antenne     = antenniste91_upsert_page( 'antenne-tv', 'Antenne TV & TNT', antenniste91_content_service_antenne(), $services_parent );
+	$antenne_arpajon = antenniste91_upsert_page( 'antenne-tv-arpajon', 'Antenne TV à Arpajon', antenniste91_content_geo_antenne_arpajon(), $services_parent );
 	$parabole    = antenniste91_upsert_page( 'parabole-satellite', 'Parabole & satellite', antenniste91_content_service_parabole(), $services_parent );
 	$starlink    = antenniste91_upsert_page( 'starlink', 'Internet Starlink', antenniste91_content_service_starlink(), $services_parent );
 	$video       = antenniste91_upsert_page( 'videosurveillance', 'Vidéosurveillance', antenniste91_content_service_video(), $services_parent );

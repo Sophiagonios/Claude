@@ -22,11 +22,14 @@ while ( have_posts() ) :
 		</div>
 	</div>
 
-	<?php $service_slugs = array( 'antenne-tv', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' ); ?>
+	<?php $service_slugs = array( 'antenne-tv', 'antenne-tv-arpajon', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' ); ?>
 	<?php if ( in_array( get_post_field( 'post_name' ), $service_slugs, true ) ) : ?>
 		<div class="wrap section-pad">
 			<div class="page-layout">
 				<aside class="toc">
+					<?php $reading_minutes = max( 1, (int) round( str_word_count( wp_strip_all_tags( get_the_content() ) ) / 200 ) ); ?>
+					<div class="toc-meta"><span>Temps de lecture</span><strong><?php echo esc_html( $reading_minutes ); ?> min</strong></div>
+					<div class="toc-progress"><span class="toc-progress-bar"></span></div>
 					<span class="toc-label">Sur cette page</span>
 					<?php foreach ( antenniste91_service_toc() as $item ) : ?>
 						<a href="<?php echo esc_url( $item[0] ); ?>"><?php echo esc_html( $item[1] ); ?></a>

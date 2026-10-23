@@ -140,6 +140,49 @@ function antenniste91_feature_cards_block( $items ) {
 	return antenniste91_html_block( $html );
 }
 
+/** Petit repère numéroté (cercle + chiffre) utilisé sur les schémas techniques. */
+function antenniste91_schema_marker( $x, $y, $n ) {
+	return '<circle cx="' . $x . '" cy="' . $y . '" r="9" fill="var(--accent)" stroke="#fff" stroke-width="1.5"/>'
+		. '<text x="' . $x . '" y="' . ( $y + 3.5 ) . '" font-size="10" font-weight="700" text-anchor="middle" fill="#1A1203" font-family="Montserrat,sans-serif">' . esc_html( $n ) . '</text>';
+}
+
+/** Schéma en coupe d'une installation d'antenne : remplace une énième photo de toit par une explication visuelle, chaque chiffre renvoyant à sa légende. */
+function antenniste91_schema_antenne_block() {
+	$items = array(
+		array( '1', 'Antenne', "Capte le signal hertzien, orientée vers l'émetteur le plus proche." ),
+		array( '2', 'Mât et fixations', 'Fixation solide en toiture, dimensionnée pour résister au vent.' ),
+		array( '3', 'Câble de descente', "Relie l'antenne à l'amplificateur, protégé des intempéries." ),
+		array( '4', 'Amplificateur', 'Renforce le signal avant sa répartition dans le logement.' ),
+		array( '5', 'Répartiteur', 'Distribue le signal vers chaque prise TV du logement.' ),
+		array( '6', 'Prise TV', 'Un signal stable, prêt à brancher.' ),
+	);
+	$svg = '<svg viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">'
+		. '<path d="M20 120 L160 40 L300 120" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>'
+		. '<path d="M40 120 L40 230 L280 230 L280 120" stroke="currentColor" stroke-width="2" opacity=".35"/>'
+		. '<line x1="160" y1="40" x2="160" y2="10" stroke="currentColor" stroke-width="3"/>'
+		. '<path d="M160 16 L182 10 M160 22 L178 18 M160 28 L174 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>'
+		. '<path d="M160 40 C140 70, 150 100, 130 150" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>'
+		. '<rect x="108" y="150" width="44" height="26" rx="4" stroke="currentColor" stroke-width="2"/>'
+		. '<path d="M130 176 L130 196" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>'
+		. '<rect x="104" y="196" width="52" height="24" rx="4" stroke="currentColor" stroke-width="2"/>'
+		. '<path d="M156 208 C190 208, 210 208, 230 208" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>'
+		. '<rect x="230" y="198" width="20" height="20" rx="3" stroke="currentColor" stroke-width="2"/>'
+		. antenniste91_schema_marker( 160, 14, '1' )
+		. antenniste91_schema_marker( 160, 40, '2' )
+		. antenniste91_schema_marker( 145, 95, '3' )
+		. antenniste91_schema_marker( 130, 163, '4' )
+		. antenniste91_schema_marker( 130, 208, '5' )
+		. antenniste91_schema_marker( 240, 208, '6' )
+		. '</svg>';
+
+	$html = '<div class="schema-block"><div class="schema-visual">' . $svg . '</div><ol class="schema-legend">';
+	foreach ( $items as $item ) {
+		$html .= '<li><span class="num">' . esc_html( $item[0] ) . '</span><div><strong>' . esc_html( $item[1] ) . '</strong><p>' . esc_html( $item[2] ) . '</p></div></li>';
+	}
+	$html .= '</ol></div>';
+	return antenniste91_html_block( $html );
+}
+
 function antenniste91_paragraph_block( $text, $class = '' ) {
 	$class_attr = $class ? ' class="' . esc_attr( $class ) . '"' : '';
 	$json       = $class ? ' {"className":"' . esc_attr( $class ) . '"}' : '';
@@ -439,9 +482,13 @@ function antenniste91_service_page( $args ) {
 	$c .= antenniste91_feature_cards_block( $args['included'] );
 	$c .= antenniste91_heading_block( 'Les signes qui indiquent qu\'il est temps d\'appeler', 3, '', 'signes' );
 	$c .= antenniste91_card_list_block( $args['signs'] );
-	$c .= empty( $args['photo1_real'] )
-		? antenniste91_photo_placeholder_block( array( $args['photo1'] ) )
-		: antenniste91_photo_block( $args['photo1_real'], $args['photo1'] );
+	if ( ! empty( $args['photo1_diagram'] ) ) {
+		$c .= antenniste91_schema_antenne_block();
+	} else {
+		$c .= empty( $args['photo1_real'] )
+			? antenniste91_photo_placeholder_block( array( $args['photo1'] ) )
+			: antenniste91_photo_block( $args['photo1_real'], $args['photo1'] );
+	}
 	$c .= antenniste91_heading_block( 'Notre méthode', 3, '', 'methode' );
 	$c .= antenniste91_paragraph_block( $args['process'] );
 	$c .= antenniste91_heading_block( 'Le prix', 3, '', 'prix' );
@@ -459,7 +506,7 @@ function antenniste91_service_page( $args ) {
 }
 
 function antenniste91_content_service_antenne() {
-	return antenniste91_service_page(
+	$c = antenniste91_service_page(
 		array(
 			'hook'     => "Une chaîne qui saute, une image qui se pixellise, une neige persistante à l'écran : dans neuf cas sur dix, le problème vient de l'antenne, du câble ou de l'amplificateur, pas de la télévision. On identifie la cause exacte avant de réparer, pour ne pas payer deux fois.",
 			'signs'    => array(
@@ -476,8 +523,7 @@ function antenniste91_content_service_antenne() {
 			),
 			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
-			'photo1'      => 'Antenne installée sur un toit en Essonne',
-			'photo1_real' => 'antenne-toit.jpg',
+			'photo1_diagram' => true,
 			'avant_apres' => antenniste91_antenne_avant_apres_items(),
 			'faq'      => array(
 				array(
@@ -487,6 +533,49 @@ function antenniste91_content_service_antenne() {
 				array(
 					'q' => "Vous intervenez aussi en copropriété ?",
 					'a' => "Oui, sur l'antenne collective comme sur les installations individuelles. Contactez-nous pour évoquer votre configuration.",
+				),
+			),
+		)
+	);
+	$c .= antenniste91_html_block(
+		'<div class="geo-links"><h4>Antenne TV près de chez vous</h4>'
+		. '<p>Quelques communes où nous intervenons régulièrement pour ce service :</p>'
+		. '<ul class="geo-links-list"><li><a href="' . esc_url( home_url( '/services/antenne-tv-arpajon/' ) ) . '">Antenne TV à Arpajon</a></li></ul>'
+		. '</div>'
+	);
+	return $c;
+}
+
+/** Page géolocalisée service × commune : même structure que la page antenne-tv, reformulée pour Arpajon, pour répondre à une recherche locale et servir de base pour d'autres communes. */
+function antenniste91_content_geo_antenne_arpajon() {
+	return antenniste91_service_page(
+		array(
+			'hook'     => "À Arpajon comme dans le reste de l'Essonne, une chaîne qui saute ou une image pixellisée vient presque toujours du même point : l'antenne, le câble ou l'amplificateur. On identifie la cause exacte avant de réparer, pour ne pas payer deux fois.",
+			'signs'    => array(
+				"Certaines chaînes manquent ou disparaissent selon la météo",
+				"L'image se pixellise ou l'écran affiche « signal faible »",
+				"Aucune image sur une ou plusieurs prises TV du logement",
+				"L'antenne a été endommagée par le vent ou une tempête",
+			),
+			'included' => array(
+				array( 'Diagnostic complet', 'Antenne, câblage, amplificateur et répartiteur vérifiés.' ),
+				array( 'Réparation ciblée', "Réorientation ou remplacement de l'antenne si nécessaire." ),
+				array( 'Toutes les prises testées', 'Chaque prise TV concernée est vérifiée.' ),
+				array( 'Test en direct', 'Les chaînes sont contrôlées avant la fin de la visite.' ),
+			),
+			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne, à Arpajon comme sur le reste du secteur. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
+			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
+			'photo1'      => 'Antenne installée sur un toit en Essonne',
+			'photo1_real' => 'antenne-toit.jpg',
+			'avant_apres' => antenniste91_antenne_avant_apres_items(),
+			'faq'      => array(
+				array(
+					'q' => "Intervenez-vous vraiment à Arpajon, pas seulement dans les communes voisines ?",
+					'a' => "Oui, Arpajon fait partie de notre zone d'intervention régulière en Essonne, au même titre que l'ensemble du département.",
+				),
+				array(
+					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
+					'a' => "La plupart des pannes viennent d'un câble, d'un connecteur ou d'un amplificateur défectueux : l'antenne elle-même est rarement à remplacer entièrement. Le diagnostic sur place permet de le savoir avant de proposer une solution.",
 				),
 			),
 		)
