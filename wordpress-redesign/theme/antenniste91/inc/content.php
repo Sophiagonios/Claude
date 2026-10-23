@@ -57,6 +57,23 @@ function antenniste91_photo_placeholder_block( $captions ) {
 	return antenniste91_html_block( $html );
 }
 
+/** Une vraie photo, à la place d'un emplacement en attente, dans le même format que les placeholders qu'elle remplace. */
+function antenniste91_photo_block( $filename, $alt ) {
+	$src  = get_template_directory_uri() . '/assets/photos/' . $filename;
+	$html = '<div class="photo-grid cols-1"><div class="photo-real"><img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" loading="lazy"></div></div>';
+	return antenniste91_html_block( $html );
+}
+
+/** Bloc avant/après : deux vraies photos côte à côte, chacune repérée par une étiquette. */
+function antenniste91_avant_apres_block( $before, $after ) {
+	$uri = get_template_directory_uri() . '/assets/photos/';
+	$html = '<div class="avant-apres">'
+		. '<figure><div class="aa-photo"><img src="' . esc_url( $uri . $before['file'] ) . '" alt="' . esc_attr( $before['alt'] ) . '" loading="lazy"></div><figcaption><span class="aa-tag">Avant</span>' . esc_html( $before['label'] ) . '</figcaption></figure>'
+		. '<figure><div class="aa-photo"><img src="' . esc_url( $uri . $after['file'] ) . '" alt="' . esc_attr( $after['alt'] ) . '" loading="lazy"></div><figcaption><span class="aa-tag aa-tag-after">Après</span>' . esc_html( $after['label'] ) . '</figcaption></figure>'
+		. '</div>';
+	return antenniste91_html_block( $html );
+}
+
 /** Highlighted price callout, distinct from the rest of the prose. */
 function antenniste91_price_box_block( $text ) {
 	return antenniste91_html_block( '<div class="price-box"><div class="icon">€</div><p>' . $text . '</p></div>' );
@@ -145,8 +162,8 @@ function antenniste91_chunk_services_grid() {
 			'title' => 'Alarme &amp; visiophone',
 			'text'  => "Voyez qui sonne avant d'ouvrir, même à distance : visiophone et alarme installés et expliqués pour votre maison ou votre établissement.",
 			'url'   => home_url( '/services/visiophone/' ),
-			'photo' => null,
-			'alt'   => "Visiophone avec écran et combiné, installé près d'une porte",
+			'photo' => 'visiophone-entree.jpg',
+			'alt'   => "Visiophone installé près d'une porte d'entrée",
 		),
 	);
 
@@ -181,7 +198,10 @@ function antenniste91_chunk_expertise() {
 	);
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html = '<div class="whyus-band"><div class="whyus-grid">'
-		. '<div class="whyus-photo"><img src="' . esc_url( $assets_uri . 'parabole-toit.jpg' ) . '" alt="Technicien France Technique Antenne en intervention sur un toit" loading="lazy"></div>'
+		. '<div class="whyus-photo">'
+		. '<img src="' . esc_url( $assets_uri . 'parabole-toit.jpg' ) . '" alt="Technicien France Technique Antenne en intervention sur un toit" loading="lazy">'
+		. '<div class="whyus-photo-sub"><img src="' . esc_url( $assets_uri . 'visiophone-entree.jpg' ) . '" alt="Visiophone installé près d\'une porte d\'entrée" loading="lazy"></div>'
+		. '</div>'
 		. '<div class="whyus-cards">';
 	foreach ( $items as $item ) {
 		$html .= '<div class="whyus-card"><div class="whyus-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $item[0] . '</svg></div><h4>' . $item[1] . '</h4><p>' . $item[2] . '</p></div>';
@@ -198,9 +218,11 @@ function antenniste91_chunk_process() {
 		array( 'Garantie &amp; SAV', "Un contact direct en cas de question après la pose : vous ne repartez pas de zéro." ),
 	);
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
+	$last = count( $steps ) - 1;
 	$html = '<div class="process-grid"><div class="process-list">';
 	foreach ( $steps as $i => $step ) {
-		$html .= '<div class="process-step"><span class="process-num">' . ( $i + 1 ) . '</span><div><h4>' . $step[0] . '</h4><p>' . $step[1] . '</p></div></div>';
+		$line_class = $i < $last ? ' has-line' : '';
+		$html .= '<div class="process-step' . $line_class . '"><span class="process-num">' . ( $i + 1 ) . '</span><div><h4>' . $step[0] . '</h4><p>' . $step[1] . '</p></div></div>';
 	}
 	$html .= '</div><div class="process-photo"><img src="' . esc_url( $assets_uri . 'starlink-toit.jpg' ) . '" alt="Installation en toiture par France Technique Antenne" loading="lazy"></div></div>';
 	return antenniste91_html_block( $html );
@@ -317,7 +339,7 @@ function antenniste91_content_home() {
 		. '<div class="hero-ctas" style="margin-top:6px;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 		. '</div><div class="about-photo-grid">'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/starlink-toit.jpg' ) . '" alt="Installation Starlink sur un toit-terrasse" loading="lazy"></div>'
-		. '<div class="about-photo">' . antenniste91_photo_ph_inner( 'intervention alarme ou visiophone' ) . '</div>'
+		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/visiophone-entree.jpg' ) . '" alt="Visiophone installé près d\'une porte d\'entrée" loading="lazy"></div>'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/camera-app.png' ) . '" alt="Consultation des caméras depuis une application" loading="lazy"></div>'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/parabole-toit.jpg' ) . '" alt="Parabole et antenne installées en toiture" loading="lazy"></div>'
 		. '</div></div>'
@@ -365,7 +387,7 @@ function antenniste91_content_home() {
 	$c .= antenniste91_button_block( 'Voir toutes les questions →', home_url( '/faq/' ), 'outline-navy' );
 
 	$c .= antenniste91_html_block(
-		'<div class="inner-cta" style="margin-top:0;"><span class="eyebrow inv">Prêt à commencer</span><h2>Un appel suffit pour lancer le diagnostic.</h2><p>Devis gratuit, sans engagement.</p><div class="hero-ctas" style="justify-content:center;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div></div>'
+		antenniste91_final_cta_html( 'Prêt à commencer', 'Un appel suffit pour lancer le diagnostic.', 'Devis gratuit, sans engagement.' )
 	);
 
 	return $c;
@@ -429,12 +451,16 @@ function antenniste91_service_page( $args ) {
 	$c .= antenniste91_showcase_block( antenniste91_service_illustration( $args['illustration'] ), $args['included'] );
 	$c .= antenniste91_heading_block( 'Les signes qui indiquent qu\'il est temps d\'appeler', 3, '', 'signes' );
 	$c .= antenniste91_card_list_block( $args['signs'] );
-	$c .= antenniste91_photo_placeholder_block( array( $args['photo1'] ) );
+	$c .= empty( $args['photo1_real'] )
+		? antenniste91_photo_placeholder_block( array( $args['photo1'] ) )
+		: antenniste91_photo_block( $args['photo1_real'], $args['photo1'] );
 	$c .= antenniste91_heading_block( 'Notre méthode', 3, '', 'methode' );
 	$c .= antenniste91_paragraph_block( $args['process'] );
 	$c .= antenniste91_heading_block( 'Le prix', 3, '', 'prix' );
 	$c .= antenniste91_price_box_block( $args['pricing'] );
-	$c .= antenniste91_photo_placeholder_block( array( 'avant l\'intervention', 'après l\'intervention' ) );
+	$c .= empty( $args['avant_apres'] )
+		? antenniste91_photo_placeholder_block( array( 'avant l\'intervention', 'après l\'intervention' ) )
+		: antenniste91_avant_apres_block( $args['avant_apres']['before'], $args['avant_apres']['after'] );
 	if ( ! empty( $args['faq'] ) ) {
 		$c .= antenniste91_heading_block( 'Questions fréquentes', 3, '', 'faq' );
 		foreach ( $args['faq'] as $q ) {
@@ -464,6 +490,10 @@ function antenniste91_content_service_antenne() {
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
 			'illustration' => 'antenne',
 			'photo1'   => 'antenne en cours de réglage sur toiture',
+			'avant_apres' => array(
+				'before' => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Antenne râteau installée en toiture, premier réglage', 'label' => "Antenne posée, premier réglage" ),
+				'after'  => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Antenne UHF/VHF réorientée et fixée en toiture', 'label' => "Réglage fin terminé, chaînes testées" ),
+			),
 			'faq'      => array(
 				array(
 					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
@@ -846,26 +876,22 @@ function antenniste91_content_mentions_legales() {
  * réelle entourée de deux formes douces (accent + marine), texte et bouton
  * d'appel. Un seul helper pour ne pas répéter ce bloc dans 4 templates.
  */
-function antenniste91_render_final_cta( $eyebrow, $heading, $lead = '' ) {
+function antenniste91_final_cta_html( $eyebrow, $heading, $lead = '' ) {
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
-	?>
-	<div class="inner-cta">
-		<div class="inner-cta-visual">
-			<div class="inner-cta-photo">
-				<img src="<?php echo esc_url( $assets_uri . 'antenne-toit.jpg' ); ?>" alt="Installation réalisée par France Technique Antenne" loading="lazy">
-			</div>
-		</div>
-		<div>
-			<span class="eyebrow inv"><?php echo esc_html( $eyebrow ); ?></span>
-			<h2><?php echo esc_html( $heading ); ?></h2>
-			<?php if ( $lead ) : ?><p><?php echo esc_html( $lead ); ?></p><?php endif; ?>
-			<div class="hero-ctas">
-				<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
-					Appeler maintenant
-				</a>
-			</div>
-		</div>
-	</div>
-	<?php
+	$html  = '<div class="inner-cta">';
+	$html .= '<div class="inner-cta-visual"><div class="inner-cta-photo">';
+	$html .= '<img src="' . esc_url( $assets_uri . 'antenne-toit.jpg' ) . '" alt="Installation réalisée par France Technique Antenne" loading="lazy">';
+	$html .= '</div></div>';
+	$html .= '<div><span class="eyebrow inv">' . esc_html( $eyebrow ) . '</span><h2>' . esc_html( $heading ) . '</h2>';
+	if ( $lead ) {
+		$html .= '<p>' . esc_html( $lead ) . '</p>';
+	}
+	$html .= '<div class="hero-ctas"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">';
+	$html .= '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>';
+	$html .= 'Appeler maintenant</a></div></div></div>';
+	return $html;
+}
+
+function antenniste91_render_final_cta( $eyebrow, $heading, $lead = '' ) {
+	echo antenniste91_final_cta_html( $eyebrow, $heading, $lead );
 }
