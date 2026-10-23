@@ -1,9 +1,9 @@
 <?php
 /**
- * Front page: fixed hero (audience toggle + trust checklist), then the
- * "Accueil" page's own block content (services teaser, process, audience
- * split, zone/avis/faq teasers, final CTA) — fully editable in the block
- * editor, created once by inc/bootstrap-content.php.
+ * Front page: fixed hero (audience toggle), then the "Accueil" page's own
+ * block content (services teaser, why-us, avant/après, audience split,
+ * zone/avis teasers, final CTA) — fully editable in the block editor,
+ * created once by inc/bootstrap-content.php.
  */
 
 get_header();
@@ -37,13 +37,7 @@ get_header();
 						<span><strong><?php echo antenniste91_google_rating(); ?>/5</strong> sur Google</span>
 					</div>
 				</div>
-				<p style="margin:-6px 0 26px; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
-
-				<ul class="checklist">
-					<li>Diagnostic avant tout devis</li>
-					<li>Prix annoncé au téléphone, jamais de surprise</li>
-					<li>Toujours le même technicien, du premier appel au SAV</li>
-				</ul>
+				<p style="margin:-6px 0 0; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
 			</div>
 
 			<div class="hero-photo">
