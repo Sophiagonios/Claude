@@ -42,6 +42,11 @@ function antenniste91_card_list_block( $items ) {
 }
 
 /** Placeholder photo blocks (1 or 2 across) so the page has visual breathing room before real photos arrive. */
+/** Placeholder inline (icône + légende) pour un emplacement photo dont on n'a pas encore de vraie image. */
+function antenniste91_photo_ph_inner( $caption ) {
+	return '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter : ' . esc_html( $caption ) . '</span></div>';
+}
+
 function antenniste91_photo_placeholder_block( $captions ) {
 	$cols = count( $captions ) >= 2 ? 2 : 1;
 	$html = '<div class="photo-grid cols-' . $cols . '">';
@@ -140,7 +145,7 @@ function antenniste91_chunk_services_grid() {
 			'title' => 'Alarme &amp; visiophone',
 			'text'  => "Voyez qui sonne avant d'ouvrir, même à distance : visiophone et alarme installés et expliqués pour votre maison ou votre établissement.",
 			'url'   => home_url( '/services/visiophone/' ),
-			'photo' => 'visiophone-combine.jpg',
+			'photo' => null,
 			'alt'   => "Visiophone avec écran et combiné, installé près d'une porte",
 		),
 	);
@@ -148,13 +153,16 @@ function antenniste91_chunk_services_grid() {
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html = '<div class="services-grid">';
 	foreach ( $services as $s ) {
-		$html .= '<div class="card">'
-			. '<div class="card-photo"><img src="' . esc_url( $assets_uri . $s['photo'] ) . '" alt="' . esc_attr( $s['alt'] ) . '" loading="lazy" width="400" height="280"></div>'
+		$photo_html = $s['photo']
+			? '<img src="' . esc_url( $assets_uri . $s['photo'] ) . '" alt="' . esc_attr( $s['alt'] ) . '" loading="lazy" width="400" height="280">'
+			: antenniste91_photo_ph_inner( $s['alt'] );
+		$html .= '<a class="card" href="' . esc_url( $s['url'] ) . '">'
+			. '<div class="card-photo">' . $photo_html . '</div>'
 			. '<div class="card-body">'
 			. '<h3>' . $s['title'] . '</h3>'
 			. '<p>' . $s['text'] . '</p>'
-			. '<a class="link-arrow" href="' . esc_url( $s['url'] ) . '">En savoir plus →</a>'
-			. '</div></div>';
+			. '<span class="link-arrow">En savoir plus →</span>'
+			. '</div></a>';
 	}
 	$html .= '</div>';
 	return antenniste91_html_block( $html );
@@ -171,11 +179,14 @@ function antenniste91_chunk_expertise() {
 		array( $icon_chat,   'Un expert qui prend le temps d\'expliquer', "Le technicien montre ce qu'il a fait et répond à toutes vos questions, simplement." ),
 		array( $icon_repeat, 'Toujours le même interlocuteur', "Une question après la pose ? Vous rappelez la même personne, qui connaît déjà votre installation." ),
 	);
-	$html = '<div class="expertise-list">';
+	$assets_uri = get_template_directory_uri() . '/assets/photos/';
+	$html = '<div class="whyus-band"><div class="whyus-grid">'
+		. '<div class="whyus-photo"><img src="' . esc_url( $assets_uri . 'parabole-toit.jpg' ) . '" alt="Technicien France Technique Antenne en intervention sur un toit" loading="lazy"></div>'
+		. '<div class="whyus-cards">';
 	foreach ( $items as $item ) {
-		$html .= '<div class="exp-item"><div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $item[0] . '</svg></div><h4>' . $item[1] . '</h4><p>' . $item[2] . '</p></div>';
+		$html .= '<div class="whyus-card"><div class="whyus-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $item[0] . '</svg></div><h4>' . $item[1] . '</h4><p>' . $item[2] . '</p></div>';
 	}
-	$html .= '</div>';
+	$html .= '</div></div></div>';
 	return antenniste91_html_block( $html );
 }
 
@@ -191,7 +202,7 @@ function antenniste91_chunk_process() {
 	foreach ( $steps as $i => $step ) {
 		$html .= '<div class="process-step"><span class="process-num">' . ( $i + 1 ) . '</span><div><h4>' . $step[0] . '</h4><p>' . $step[1] . '</p></div></div>';
 	}
-	$html .= '</div><div class="process-photo"><img src="' . esc_url( $assets_uri . 'alarme-pose.jpg' ) . '" alt="Technicien France Technique Antenne en intervention" loading="lazy"></div></div>';
+	$html .= '</div><div class="process-photo"><img src="' . esc_url( $assets_uri . 'starlink-toit.jpg' ) . '" alt="Installation en toiture par France Technique Antenne" loading="lazy"></div></div>';
 	return antenniste91_html_block( $html );
 }
 
@@ -294,7 +305,7 @@ function antenniste91_chunk_zone_chips() {
 
 function antenniste91_content_home() {
 	$c  = antenniste91_html_block( '<span class="eyebrow">Ce que nous installons</span>' );
-	$c .= antenniste91_heading_block( 'Cinq métiers, un seul technicien.' );
+	$c .= antenniste91_heading_block( 'Quatre métiers, un seul technicien.' );
 	$c .= antenniste91_paragraph_block( "Installateur antenne TV, parabole satellite, Starlink, vidéosurveillance et visiophone en Essonne (91) : de l'antenne râteau au visiophone connecté, chaque intervention est diagnostiquée avant devis, pour particuliers, professionnels et collectivités." );
 	$c .= antenniste91_chunk_services_grid();
 
@@ -306,7 +317,7 @@ function antenniste91_content_home() {
 		. '<div class="hero-ctas" style="margin-top:6px;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 		. '</div><div class="about-photo-grid">'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/starlink-toit.jpg' ) . '" alt="Installation Starlink sur un toit-terrasse" loading="lazy"></div>'
-		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/alarme-pose.jpg' ) . '" alt="Technicien posant un boîtier d\'alarme" loading="lazy"></div>'
+		. '<div class="about-photo">' . antenniste91_photo_ph_inner( 'intervention alarme ou visiophone' ) . '</div>'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/camera-app.png' ) . '" alt="Consultation des caméras depuis une application" loading="lazy"></div>'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/parabole-toit.jpg' ) . '" alt="Parabole et antenne installées en toiture" loading="lazy"></div>'
 		. '</div></div>'
@@ -841,7 +852,7 @@ function antenniste91_render_final_cta( $eyebrow, $heading, $lead = '' ) {
 	<div class="inner-cta">
 		<div class="inner-cta-visual">
 			<div class="inner-cta-photo">
-				<img src="<?php echo esc_url( $assets_uri . 'alarme-pose.jpg' ); ?>" alt="Technicien France Technique Antenne en intervention" loading="lazy">
+				<img src="<?php echo esc_url( $assets_uri . 'antenne-toit.jpg' ); ?>" alt="Installation réalisée par France Technique Antenne" loading="lazy">
 			</div>
 		</div>
 		<div>
