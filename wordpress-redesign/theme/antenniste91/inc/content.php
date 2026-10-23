@@ -168,12 +168,21 @@ function antenniste91_chunk_services_grid() {
 }
 
 function antenniste91_chunk_expertise() {
-	$html = '<div class="expertise-list">'
-		. '<div class="exp-item"><h4>Un vrai diagnostic, pas un devis à l\'aveugle</h4><p>La cause exacte identifiée avant toute proposition — vous savez toujours pourquoi vous payez.</p></div>'
-		. '<div class="exp-item"><h4>Un prix qui ne bouge pas</h4><p>Le montant annoncé au téléphone est celui de la facture, sans surprise le jour de l\'intervention.</p></div>'
-		. '<div class="exp-item"><h4>Un expert qui prend le temps d\'expliquer</h4><p>Le technicien montre ce qu\'il a fait et répond à toutes vos questions, en clair, sans jargon.</p></div>'
-		. '<div class="exp-item"><h4>Toujours le même interlocuteur</h4><p>Une question après la pose ? Vous rappelez la même personne, qui connaît déjà votre installation.</p></div>'
-		. '</div>';
+	$icon_diag   = '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>';
+	$icon_prix   = '<path d="M3 11V6a2 2 0 0 1 2-2h5l11 11-7 7L3 11Z"/><circle cx="8" cy="8" r="1.2" fill="currentColor" stroke="none"/>';
+	$icon_chat   = '<path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.6-.8L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.4 8.4 0 0 1 12.6 3a8.5 8.5 0 0 1 8.4 8.5Z"/>';
+	$icon_repeat = '<path d="M17 2.1 21 6l-4 3.9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 21.9 3 18l4-3.9"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>';
+	$items = array(
+		array( $icon_diag,   'Un vrai diagnostic avant le devis', "La cause exacte identifiée avant toute proposition — vous savez toujours pourquoi vous payez." ),
+		array( $icon_prix,   'Un prix qui ne bouge pas', "Le montant annoncé au téléphone est celui de la facture, sans surprise le jour de l'intervention." ),
+		array( $icon_chat,   'Un expert qui prend le temps d\'expliquer', "Le technicien montre ce qu'il a fait et répond à toutes vos questions, simplement." ),
+		array( $icon_repeat, 'Toujours le même interlocuteur', "Une question après la pose ? Vous rappelez la même personne, qui connaît déjà votre installation." ),
+	);
+	$html = '<div class="expertise-list">';
+	foreach ( $items as $item ) {
+		$html .= '<div class="exp-item"><div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $item[0] . '</svg></div><h4>' . $item[1] . '</h4><p>' . $item[2] . '</p></div>';
+	}
+	$html .= '</div>';
 	return antenniste91_html_block( $html );
 }
 
@@ -216,41 +225,73 @@ function antenniste91_chunk_audience() {
 		return $out;
 	};
 
-	$html = '<div class="aud-toggle" role="group" aria-label="Vous êtes...">'
-		. '<button type="button" class="aud-tab" id="aud-tab-part" aria-pressed="true">Particuliers</button>'
-		. '<button type="button" class="aud-tab" id="aud-tab-pro" aria-pressed="false">Professionnels &amp; collectivités</button>'
-		. '</div>'
-		. '<div class="audience-split audience-split-tabbed">'
-		. '<div class="aud-card" id="aud-panel-part"><span class="tag">Maison individuelle</span><h3>Particuliers</h3>'
+	$html = '<div class="audience-split">'
+		. '<div class="aud-card"><span class="tag">Maison individuelle</span><h3>Particuliers</h3>'
 		. $render_list( $particulier_items )
 		. '<br/><a class="btn btn-ghost" href="' . esc_url( home_url( '/contact/' ) ) . '">Décrire mon besoin</a></div>'
-		. '<div class="aud-card pro" id="aud-panel-pro" hidden><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3>'
+		. '<div class="aud-card pro"><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3>'
 		. $render_list( $pro_items )
 		. '<br/><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
 		. '</div>';
 	return antenniste91_html_block( $html );
 }
 
+function antenniste91_reviews_stars() {
+	return '<div class="stars">' . str_repeat( '<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2l-5-4.9 6.9-1Z"/></svg>', 5 ) . '</div>';
+}
+
+/** Un seul avis — étoiles, citation, badge Google — réutilisé partout où des avis s'affichent. */
+function antenniste91_review_card( $featured = false ) {
+	$google_icon = '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.63h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.89c2.27-2.09 3.58-5.17 3.58-8.81Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.92l-3.89-3c-1.08.73-2.46 1.15-4.04 1.15-3.1 0-5.73-2.09-6.67-4.9H1.3v3.09A12 12 0 0 0 12 24Z"/><path fill="#FBBC05" d="M5.33 14.33a7.2 7.2 0 0 1 0-4.66V6.58H1.3a12 12 0 0 0 0 10.84l4.03-3.09Z"/><path fill="#EA4335" d="M12 4.77c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.94 1.19 15.23 0 12 0A12 12 0 0 0 1.3 6.58l4.03 3.09C6.27 6.86 8.9 4.77 12 4.77Z"/></svg>';
+	$class = 'review' . ( $featured ? ' feat' : '' );
+	return '<div class="' . $class . '">' . antenniste91_reviews_stars()
+		. '<p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p>'
+		. '<div class="who">' . $google_icon . '<span class="ph">Prénom, ville</span></div></div>';
+}
+
 function antenniste91_chunk_reviews_teaser() {
-	$html = '<div class="rating-strip" style="margin-bottom:22px;"><strong>4,9/5</strong> — note Google <span class="ph">(nombre d\'avis à renseigner)</span></div>'
+	$html = '<div class="rating-strip">' . antenniste91_reviews_stars() . '<strong>' . antenniste91_google_rating() . '/5</strong> ' . antenniste91_review_count_label() . '</div>'
 		. '<div class="reviews-grid">'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review feat"><p class="ph">« Exemple d\'avis mis en avant — à remplacer. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
+		. antenniste91_review_card( false )
+		. antenniste91_review_card( true )
+		. antenniste91_review_card( false )
 		. '</div>';
 	return antenniste91_html_block( $html );
 }
 
-/** Carte stylisée (originale, simplifiée) du département de l'Essonne, avec un repère central. */
+/**
+ * Carte stylisée du département de l'Essonne (91), avec les principales
+ * communes nommées en vraies balises <text> — lisibles, sélectionnables,
+ * et utiles au référencement local, pas juste décoratives.
+ */
 function antenniste91_essonne_map_svg() {
-	return '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">'
-		. '<path d="M22 14 52 9 82 22 91 48 76 78 44 92 14 70 8 38Z" fill="var(--navy-tint)" stroke="var(--accent-blue)" stroke-width="2"/>'
-		. '<circle cx="47" cy="50" r="4.5" fill="var(--accent-blue)" stroke="none"/>'
-		. '<circle cx="30" cy="32" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
-		. '<circle cx="66" cy="38" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
-		. '<circle cx="58" cy="68" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
-		. '<circle cx="28" cy="60" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
-		. '</svg>';
+	$towns = array(
+		array( 150, 112, 'Évry-Courcouronnes', true ),
+		array( 188, 118, 'Corbeil-Essonnes', false ),
+		array( 72, 44, 'Massy', false ),
+		array( 95, 60, 'Palaiseau', false ),
+		array( 58, 212, 'Étampes', false ),
+		array( 188, 52, 'Savigny-sur-Orge', false ),
+		array( 222, 72, 'Draveil', false ),
+		array( 132, 160, 'Brétigny-sur-Orge', false ),
+	);
+
+	$svg = '<svg viewBox="0 0 300 260" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="Carte du département de l\'Essonne (91) avec ses principales communes">';
+	$svg .= '<path d="M42 22 112 16 182 10 232 30 262 62 250 102 272 142 230 192 180 232 120 246 70 220 30 180 15 130 26 80Z" fill="var(--navy-tint)" stroke="var(--accent-blue)" stroke-width="2.5"/>';
+
+	foreach ( $towns as $t ) {
+		list( $x, $y, $label, $is_main ) = $t;
+		if ( $is_main ) {
+			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="6" fill="var(--accent-blue)" stroke="none"/>';
+			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="10" fill="none" stroke="var(--accent-blue)" stroke-width="1.5" opacity=".5"/>';
+			$svg .= '<text x="' . $x . '" y="' . ( $y - 16 ) . '" text-anchor="middle" font-family="Public Sans, sans-serif" font-weight="800" font-size="13" fill="currentColor" stroke="none">' . esc_html( $label ) . '</text>';
+		} else {
+			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="3.5" fill="currentColor" stroke="none" opacity=".7"/>';
+			$svg .= '<text x="' . $x . '" y="' . ( $y - 8 ) . '" text-anchor="middle" font-family="Public Sans, sans-serif" font-weight="600" font-size="10.5" fill="currentColor" stroke="none" opacity=".85">' . esc_html( $label ) . '</text>';
+		}
+	}
+	$svg .= '</svg>';
+	return $svg;
 }
 
 function antenniste91_chunk_zone_chips() {
@@ -594,15 +635,13 @@ function antenniste91_content_avis() {
 
 /** Same visual block as the homepage teaser, without duplicating the function name. */
 function antenniste91_chunk_reviews_teaser_raw() {
-	return '<div class="rating-strip" style="margin-bottom:22px;"><strong>4,9/5</strong> — note Google <span class="ph">(nombre d\'avis à renseigner)</span></div>'
-		. '<div class="reviews-grid">'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review feat"><p class="ph">« Exemple d\'avis mis en avant — à remplacer. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '<div class="review"><p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p><div class="who ph">Prénom, Ville</div></div>'
-		. '</div>';
+	$html = '<div class="rating-strip">' . antenniste91_reviews_stars() . '<strong>' . antenniste91_google_rating() . '/5</strong> ' . antenniste91_review_count_label() . '</div>'
+		. '<div class="reviews-grid">';
+	for ( $i = 0; $i < 6; $i++ ) {
+		$html .= antenniste91_review_card( 1 === $i );
+	}
+	$html .= '</div>';
+	return $html;
 }
 
 function antenniste91_content_faq() {

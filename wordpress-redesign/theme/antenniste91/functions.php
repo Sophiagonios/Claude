@@ -83,7 +83,6 @@ function antenniste91_inline_scripts() {
 			}
 		}
 		wireAudienceToggle('tab-part', 'tab-pro', 'panel-part', 'panel-pro');
-		wireAudienceToggle('aud-tab-part', 'aud-tab-pro', 'aud-panel-part', 'aud-panel-pro');
 
 		/* Sombre mat = thème par défaut (pas d'attribut data-theme).
 		   Clair = choix explicite de la personne (data-theme="light"). */
