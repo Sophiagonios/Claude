@@ -44,7 +44,7 @@
 			<span>
 				© <?php echo esc_html( gmdate( 'Y' ) ); ?>
 				<?php echo esc_html( get_theme_mod( 'antenniste91_company_name', 'Antenniste 91' ) ); ?>
-				<?php $siret = get_theme_mod( 'antenniste91_siret', '' ); if ( $siret ) : ?>— SIRET <?php echo esc_html( $siret ); ?><?php endif; ?>
+				<?php $siret = get_theme_mod( 'antenniste91_siret', '' ); if ( $siret ) : ?>, SIRET <?php echo esc_html( $siret ); ?><?php endif; ?>
 			</span>
 			<span>
 				<a href="<?php echo esc_url( home_url( '/mentions-legales/' ) ); ?>">Mentions légales</a> ·

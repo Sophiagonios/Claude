@@ -111,7 +111,7 @@ function antenniste91_customize_register( $wp_customize ) {
 		),
 		'antenniste91_hero_lead_pro' => array(
 			'label'   => __( 'Héro — texte (professionnels)', 'antenniste91' ),
-			'default' => __( 'Hôtels, commerces, collectivités : un seul expert pour cadrer le besoin, chiffrer et coordonner l\'installation sur un ou plusieurs sites — avec la réactivité et le sérieux qu\'exige un cahier des charges professionnel.', 'antenniste91' ),
+			'default' => __( 'Hôtels, commerces, collectivités : un seul expert pour cadrer le besoin, chiffrer et coordonner l\'installation sur un ou plusieurs sites, avec la réactivité et le sérieux qu\'exige un cahier des charges professionnel.', 'antenniste91' ),
 			'type'    => 'textarea',
 		),
 	);

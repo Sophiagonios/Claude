@@ -45,7 +45,7 @@ function antenniste91_handle_contact_form() {
 	}
 
 	$to = get_theme_mod( 'antenniste91_email', get_option( 'admin_email' ) );
-	$subject = 'Nouvelle demande depuis le site — ' . $name;
+	$subject = 'Nouvelle demande depuis le site : ' . $name;
 	$body  = "Nom : $name\n";
 	$body .= "Téléphone : $phone\n";
 	$body .= "Email : $email\n\n";

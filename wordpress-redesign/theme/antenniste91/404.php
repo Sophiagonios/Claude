@@ -38,15 +38,7 @@ get_header();
 	</div>
 </div>
 
-<div class="inner-cta">
-	<span class="eyebrow inv">Besoin d'aide tout de suite ?</span>
-	<h2>Un appel suffit pour lancer le diagnostic.</h2>
-	<div class="hero-ctas">
-		<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
-			Appeler maintenant
-		</a>
-	</div>
-</div>
+<?php antenniste91_render_final_cta( "Besoin d'aide tout de suite ?", 'Un appel suffit pour lancer le diagnostic.' ); ?>
 
 <?php
 get_footer();

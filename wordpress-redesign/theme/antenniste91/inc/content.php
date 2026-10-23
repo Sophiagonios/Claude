@@ -180,12 +180,18 @@ function antenniste91_chunk_expertise() {
 }
 
 function antenniste91_chunk_process() {
-	$html = '<div class="band-navy section-pad"><div class="process">'
-		. '<div class="step"><span class="step-num">01 · Appel</span><h4>Diagnostic par téléphone</h4><p>Vous décrivez la panne ou le projet, on cerne ce qui est probablement en cause, gratuitement.</p></div>'
-		. '<div class="step"><span class="step-num">02 · Devis</span><h4>Prix ferme, sans surprise</h4><p>Un devis détaillé transmis avant intervention. Rien n\'est engagé tant qu\'il n\'est pas validé.</p></div>'
-		. '<div class="step"><span class="step-num">03 · Pose</span><h4>Installation &amp; tests</h4><p>Chaînes, débit ou image caméra testés en direct avant que le technicien ne reparte.</p></div>'
-		. '<div class="step"><span class="step-num">04 · Suivi</span><h4>Garantie &amp; SAV</h4><p>Un contact direct en cas de question après la pose : vous ne repartez pas de zéro.</p></div>'
-		. '</div></div>';
+	$steps = array(
+		array( 'Diagnostic par téléphone', "Vous décrivez la panne ou le projet, on cerne ce qui est probablement en cause, gratuitement." ),
+		array( 'Prix ferme, sans surprise', "Un devis détaillé transmis avant intervention. Rien n'est engagé tant qu'il n'est pas validé." ),
+		array( 'Installation &amp; tests', "Chaînes, débit ou image caméra testés en direct avant que le technicien ne reparte." ),
+		array( 'Garantie &amp; SAV', "Un contact direct en cas de question après la pose : vous ne repartez pas de zéro." ),
+	);
+	$assets_uri = get_template_directory_uri() . '/assets/photos/';
+	$html = '<div class="process-grid"><div class="process-list">';
+	foreach ( $steps as $i => $step ) {
+		$html .= '<div class="process-step"><span class="process-num">' . ( $i + 1 ) . '</span><div><h4>' . $step[0] . '</h4><p>' . $step[1] . '</p></div></div>';
+	}
+	$html .= '</div><div class="process-photo"><img src="' . esc_url( $assets_uri . 'alarme-pose.jpg' ) . '" alt="Technicien France Technique Antenne en intervention" loading="lazy"></div></div>';
 	return antenniste91_html_block( $html );
 }
 
@@ -252,38 +258,24 @@ function antenniste91_chunk_reviews_teaser() {
 }
 
 /**
- * Carte stylisée du département de l'Essonne (91), avec les principales
- * communes nommées en vraies balises <text> — lisibles, sélectionnables,
- * et utiles au référencement local, pas juste décoratives.
+ * Vraie carte des communes de l'Essonne (91), fournie par la cliente,
+ * utilisée telle quelle, avec quelques repères animés (pastille rouge
+ * qui pulse) positionnés sur les villes principales.
  */
-function antenniste91_essonne_map_svg() {
-	$towns = array(
-		array( 150, 112, 'Évry-Courcouronnes', true ),
-		array( 188, 118, 'Corbeil-Essonnes', false ),
-		array( 72, 44, 'Massy', false ),
-		array( 95, 60, 'Palaiseau', false ),
-		array( 58, 212, 'Étampes', false ),
-		array( 188, 52, 'Savigny-sur-Orge', false ),
-		array( 222, 72, 'Draveil', false ),
-		array( 132, 160, 'Brétigny-sur-Orge', false ),
+function antenniste91_essonne_map_image() {
+	$image_url = esc_url( get_template_directory_uri() . '/assets/photos/carte-essonne.webp' );
+	$markers   = array(
+		array( 75, 29, 'Évry-Courcouronnes' ),
+		array( 48, 10, 'Massy' ),
+		array( 39, 70, 'Étampes' ),
 	);
-
-	$svg = '<svg viewBox="0 0 300 260" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="Carte du département de l\'Essonne (91) avec ses principales communes">';
-	$svg .= '<path d="M42 22 112 16 182 10 232 30 262 62 250 102 272 142 230 192 180 232 120 246 70 220 30 180 15 130 26 80Z" fill="var(--navy-tint)" stroke="var(--navy)" stroke-width="2.5"/>';
-
-	foreach ( $towns as $t ) {
-		list( $x, $y, $label, $is_main ) = $t;
-		if ( $is_main ) {
-			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="6" fill="var(--accent)" stroke="none"/>';
-			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="10" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity=".5"/>';
-			$svg .= '<text x="' . $x . '" y="' . ( $y - 16 ) . '" text-anchor="middle" font-family="Public Sans, sans-serif" font-weight="800" font-size="13" fill="currentColor" stroke="none">' . esc_html( $label ) . '</text>';
-		} else {
-			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="3.5" fill="currentColor" stroke="none" opacity=".7"/>';
-			$svg .= '<text x="' . $x . '" y="' . ( $y - 8 ) . '" text-anchor="middle" font-family="Public Sans, sans-serif" font-weight="600" font-size="10.5" fill="currentColor" stroke="none" opacity=".85">' . esc_html( $label ) . '</text>';
-		}
+	$html = '<div class="essonne-map"><img src="' . $image_url . '" alt="Carte des communes du département de l\'Essonne (91)" loading="lazy">';
+	foreach ( $markers as $m ) {
+		list( $x, $y, $label ) = $m;
+		$html .= '<span class="essonne-marker" style="left:' . $x . '%; top:' . $y . '%;" title="' . esc_attr( $label ) . '"><span class="ping"></span></span>';
 	}
-	$svg .= '</svg>';
-	return $svg;
+	$html .= '</div>';
+	return $html;
 }
 
 function antenniste91_chunk_zone_chips() {
@@ -337,7 +329,7 @@ function antenniste91_content_home() {
 		. '<p>Nous intervenons dans l\'ensemble du département de l\'Essonne et les communes limitrophes, déplacement inclus dans le devis, quelle que soit la commune.</p>'
 		. antenniste91_chunk_zone_chips()
 		. '<a class="link-arrow" href="' . esc_url( home_url( '/zone-intervention/' ) ) . '">Voir le détail des secteurs →</a>'
-		. '</div><div class="zone-map-wrap">' . antenniste91_essonne_map_svg() . '</div></div>'
+		. '</div><div class="zone-map-wrap">' . antenniste91_essonne_map_image() . '</div></div>'
 	);
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Avis clients</span>' );
@@ -608,7 +600,7 @@ function antenniste91_content_service_visiophone() {
 }
 
 function antenniste91_content_zone() {
-	$c  = antenniste91_html_block( '<div class="zone-map-wrap zone-map-standalone">' . antenniste91_essonne_map_svg() . '</div>' );
+	$c  = antenniste91_html_block( '<div class="zone-map-wrap zone-map-standalone">' . antenniste91_essonne_map_image() . '</div>' );
 	$c .= antenniste91_paragraph_block( "Nous intervenons dans tout le département de l'Essonne (91), sans exception, ainsi que dans les communes limitrophes. Le déplacement est toujours inclus dans le devis." );
 	$c .= antenniste91_heading_block( 'Quelques communes où nous intervenons régulièrement', 3 );
 	$c .= antenniste91_chunk_zone_chips();
@@ -836,4 +828,35 @@ function antenniste91_content_mentions_legales() {
 	$c .= antenniste91_heading_block( 'Données personnelles', 3 );
 	$c .= antenniste91_paragraph_block( "Les informations transmises via ce site (téléphone, email) ne sont utilisées que pour répondre à votre demande. <span class=\"ph\">Cette section doit être complétée ou validée avec un professionnel du droit avant mise en ligne.</span>" );
 	return $c;
+}
+
+/**
+ * Bandeau d'appel final (404, contact, pages génériques, articles) : photo
+ * réelle entourée de deux formes douces (accent + marine), texte et bouton
+ * d'appel. Un seul helper pour ne pas répéter ce bloc dans 4 templates.
+ */
+function antenniste91_render_final_cta( $eyebrow, $heading, $lead = '' ) {
+	$assets_uri = get_template_directory_uri() . '/assets/photos/';
+	?>
+	<div class="inner-cta">
+		<div class="inner-cta-visual">
+			<svg class="blob blob-1" viewBox="0 0 200 200" fill="currentColor"><path d="M48 16c34-14 90-8 118 24s28 84-4 112-88 30-122-2S14 30 48 16Z"/></svg>
+			<svg class="blob blob-2" viewBox="0 0 200 200" fill="currentColor"><path d="M60 10c40-18 110 2 128 46s-10 96-52 118-104 6-126-38S20 28 60 10Z"/></svg>
+			<div class="inner-cta-photo">
+				<img src="<?php echo esc_url( $assets_uri . 'alarme-pose.jpg' ); ?>" alt="Technicien France Technique Antenne en intervention" loading="lazy">
+			</div>
+		</div>
+		<div>
+			<span class="eyebrow inv"><?php echo esc_html( $eyebrow ); ?></span>
+			<h2><?php echo esc_html( $heading ); ?></h2>
+			<?php if ( $lead ) : ?><p><?php echo esc_html( $lead ); ?></p><?php endif; ?>
+			<div class="hero-ctas">
+				<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+					Appeler maintenant
+				</a>
+			</div>
+		</div>
+	</div>
+	<?php
 }

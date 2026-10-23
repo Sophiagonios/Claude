@@ -25,15 +25,7 @@ while ( have_posts() ) :
 endwhile;
 ?>
 
-<div class="inner-cta">
-	<span class="eyebrow inv">Prêt à commencer</span>
-	<h2>Un appel suffit pour lancer le diagnostic.</h2>
-	<p>Décrivez votre besoin, obtenez un créneau et un devis gratuit — sans engagement.</p>
-	<div class="hero-ctas">
-		<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">Appeler maintenant</a>
-	</div>
-	<p style="margin-top:16px; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
-</div>
+<?php antenniste91_render_final_cta( 'Prêt à commencer', 'Un appel suffit pour lancer le diagnostic.', "Décrivez votre besoin, obtenez un créneau et un devis gratuit, sans engagement." ); ?>
 
 <?php
 get_footer();

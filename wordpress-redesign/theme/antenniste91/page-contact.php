@@ -27,7 +27,7 @@ while ( have_posts() ) :
 
 			<?php if ( 'sent' === $status ) : ?>
 				<div class="callout" style="border-left-color:var(--success);">
-					<p><strong>Message envoyé.</strong> Nous vous répondons au plus vite — ou appelez directement si c'est urgent : <?php echo antenniste91_phone_display(); ?>.</p>
+					<p><strong>Message envoyé.</strong> Nous vous répondons au plus vite, ou appelez directement si c'est urgent : <?php echo antenniste91_phone_display(); ?>.</p>
 				</div>
 			<?php elseif ( 'invalid' === $status ) : ?>
 				<div class="callout" style="border-left-color:#B3261E;">
@@ -75,15 +75,7 @@ while ( have_posts() ) :
 endwhile;
 ?>
 
-<div class="inner-cta">
-	<span class="eyebrow inv">Plus rapide qu'un formulaire</span>
-	<h2>Un appel suffit pour lancer le diagnostic.</h2>
-	<div class="hero-ctas">
-		<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
-			Appeler maintenant
-		</a>
-	</div>
-</div>
+<?php antenniste91_render_final_cta( "Plus rapide qu'un formulaire", 'Un appel suffit pour lancer le diagnostic.' ); ?>
 
 <?php
 get_footer();

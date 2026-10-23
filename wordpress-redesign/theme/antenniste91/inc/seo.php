@@ -26,7 +26,7 @@ function antenniste91_meta_title() {
 	if ( is_singular() ) {
 		return wp_get_document_title();
 	}
-	return get_bloginfo( 'name' ) . ' — ' . get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' );
+	return get_bloginfo( 'name' ) . ' · ' . get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' );
 }
 
 function antenniste91_head_meta() {

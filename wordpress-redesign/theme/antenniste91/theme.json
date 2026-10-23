@@ -14,23 +14,22 @@
     },
     "typography": {
       "fontFamilies": [
-        { "slug": "display", "name": "Titres", "fontFamily": "'Archivo', system-ui, sans-serif" },
-        { "slug": "body", "name": "Texte", "fontFamily": "'Public Sans', system-ui, sans-serif" },
-        { "slug": "mono", "name": "Mono", "fontFamily": "'IBM Plex Mono', ui-monospace, monospace" }
+        { "slug": "display", "name": "Titres", "fontFamily": "'Montserrat', system-ui, sans-serif" },
+        { "slug": "body", "name": "Texte", "fontFamily": "'Roboto', system-ui, sans-serif" }
       ]
     },
     "layout": { "contentSize": "760px", "wideSize": "1240px" }
   },
   "styles": {
     "color": { "background": "#FFFFFF", "text": "#16202B" },
-    "typography": { "fontFamily": "'Public Sans', system-ui, sans-serif" },
+    "typography": { "fontFamily": "'Roboto', system-ui, sans-serif" },
     "elements": {
       "button": {
         "color": { "background": "#C98A33", "text": "#2B1B04" },
         "border": { "radius": "10px" }
       },
       "heading": {
-        "typography": { "fontFamily": "'Archivo', system-ui, sans-serif", "fontWeight": "800" }
+        "typography": { "fontFamily": "'Montserrat', system-ui, sans-serif", "fontWeight": "800" }
       }
     }
   }

@@ -47,7 +47,7 @@ get_header();
 			</div>
 
 			<div class="hero-photo">
-				<div class="cap">Photo à ajouter — une intervention réelle (antenne, Starlink ou caméra posée)</div>
+				<div class="cap">Photo à ajouter : une intervention réelle (antenne, Starlink ou caméra posée)</div>
 			</div>
 		</div>
 	</div>
