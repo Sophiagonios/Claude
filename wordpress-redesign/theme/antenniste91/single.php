@@ -7,10 +7,14 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$banner_photo = antenniste91_blog_banner_photo( get_post_field( 'post_name' ) );
+	$banner_photo_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+	if ( ! $banner_photo_url ) {
+		$fallback         = antenniste91_blog_banner_photo( get_post_field( 'post_name' ) );
+		$banner_photo_url = $fallback ? get_template_directory_uri() . '/assets/photos/' . $fallback : '';
+	}
 	?>
-	<?php if ( $banner_photo ) : ?>
-		<div class="page-banner-photo" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/photos/' . $banner_photo ); ?>');">
+	<?php if ( $banner_photo_url ) : ?>
+		<div class="page-banner-photo" style="background-image:url('<?php echo esc_url( $banner_photo_url ); ?>');">
 			<div class="wrap">
 				<p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a> / <a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">Blog</a></p>
 				<span class="eyebrow"><?php echo esc_html( get_the_date() ); ?></span>

@@ -12,12 +12,16 @@ while ( have_posts() ) :
 	the_post();
 	?>
 	<?php
-	$service_slugs = array( 'antenne-tv', 'antenne-tv-arpajon', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' );
-	$is_service    = in_array( get_post_field( 'post_name' ), $service_slugs, true );
-	$banner_photo  = $is_service ? antenniste91_service_banner_photo( get_post_field( 'post_name' ) ) : '';
+	$service_slugs    = array( 'antenne-tv', 'antenne-tv-arpajon', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' );
+	$is_service       = in_array( get_post_field( 'post_name' ), $service_slugs, true );
+	$banner_photo_url = $is_service ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : '';
+	if ( $is_service && ! $banner_photo_url ) {
+		$fallback         = antenniste91_service_banner_photo( get_post_field( 'post_name' ) );
+		$banner_photo_url = $fallback ? get_template_directory_uri() . '/assets/photos/' . $fallback : '';
+	}
 	?>
-	<?php if ( $banner_photo ) : ?>
-		<div class="page-banner-photo" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/photos/' . $banner_photo ); ?>');">
+	<?php if ( $banner_photo_url ) : ?>
+		<div class="page-banner-photo" style="background-image:url('<?php echo esc_url( $banner_photo_url ); ?>');">
 			<div class="wrap">
 				<p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a> / <?php the_title(); ?></p>
 				<span class="eyebrow"><?php bloginfo( 'name' ); ?></span>

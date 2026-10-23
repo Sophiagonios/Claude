@@ -7,10 +7,16 @@
  */
 
 get_header();
+
+$front_id        = (int) get_option( 'page_on_front' );
+$hero_photo_url  = $front_id ? get_the_post_thumbnail_url( $front_id, 'full' ) : false;
+if ( ! $hero_photo_url ) {
+	$hero_photo_url = get_template_directory_uri() . '/assets/photos/antenne-toit.jpg';
+}
 ?>
 
 <div class="wrap hero-band">
-	<div class="hero" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/photos/antenne-toit.jpg' ); ?>');">
+	<div class="hero" style="background-image:url('<?php echo esc_url( $hero_photo_url ); ?>');">
 		<div class="grid">
 			<div class="toggle" role="group" aria-label="Je suis...">
 				<button type="button" id="tab-part" aria-pressed="true">Particulier</button>
@@ -39,7 +45,7 @@ get_header();
 			<p style="margin:-6px 0 0; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
 
 			<div class="hero-photo">
-				<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/antenne-toit.jpg' ); ?>" alt="Antenne installée sur un toit en Essonne" width="800" height="600">
+				<img src="<?php echo esc_url( $hero_photo_url ); ?>" alt="Antenne installée sur un toit en Essonne" width="800" height="600">
 			</div>
 		</div>
 	</div>

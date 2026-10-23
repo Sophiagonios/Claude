@@ -39,7 +39,7 @@ function antenniste91_seed_blog_posts() {
 		if ( $existing ) {
 			continue;
 		}
-		wp_insert_post(
+		$post_id = wp_insert_post(
 			array(
 				'post_title'   => $post['title'],
 				'post_name'    => $post['slug'],
@@ -49,6 +49,73 @@ function antenniste91_seed_blog_posts() {
 				'post_type'    => 'post',
 			)
 		);
+		$photo = antenniste91_blog_banner_photo( $post['slug'] );
+		if ( $post_id && $photo ) {
+			antenniste91_set_default_thumbnail( $post_id, $photo, $post['title'] );
+		}
+	}
+}
+
+/**
+ * Importe une photo du thème dans la médiathèque, une seule fois (retrouvée
+ * ensuite par son titre), afin qu'elle devienne une vraie image de la
+ * bibliothèque — remplaçable depuis l'admin sans toucher au code.
+ */
+function antenniste91_seed_photo_attachment( $filename, $alt ) {
+	$title    = 'antenniste91-' . sanitize_title( pathinfo( $filename, PATHINFO_FILENAME ) );
+	$existing = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'title'          => $title,
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+		)
+	);
+	if ( $existing ) {
+		return (int) $existing[0];
+	}
+
+	$source = get_template_directory() . '/assets/photos/' . $filename;
+	if ( ! file_exists( $source ) ) {
+		return 0;
+	}
+
+	$upload = wp_upload_bits( $filename, null, file_get_contents( $source ) );
+	if ( ! empty( $upload['error'] ) ) {
+		return 0;
+	}
+
+	$filetype      = wp_check_filetype( $upload['file'], null );
+	$attachment_id = wp_insert_attachment(
+		array(
+			'post_title'     => $title,
+			'post_mime_type' => $filetype['type'],
+			'post_status'    => 'inherit',
+		),
+		$upload['file']
+	);
+	if ( is_wp_error( $attachment_id ) || ! $attachment_id ) {
+		return 0;
+	}
+
+	update_post_meta( $attachment_id, '_wp_attachment_image_alt', $alt );
+
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$metadata = wp_generate_attachment_metadata( $attachment_id, $upload['file'] );
+	wp_update_attachment_metadata( $attachment_id, $metadata );
+
+	return $attachment_id;
+}
+
+/** Donne à une page/un article une image à la une par défaut — la propriétaire peut la changer ensuite depuis l'admin. */
+function antenniste91_set_default_thumbnail( $post_id, $filename, $alt ) {
+	if ( ! $post_id || has_post_thumbnail( $post_id ) ) {
+		return;
+	}
+	$attachment_id = antenniste91_seed_photo_attachment( $filename, $alt );
+	if ( $attachment_id ) {
+		set_post_thumbnail( $post_id, $attachment_id );
 	}
 }
 
@@ -85,6 +152,22 @@ function antenniste91_bootstrap() {
 	}
 
 	antenniste91_seed_blog_posts();
+
+	$service_pages = array(
+		'antenne-tv'         => $antenne,
+		'antenne-tv-arpajon' => $antenne_arpajon,
+		'parabole-satellite' => $parabole,
+		'starlink'           => $starlink,
+		'videosurveillance'  => $video,
+		'visiophone'         => $visiophone,
+	);
+	foreach ( $service_pages as $slug => $page_id ) {
+		$photo = antenniste91_service_banner_photo( $slug );
+		if ( $page_id && $photo ) {
+			antenniste91_set_default_thumbnail( $page_id, $photo, get_the_title( $page_id ) );
+		}
+	}
+	antenniste91_set_default_thumbnail( $accueil, 'antenne-toit.jpg', 'Antenne et parabole installées sur un toit en Essonne' );
 
 	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $contact ) );
 

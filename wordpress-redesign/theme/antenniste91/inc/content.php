@@ -57,11 +57,16 @@ function antenniste91_photo_placeholder_block( $captions ) {
 	return antenniste91_html_block( $html );
 }
 
-/** Une vraie photo, à la place d'un emplacement en attente, dans le même format que les placeholders qu'elle remplace. */
+/**
+ * Une vraie photo de la médiathèque, comme un bloc Image standard — la
+ * propriétaire peut cliquer dessus dans l'éditeur et la remplacer par une
+ * autre photo, sans toucher au code.
+ */
 function antenniste91_photo_block( $filename, $alt ) {
-	$src  = get_template_directory_uri() . '/assets/photos/' . $filename;
-	$html = '<div class="photo-grid cols-1"><div class="photo-real"><img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" loading="lazy"></div></div>';
-	return antenniste91_html_block( $html );
+	$src = get_template_directory_uri() . '/assets/photos/' . $filename;
+	return "<!-- wp:image {\"sizeSlug\":\"large\",\"className\":\"photo-real\"} -->\n"
+		. '<figure class="wp-block-image size-large photo-real"><img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '"/></figure>'
+		. "\n<!-- /wp:image -->\n\n";
 }
 
 /**

@@ -19,12 +19,16 @@ get_header();
 			<?php
 			while ( have_posts() ) :
 				the_post();
-				$card_photo = antenniste91_blog_banner_photo( get_post_field( 'post_name' ) );
+				$card_photo_url = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
+				if ( ! $card_photo_url ) {
+					$fallback       = antenniste91_blog_banner_photo( get_post_field( 'post_name' ) );
+					$card_photo_url = $fallback ? get_template_directory_uri() . '/assets/photos/' . $fallback : '';
+				}
 				?>
 				<a class="card" href="<?php the_permalink(); ?>">
 					<div class="card-photo">
-						<?php if ( $card_photo ) : ?>
-							<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/' . $card_photo ); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
+						<?php if ( $card_photo_url ) : ?>
+							<img src="<?php echo esc_url( $card_photo_url ); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
 						<?php else : ?>
 							<?php echo antenniste91_photo_ph_inner( get_the_title() ); ?>
 						<?php endif; ?>
