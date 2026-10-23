@@ -17,13 +17,13 @@ Text Domain: antenniste91
    visite le site.
    ========================================================= */
 :root{
-  --paper:#141414;
-  --paper-2:#1C1C1C;
-  --card:#1E1E1E;
-  --text:#F0F0EE;
-  --text-soft:#C9C9C7;
-  --muted:#9A9A98;
-  --line:#343434;
+  --paper:#171E29;
+  --paper-2:#1E2736;
+  --card:#242F42;
+  --text:#F3F6F9;
+  --text-soft:#C7D2DF;
+  --muted:#8FA0B5;
+  --line:#37455C;
 
   --navy:#2E6C9E;
   --navy-dark:#0B2740;
@@ -169,7 +169,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
    5) Hero (front page — fixed template markup)
    ========================================================= */
 .hero-band{ padding-block:22px 0; }
-.hero{ color:#fff; border-radius:var(--radius-lg); box-shadow:var(--shadow); position:relative; overflow:hidden; background-color:#0D0D0D; background-size:cover; background-position:center; background-repeat:no-repeat; min-height:560px; display:flex; align-items:center; }
+.hero{ color:#fff; border-radius:var(--radius-lg); box-shadow:var(--shadow); position:relative; overflow:hidden; background-color:#161E2A; background-size:cover; background-position:center; background-repeat:no-repeat; min-height:560px; display:flex; align-items:center; }
 .hero::before{ content:""; position:absolute; inset:0; background:linear-gradient(100deg, rgba(8,8,8,.85) 0%, rgba(8,8,8,.62) 40%, rgba(8,8,8,.28) 70%, rgba(8,8,8,.05) 100%); pointer-events:none; }
 .hero .grid{ position:relative; z-index:1; padding:clamp(30px,5vw,54px); max-width:640px; }
 .hero-photo{ display:none; }
@@ -177,10 +177,9 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 	.hero{ min-height:0; background-image:none !important; }
 	.hero::before{ display:none; }
 	.hero .grid{ max-width:none; }
-	.hero-photo{ display:block; position:relative; aspect-ratio:4/5; max-width:360px; margin:28px auto 0; border-radius:var(--radius-md); overflow:visible; }
-	.hero-photo > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:var(--radius-md); box-shadow:0 30px 60px -24px rgba(0,0,0,.6); }
-	.hero-photo-sub{ position:absolute; left:-8%; bottom:-10%; width:52%; aspect-ratio:4/3; border-radius:14px; overflow:hidden; border:4px solid var(--paper); box-shadow:0 20px 40px -16px rgba(0,0,0,.7); z-index:2; }
-	.hero-photo-sub img{ width:100%; height:100%; object-fit:cover; display:block; }
+	.hero-photo{ display:block; position:relative; aspect-ratio:4/3; margin:28px 0 0; border-radius:var(--radius-md); overflow:hidden; }
+	.hero-photo > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+	.hero-photo-sub{ display:none; }
 }
 .pill{ display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:7px 14px; border-radius:8px; font-family:'Roboto',sans-serif; font-size:11.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:#D8D8D6; margin-bottom:20px; }
 .pill .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
@@ -227,7 +226,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 /* Bande volontairement toujours sombre, quel que soit le thème choisi :
    toutes ses couleurs sont donc figées (pas de var(--…) qui basculerait
    en clair) pour ne jamais perdre le contraste texte/fond. */
-.whyus-band{ background:#0D0D0D; border:1px solid #2A2A2A; border-radius:var(--radius-lg); padding:clamp(28px,4.5vw,48px); margin-top:30px; }
+.whyus-band{ background:#161E2A; border:1px solid #34415A; border-radius:var(--radius-lg); padding:clamp(28px,4.5vw,48px); margin-top:30px; }
 .whyus-grid{ display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:48px; align-items:center; }
 @media (max-width:860px){ .whyus-grid{ grid-template-columns:1fr; } }
 .whyus-photo{ aspect-ratio:4/5; border-radius:var(--radius-lg); overflow:hidden; }
@@ -235,7 +234,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 @media (max-width:860px){ .whyus-photo{ aspect-ratio:16/9; order:-1; } }
 .whyus-cards{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
 @media (max-width:480px){ .whyus-cards{ grid-template-columns:1fr; } }
-.whyus-card{ background:#1C1C1C; border:1px solid #2A2A2A; border-radius:14px; padding:24px; }
+.whyus-card{ background:#1E2838; border:1px solid #34415A; border-radius:14px; padding:24px; }
 .whyus-icon{ width:56px; height:56px; border-radius:14px; background:#2E2213; color:#F5A623; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
 .whyus-icon svg{ width:26px; height:26px; }
 .whyus-card h4{ color:#fff; font-size:18px; margin:0 0 8px; font-weight:700; }
@@ -449,7 +448,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 .entry-content h3{ margin-top:1.3em; }
 .entry-content p{ color:var(--text-soft); }
 
-.inner-cta{ background:linear-gradient(165deg, #1C1409, #0F0D0A); color:#fff; border-radius:var(--radius-lg); padding:clamp(32px,5vw,52px); margin:clamp(40px,5vw,64px) 0 0; border:1px solid #2A2A2A; text-align:center; }
+.inner-cta{ background:linear-gradient(165deg, #241B0C, #17120A); color:#fff; border-radius:var(--radius-lg); padding:clamp(32px,5vw,52px); margin:clamp(40px,5vw,64px) 0 0; border:1px solid #3A3022; text-align:center; }
 .inner-cta .eyebrow.inv{ color:var(--accent); }
 .inner-cta h2{ color:#fff; font-size:clamp(24px,3vw,32px); margin:6px auto 12px; max-width:38ch; }
 .inner-cta p{ color:#D8D8D6; margin:0 auto 22px; max-width:52ch; }
@@ -458,7 +457,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 /* =========================================================
    8) Footer + sticky mobile call bar
    ========================================================= */
-.site-footer{ background:#0A0A0A; color:#B5B5B3; padding-block:52px 86px; border-top:1px solid var(--line); }
+.site-footer{ background:#121925; color:#B9C4D2; padding-block:52px 86px; border-top:1px solid var(--line); }
 .site-footer .fgrid{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); gap:36px; }
 @media (max-width:860px){ .site-footer .fgrid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
 @media (max-width:520px){ .site-footer .fgrid{ grid-template-columns:1fr; } }
@@ -480,7 +479,7 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
    ========================================================= */
 .cookie-banner{ position:fixed; left:0; right:0; bottom:0; z-index:70; padding:16px; }
 .cookie-banner[hidden]{ display:none; }
-.cookie-banner-box{ max-width:720px; margin-inline:auto; background:#0D0D0D; color:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:0 20px 44px -20px rgba(0,0,0,.6); display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between; }
+.cookie-banner-box{ max-width:720px; margin-inline:auto; background:#1E2736; color:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:0 20px 44px -20px rgba(0,0,0,.6); display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between; }
 .cookie-banner-box p{ margin:0; font-size:13.5px; color:#D8D8D6; flex:1 1 260px; }
 .cookie-banner-box a{ color:var(--accent); text-decoration:underline; }
 .cookie-banner-actions{ display:flex; gap:10px; flex:none; }
