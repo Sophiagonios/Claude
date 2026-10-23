@@ -76,15 +76,12 @@ function antenniste91_photo_block( $filename, $alt ) {
  * flèches, pour pouvoir en ajouter d'autres au fur et à mesure.
  */
 function antenniste91_avant_apres_block( $items ) {
-	$uri  = get_template_directory_uri() . '/assets/photos/';
 	$html = '<div class="ba-grid">';
 	foreach ( $items as $item ) {
-		$before = $item['before'];
-		$after  = $item['after'];
 		$html .= '<div class="ba-wrap">'
 			. '<div class="ba-slider">'
-			. '<img class="ba-img ba-after" src="' . esc_url( $uri . $after['file'] ) . '" alt="' . esc_attr( $after['alt'] ) . '" loading="lazy">'
-			. '<img class="ba-img ba-before" src="' . esc_url( $uri . $before['file'] ) . '" alt="' . esc_attr( $before['alt'] ) . '" loading="lazy">'
+			. '<img class="ba-img ba-after" src="' . esc_url( $item['after_url'] ) . '" alt="' . esc_attr( $item['after_alt'] ) . '" loading="lazy">'
+			. '<img class="ba-img ba-before" src="' . esc_url( $item['before_url'] ) . '" alt="' . esc_attr( $item['before_alt'] ) . '" loading="lazy">'
 			. '<span class="ba-tag ba-tag-before">Avant</span>'
 			. '<span class="ba-tag ba-tag-after">Après</span>'
 			. '<div class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>'
@@ -100,22 +97,13 @@ function antenniste91_avant_apres_block( $items ) {
 	return antenniste91_html_block( $html );
 }
 
-/** Données partagées (accueil + page antenne-tv) pour le(s) comparateur(s) avant/après antenne. */
+/**
+ * Données partagées (accueil + page antenne-tv) pour le(s) comparateur(s)
+ * avant/après antenne — modifiables depuis Réglages → Avant / Après,
+ * voir inc/avant-apres-settings.php.
+ */
 function antenniste91_antenne_avant_apres_items() {
-	return array(
-		array(
-			'title'   => "Remplacement d'une antenne de toit",
-			'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Grande antenne râteau multi-éléments avant remplacement' ),
-			'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Petite antenne compacte installée en remplacement' ),
-			'caption' => 'Remplacement par une antenne plus compacte, en toiture.',
-		),
-		array(
-			'title'   => "Réglage d'une antenne de toit",
-			'before'  => array( 'file' => 'antenne-reglage-avant.jpg', 'alt' => 'Antenne de toit avant réglage' ),
-			'after'   => array( 'file' => 'antenne-reglage-apres.jpg', 'alt' => 'Antenne de toit réorientée après réglage' ),
-			'caption' => "Réorientation d'une antenne existante pour retrouver un signal stable.",
-		),
-	);
+	return antenniste91_get_avant_apres_items();
 }
 
 /** Highlighted price callout, distinct from the rest of the prose. */
@@ -153,14 +141,10 @@ function antenniste91_schema_marker( $x, $y, $n ) {
 
 /** Schéma en coupe d'une installation d'antenne : remplace une énième photo de toit par une explication visuelle, chaque chiffre renvoyant à sa légende. */
 function antenniste91_schema_antenne_block() {
-	$items = array(
-		array( '1', 'Antenne', "Capte le signal hertzien, orientée vers l'émetteur le plus proche." ),
-		array( '2', 'Mât et fixations', 'Fixation solide en toiture, dimensionnée pour résister au vent.' ),
-		array( '3', 'Câble de descente', "Relie l'antenne à l'amplificateur, protégé des intempéries." ),
-		array( '4', 'Amplificateur', 'Renforce le signal avant sa répartition dans le logement.' ),
-		array( '5', 'Répartiteur', 'Distribue le signal vers chaque prise TV du logement.' ),
-		array( '6', 'Prise TV', 'Un signal stable, prêt à brancher.' ),
-	);
+	$items = array();
+	foreach ( antenniste91_get_schema_legend() as $i => $entry ) {
+		$items[] = array( (string) ( $i + 1 ), $entry['title'], $entry['text'] );
+	}
 	$svg = '<svg viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">'
 		. '<path d="M20 120 L160 40 L300 120" stroke="currentColor" stroke-width="2" stroke-linejoin="round" opacity=".55"/>'
 		. '<path d="M40 120 L40 230 L280 230 L280 120" stroke="currentColor" stroke-width="1.5" opacity=".25"/>'

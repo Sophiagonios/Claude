@@ -169,4 +169,6 @@ require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/contact-form.php';
 require get_template_directory() . '/inc/security.php';
 require get_template_directory() . '/inc/cookie-consent.php';
+require get_template_directory() . '/inc/avant-apres-settings.php';
+require get_template_directory() . '/inc/schema-settings.php';
 require get_template_directory() . '/inc/bootstrap-content.php';
