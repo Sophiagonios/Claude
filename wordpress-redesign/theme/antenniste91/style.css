@@ -99,11 +99,11 @@ img{ max-width:100%; height:auto; display:block; }
 /* =========================================================
    3) Top bar + header
    ========================================================= */
-.topstrip{ background:#0A0A0A; color:#D8D8D6; font-family:'Roboto',sans-serif; font-size:14px; border-bottom:1px solid var(--line); }
-.topstrip svg{ color:var(--logo-blue); }
+.topstrip{ background:var(--accent); color:#2B1B04; font-family:'Roboto',sans-serif; font-size:14px; font-weight:600; border-bottom:1px solid var(--line); }
+.topstrip svg{ color:#2B1B04; }
 .topstrip .wrap{ display:flex; align-items:center; justify-content:center; gap:22px; padding-block:11px; flex-wrap:wrap; text-align:center; }
 .topstrip .hours, .topstrip .zone{ display:flex; align-items:center; gap:7px; white-space:nowrap; }
-.topstrip a{ color:#fff; font-weight:700; text-decoration:underline; text-underline-offset:2px; white-space:nowrap; }
+.topstrip a{ color:#2B1B04; font-weight:800; text-decoration:underline; text-underline-offset:2px; white-space:nowrap; }
 
 .site-header{ position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
 .site-header .wrap{ display:flex; align-items:center; justify-content:space-between; padding-block:13px; gap:16px; }

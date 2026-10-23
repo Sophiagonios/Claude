@@ -104,6 +104,12 @@ function antenniste91_antenne_avant_apres_items() {
 			'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Petite antenne compacte installée en remplacement' ),
 			'caption' => 'Remplacement par une antenne plus compacte, en toiture.',
 		),
+		array(
+			'title'   => "Réglage d'une antenne de toit",
+			'before'  => array( 'file' => 'antenne-reglage-avant.jpg', 'alt' => 'Antenne de toit avant réglage' ),
+			'after'   => array( 'file' => 'antenne-reglage-apres.jpg', 'alt' => 'Antenne de toit réorientée après réglage' ),
+			'caption' => "Réorientation d'une antenne existante pour retrouver un signal stable.",
+		),
 	);
 }
 
