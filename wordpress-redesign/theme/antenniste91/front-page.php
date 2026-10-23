@@ -37,6 +37,13 @@ get_header();
 				</div>
 			</div>
 			<p style="margin:-6px 0 0; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
+
+			<div class="hero-photo">
+				<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/antenne-toit.jpg' ); ?>" alt="Antenne installée sur un toit en Essonne" width="800" height="1000">
+				<div class="hero-photo-sub">
+					<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/parabole-toit.jpg' ); ?>" alt="Parabole satellite installée en toiture" width="400" height="300">
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -19,9 +19,16 @@ get_header();
 			<?php
 			while ( have_posts() ) :
 				the_post();
+				$card_photo = antenniste91_blog_banner_photo( get_post_field( 'post_name' ) );
 				?>
 				<a class="card" href="<?php the_permalink(); ?>">
-					<div class="card-photo"><?php echo antenniste91_photo_ph_inner( get_the_title() ); ?></div>
+					<div class="card-photo">
+						<?php if ( $card_photo ) : ?>
+							<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/' . $card_photo ); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
+						<?php else : ?>
+							<?php echo antenniste91_photo_ph_inner( get_the_title() ); ?>
+						<?php endif; ?>
+					</div>
 					<div class="card-body">
 						<span class="post-meta"><?php echo esc_html( get_the_date() ); ?></span>
 						<h3><?php the_title(); ?></h3>

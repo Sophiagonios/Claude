@@ -450,12 +450,24 @@ function antenniste91_service_toc() {
 /** Vraie photo en fond du bandeau d'en-tête, par page produit / géolocalisée. */
 function antenniste91_service_banner_photo( $slug ) {
 	$map = array(
-		'antenne-tv'          => 'antenne-toit.jpg',
+		'antenne-tv'          => 'antenne-reglage-avant.jpg',
 		'antenne-tv-arpajon'  => 'antenne-reglage-apres.jpg',
 		'parabole-satellite'  => 'parabole-toit.jpg',
 		'starlink'            => 'starlink-mur.jpg',
 		'videosurveillance'   => 'camera-interieure.png',
 		'visiophone'          => 'visiophone-entree.jpg',
+	);
+	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
+}
+
+/** Vraie photo en fond du bandeau d'en-tête, par article de blog. */
+function antenniste91_blog_banner_photo( $slug ) {
+	$map = array(
+		'antenne-tv-perd-signal-hiver'               => 'antenne-avant.jpg',
+		'autorisation-parabole-satellite'             => 'parabole-toit.jpg',
+		'starlink-essonne-vaut-le-coup'               => 'starlink-mur.jpg',
+		'videosurveillance-domicile-ce-quil-faut-savoir' => 'camera-interieure.png',
+		'copropriete-reparation-antenne-collective'   => 'antenne-apres.jpg',
 	);
 	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
 }
@@ -578,8 +590,7 @@ function antenniste91_content_geo_antenne_arpajon() {
 			),
 			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne, à Arpajon comme sur le reste du secteur. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
 			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
-			'photo1'      => 'Antenne installée sur un toit en Essonne',
-			'photo1_real' => 'antenne-toit.jpg',
+			'photo1_diagram' => true,
 			'avant_apres' => antenniste91_antenne_avant_apres_items(),
 			'faq'      => array(
 				array(

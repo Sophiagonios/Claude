@@ -169,11 +169,19 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
    5) Hero (front page — fixed template markup)
    ========================================================= */
 .hero-band{ padding-block:22px 0; }
-.hero{ color:#fff; border-radius:var(--radius-lg); box-shadow:var(--shadow); position:relative; overflow:hidden; background-size:cover; background-position:center; min-height:560px; display:flex; align-items:center; }
-.hero::before{ content:""; position:absolute; inset:0; background:linear-gradient(100deg, rgba(8,8,8,.93) 0%, rgba(8,8,8,.8) 38%, rgba(8,8,8,.4) 68%, rgba(8,8,8,.12) 100%); pointer-events:none; }
+.hero{ color:#fff; border-radius:var(--radius-lg); box-shadow:var(--shadow); position:relative; overflow:hidden; background-color:#0D0D0D; background-size:cover; background-position:center; background-repeat:no-repeat; min-height:560px; display:flex; align-items:center; }
+.hero::before{ content:""; position:absolute; inset:0; background:linear-gradient(100deg, rgba(8,8,8,.85) 0%, rgba(8,8,8,.62) 40%, rgba(8,8,8,.28) 70%, rgba(8,8,8,.05) 100%); pointer-events:none; }
 .hero .grid{ position:relative; z-index:1; padding:clamp(30px,5vw,54px); max-width:640px; }
-@media (max-width:700px){ .hero{ min-height:0; } .hero .grid{ max-width:none; } }
-@media (max-width:700px){ .hero .grid{ grid-template-columns:1fr; gap:36px; } }
+.hero-photo{ display:none; }
+@media (max-width:700px){
+	.hero{ min-height:0; background-image:none !important; }
+	.hero::before{ display:none; }
+	.hero .grid{ max-width:none; }
+	.hero-photo{ display:block; position:relative; aspect-ratio:4/5; max-width:360px; margin:28px auto 0; border-radius:var(--radius-md); overflow:visible; }
+	.hero-photo > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:var(--radius-md); box-shadow:0 30px 60px -24px rgba(0,0,0,.6); }
+	.hero-photo-sub{ position:absolute; left:-8%; bottom:-10%; width:52%; aspect-ratio:4/3; border-radius:14px; overflow:hidden; border:4px solid var(--paper); box-shadow:0 20px 40px -16px rgba(0,0,0,.7); z-index:2; }
+	.hero-photo-sub img{ width:100%; height:100%; object-fit:cover; display:block; }
+}
 .pill{ display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); padding:7px 14px; border-radius:8px; font-family:'Roboto',sans-serif; font-size:11.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:#D8D8D6; margin-bottom:20px; }
 .pill .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
 .toggle{ display:inline-flex; padding:4px; background:rgba(255,255,255,.07); border-radius:10px; border:1px solid rgba(255,255,255,.16); margin-bottom:20px; }
