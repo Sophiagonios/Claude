@@ -29,7 +29,7 @@ get_header();
 
 				<div class="hero-ctas">
 					<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+						<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.9.6.6 0 1.1.5 1.1 1.1v3.8c0 .6-.5 1.1-1.1 1.1C9.8 21.6 2.4 14.2 2.4 2.5c0-.6.5-1.1 1.1-1.1H7.3c.6 0 1.1.5 1.1 1.1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
 						Appeler maintenant
 					</a>
 					<div class="google-badge">
@@ -40,9 +40,9 @@ get_header();
 				<p style="margin:-6px 0 26px; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
 
 				<ul class="checklist">
-					<li>Un conseil clair, même sans engagement</li>
-					<li>Un expert qui répond à toutes vos questions</li>
-					<li>Rien ne repart tant que ce n'est pas réglé</li>
+					<li>Diagnostic avant tout devis</li>
+					<li>Prix annoncé au téléphone, jamais de surprise</li>
+					<li>Toujours le même technicien, du premier appel au SAV</li>
 				</ul>
 			</div>
 

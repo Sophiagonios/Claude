@@ -108,6 +108,23 @@ function antenniste91_inline_scripts() {
 				paint(next);
 			});
 		}
+
+		/* Comparateur avant/après à curseur : la photo "avant" est révélée
+		   par un clip-path piloté par un <input type="range"> natif, donc
+		   déplaçable au doigt, à la souris, ou au clavier (flèches). */
+		document.querySelectorAll('.ba-slider').forEach(function(slider){
+			var range = slider.querySelector('.ba-range');
+			var before = slider.querySelector('.ba-before');
+			var handle = slider.querySelector('.ba-handle');
+			if ( ! range || ! before || ! handle ) { return; }
+			function update(){
+				var v = range.value;
+				before.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
+				handle.style.left = v + '%';
+			}
+			range.addEventListener('input', update);
+			update();
+		});
 	})();
 	</script>
 	<?php

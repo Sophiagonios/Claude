@@ -64,12 +64,19 @@ function antenniste91_photo_block( $filename, $alt ) {
 	return antenniste91_html_block( $html );
 }
 
-/** Bloc avant/après : deux vraies photos côte à côte, chacune repérée par une étiquette. */
-function antenniste91_avant_apres_block( $before, $after ) {
+/** Comparateur avant/après à curseur : une seule photo glisse pour révéler l'autre, comme sur la référence envoyée par la cliente. */
+function antenniste91_avant_apres_block( $before, $after, $caption = '' ) {
 	$uri = get_template_directory_uri() . '/assets/photos/';
-	$html = '<div class="avant-apres">'
-		. '<figure><div class="aa-photo"><img src="' . esc_url( $uri . $before['file'] ) . '" alt="' . esc_attr( $before['alt'] ) . '" loading="lazy"></div><figcaption><span class="aa-tag">Avant</span>' . esc_html( $before['label'] ) . '</figcaption></figure>'
-		. '<figure><div class="aa-photo"><img src="' . esc_url( $uri . $after['file'] ) . '" alt="' . esc_attr( $after['alt'] ) . '" loading="lazy"></div><figcaption><span class="aa-tag aa-tag-after">Après</span>' . esc_html( $after['label'] ) . '</figcaption></figure>'
+	$html = '<div class="ba-wrap">'
+		. '<div class="ba-slider">'
+		. '<img class="ba-img ba-after" src="' . esc_url( $uri . $after['file'] ) . '" alt="' . esc_attr( $after['alt'] ) . '" loading="lazy">'
+		. '<img class="ba-img ba-before" src="' . esc_url( $uri . $before['file'] ) . '" alt="' . esc_attr( $before['alt'] ) . '" loading="lazy">'
+		. '<span class="ba-tag ba-tag-before">Avant</span>'
+		. '<span class="ba-tag ba-tag-after">Après</span>'
+		. '<div class="ba-handle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div>'
+		. '<input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Faire glisser pour comparer avant et après">'
+		. '</div>'
+		. ( $caption ? '<p class="ba-caption">' . esc_html( $caption ) . '</p>' : '' )
 		. '</div>';
 	return antenniste91_html_block( $html );
 }
@@ -199,8 +206,8 @@ function antenniste91_chunk_expertise() {
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html = '<div class="whyus-band"><div class="whyus-grid">'
 		. '<div class="whyus-photo">'
-		. '<img src="' . esc_url( $assets_uri . 'parabole-toit.jpg' ) . '" alt="Technicien France Technique Antenne en intervention sur un toit" loading="lazy">'
-		. '<div class="whyus-photo-sub"><img src="' . esc_url( $assets_uri . 'visiophone-entree.jpg' ) . '" alt="Visiophone installé près d\'une porte d\'entrée" loading="lazy"></div>'
+		. '<img src="' . esc_url( $assets_uri . 'starlink-mur.jpg' ) . '" alt="Antenne Starlink installée sur un mur, en hauteur" loading="lazy">'
+		. '<div class="whyus-photo-sub"><img src="' . esc_url( $assets_uri . 'camera-interieure.png' ) . '" alt="Caméra de vidéosurveillance intérieure" loading="lazy"></div>'
 		. '</div>'
 		. '<div class="whyus-cards">';
 	foreach ( $items as $item ) {
@@ -460,7 +467,7 @@ function antenniste91_service_page( $args ) {
 	$c .= antenniste91_price_box_block( $args['pricing'] );
 	$c .= empty( $args['avant_apres'] )
 		? antenniste91_photo_placeholder_block( array( 'avant l\'intervention', 'après l\'intervention' ) )
-		: antenniste91_avant_apres_block( $args['avant_apres']['before'], $args['avant_apres']['after'] );
+		: antenniste91_avant_apres_block( $args['avant_apres']['before'], $args['avant_apres']['after'], $args['avant_apres']['caption'] );
 	if ( ! empty( $args['faq'] ) ) {
 		$c .= antenniste91_heading_block( 'Questions fréquentes', 3, '', 'faq' );
 		foreach ( $args['faq'] as $q ) {
@@ -491,8 +498,9 @@ function antenniste91_content_service_antenne() {
 			'illustration' => 'antenne',
 			'photo1'   => 'antenne en cours de réglage sur toiture',
 			'avant_apres' => array(
-				'before' => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Antenne râteau installée en toiture, premier réglage', 'label' => "Antenne posée, premier réglage" ),
-				'after'  => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Antenne UHF/VHF réorientée et fixée en toiture', 'label' => "Réglage fin terminé, chaînes testées" ),
+				'before'  => array( 'file' => 'antenne-avant.jpg', 'alt' => 'Antenne râteau installée en toiture, avant le réglage fin' ),
+				'after'   => array( 'file' => 'antenne-apres.jpg', 'alt' => 'Antenne UHF/VHF réorientée et fixée en toiture, après réglage' ),
+				'caption' => 'Faites glisser pour comparer : réglage et réorientation d\'une antenne de toit.',
 			),
 			'faq'      => array(
 				array(
@@ -879,15 +887,15 @@ function antenniste91_content_mentions_legales() {
 function antenniste91_final_cta_html( $eyebrow, $heading, $lead = '' ) {
 	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html  = '<div class="inner-cta">';
-	$html .= '<div class="inner-cta-visual"><div class="inner-cta-photo">';
-	$html .= '<img src="' . esc_url( $assets_uri . 'antenne-toit.jpg' ) . '" alt="Installation réalisée par France Technique Antenne" loading="lazy">';
+	$html .= '<div class="inner-cta-visual"><div class="inner-cta-photo illustration">';
+	$html .= '<img src="' . esc_url( $assets_uri . 'cta-illustration.webp' ) . '" alt="Antenne, parabole et caméra connectées" loading="lazy">';
 	$html .= '</div></div>';
 	$html .= '<div><span class="eyebrow inv">' . esc_html( $eyebrow ) . '</span><h2>' . esc_html( $heading ) . '</h2>';
 	if ( $lead ) {
 		$html .= '<p>' . esc_html( $lead ) . '</p>';
 	}
 	$html .= '<div class="hero-ctas"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">';
-	$html .= '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>';
+	$html .= '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.9.6.6 0 1.1.5 1.1 1.1v3.8c0 .6-.5 1.1-1.1 1.1C9.8 21.6 2.4 14.2 2.4 2.5c0-.6.5-1.1 1.1-1.1H7.3c.6 0 1.1.5 1.1 1.1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>';
 	$html .= 'Appeler maintenant</a></div></div></div>';
 	return $html;
 }
