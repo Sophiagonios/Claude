@@ -10,42 +10,33 @@ get_header();
 ?>
 
 <div class="wrap hero-band">
-	<div class="hero">
+	<div class="hero" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/photos/antenne-toit.jpg' ); ?>');">
 		<div class="grid">
-			<div>
-				<div class="toggle" role="group" aria-label="Je suis...">
-					<button type="button" id="tab-part" aria-pressed="true">Particulier</button>
-					<button type="button" id="tab-pro" aria-pressed="false">Professionnel</button>
-				</div>
-
-				<div class="audience-panel" id="panel-part">
-					<h1><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_title_part' ) ); ?></h1>
-					<p class="lead"><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_lead_part' ) ); ?></p>
-				</div>
-				<div class="audience-panel" id="panel-pro" hidden>
-					<h1><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_title_pro' ) ); ?></h1>
-					<p class="lead"><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_lead_pro' ) ); ?></p>
-				</div>
-
-				<div class="hero-ctas">
-					<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
-						<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.9.6.6 0 1.1.5 1.1 1.1v3.8c0 .6-.5 1.1-1.1 1.1C9.8 21.6 2.4 14.2 2.4 2.5c0-.6.5-1.1 1.1-1.1H7.3c.6 0 1.1.5 1.1 1.1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
-						Appeler maintenant
-					</a>
-					<div class="google-badge">
-						<svg viewBox="0 0 24 24" width="22" height="22"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.63h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.89c2.27-2.09 3.58-5.17 3.58-8.81Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.92l-3.89-3c-1.08.73-2.46 1.15-4.04 1.15-3.1 0-5.73-2.09-6.67-4.9H1.3v3.09A12 12 0 0 0 12 24Z"/><path fill="#FBBC05" d="M5.33 14.33a7.2 7.2 0 0 1 0-4.66V6.58H1.3a12 12 0 0 0 0 10.84l4.03-3.09Z"/><path fill="#EA4335" d="M12 4.77c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.94 1.19 15.23 0 12 0A12 12 0 0 0 1.3 6.58l4.03 3.09C6.27 6.86 8.9 4.77 12 4.77Z"/></svg>
-						<span><strong><?php echo antenniste91_google_rating(); ?>/5</strong> sur Google</span>
-					</div>
-				</div>
-				<p style="margin:-6px 0 0; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
+			<div class="toggle" role="group" aria-label="Je suis...">
+				<button type="button" id="tab-part" aria-pressed="true">Particulier</button>
+				<button type="button" id="tab-pro" aria-pressed="false">Professionnel</button>
 			</div>
 
-			<div class="hero-photo">
-				<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/antenne-toit.jpg' ); ?>" alt="Antenne installée sur un toit en Essonne" width="800" height="1000">
-				<div class="hero-photo-sub">
-					<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/photos/parabole-toit.jpg' ); ?>" alt="Parabole satellite installée en toiture" width="400" height="300">
+			<div class="audience-panel" id="panel-part">
+				<h1><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_title_part' ) ); ?></h1>
+				<p class="lead"><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_lead_part' ) ); ?></p>
+			</div>
+			<div class="audience-panel" id="panel-pro" hidden>
+				<h1><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_title_pro' ) ); ?></h1>
+				<p class="lead"><?php echo wp_kses_post( get_theme_mod( 'antenniste91_hero_lead_pro' ) ); ?></p>
+			</div>
+
+			<div class="hero-ctas">
+				<a class="btn btn-call" href="<?php echo esc_url( antenniste91_phone_href() ); ?>">
+					<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.9.6.6 0 1.1.5 1.1 1.1v3.8c0 .6-.5 1.1-1.1 1.1C9.8 21.6 2.4 14.2 2.4 2.5c0-.6.5-1.1 1.1-1.1H7.3c.6 0 1.1.5 1.1 1.1 0 1.4.2 2.7.6 3.9.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
+					Appeler maintenant
+				</a>
+				<div class="google-badge">
+					<svg viewBox="0 0 24 24" width="22" height="22"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.63h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.89c2.27-2.09 3.58-5.17 3.58-8.81Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.92l-3.89-3c-1.08.73-2.46 1.15-4.04 1.15-3.1 0-5.73-2.09-6.67-4.9H1.3v3.09A12 12 0 0 0 12 24Z"/><path fill="#FBBC05" d="M5.33 14.33a7.2 7.2 0 0 1 0-4.66V6.58H1.3a12 12 0 0 0 0 10.84l4.03-3.09Z"/><path fill="#EA4335" d="M12 4.77c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.94 1.19 15.23 0 12 0A12 12 0 0 0 1.3 6.58l4.03 3.09C6.27 6.86 8.9 4.77 12 4.77Z"/></svg>
+					<span><strong><?php echo antenniste91_google_rating(); ?>/5</strong> sur Google</span>
 				</div>
 			</div>
+			<p style="margin:-6px 0 0; color:#CFDDE8; font-size:13.5px;">Devis gratuit, sans engagement.</p>
 		</div>
 	</div>
 </div>
