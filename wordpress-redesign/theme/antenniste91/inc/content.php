@@ -140,10 +140,10 @@ function antenniste91_feature_cards_block( $items ) {
 	return antenniste91_html_block( $html );
 }
 
-/** Petit repère numéroté (cercle + chiffre) utilisé sur les schémas techniques. */
+/** Petit repère numéroté (cercle + chiffre) utilisé sur les schémas techniques : contour léger plutôt qu'un aplat de couleur. */
 function antenniste91_schema_marker( $x, $y, $n ) {
-	return '<circle cx="' . $x . '" cy="' . $y . '" r="9" fill="var(--accent)" stroke="#fff" stroke-width="1.5"/>'
-		. '<text x="' . $x . '" y="' . ( $y + 3.5 ) . '" font-size="10" font-weight="700" text-anchor="middle" fill="#1A1203" font-family="Montserrat,sans-serif">' . esc_html( $n ) . '</text>';
+	return '<circle cx="' . $x . '" cy="' . $y . '" r="9" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5"/>'
+		. '<text x="' . $x . '" y="' . ( $y + 3.5 ) . '" font-size="10" font-weight="700" text-anchor="middle" fill="var(--accent)" font-family="Montserrat,sans-serif">' . esc_html( $n ) . '</text>';
 }
 
 /** Schéma en coupe d'une installation d'antenne : remplace une énième photo de toit par une explication visuelle, chaque chiffre renvoyant à sa légende. */
@@ -157,16 +157,16 @@ function antenniste91_schema_antenne_block() {
 		array( '6', 'Prise TV', 'Un signal stable, prêt à brancher.' ),
 	);
 	$svg = '<svg viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">'
-		. '<path d="M20 120 L160 40 L300 120" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>'
-		. '<path d="M40 120 L40 230 L280 230 L280 120" stroke="currentColor" stroke-width="2" opacity=".35"/>'
-		. '<line x1="160" y1="40" x2="160" y2="10" stroke="currentColor" stroke-width="3"/>'
-		. '<path d="M160 16 L182 10 M160 22 L178 18 M160 28 L174 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>'
-		. '<path d="M160 40 C140 70, 150 100, 130 150" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>'
-		. '<rect x="108" y="150" width="44" height="26" rx="4" stroke="currentColor" stroke-width="2"/>'
-		. '<path d="M130 176 L130 196" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>'
-		. '<rect x="104" y="196" width="52" height="24" rx="4" stroke="currentColor" stroke-width="2"/>'
-		. '<path d="M156 208 C190 208, 210 208, 230 208" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>'
-		. '<rect x="230" y="198" width="20" height="20" rx="3" stroke="currentColor" stroke-width="2"/>'
+		. '<path d="M20 120 L160 40 L300 120" stroke="currentColor" stroke-width="2" stroke-linejoin="round" opacity=".55"/>'
+		. '<path d="M40 120 L40 230 L280 230 L280 120" stroke="currentColor" stroke-width="1.5" opacity=".25"/>'
+		. '<line x1="160" y1="40" x2="160" y2="10" stroke="currentColor" stroke-width="2" opacity=".55"/>'
+		. '<path d="M160 16 L182 10 M160 22 L178 18 M160 28 L174 26" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".55"/>'
+		. '<path d="M160 40 C140 70, 150 100, 130 150" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="1 6" stroke-linecap="round" opacity=".7"/>'
+		. '<rect x="108" y="150" width="44" height="26" rx="4" stroke="currentColor" stroke-width="1.5" opacity=".55"/>'
+		. '<path d="M130 176 L130 196" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="1 6" stroke-linecap="round" opacity=".7"/>'
+		. '<rect x="104" y="196" width="52" height="24" rx="4" stroke="currentColor" stroke-width="1.5" opacity=".55"/>'
+		. '<path d="M156 208 C190 208, 210 208, 230 208" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="1 6" stroke-linecap="round" opacity=".7"/>'
+		. '<rect x="230" y="198" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.5" opacity=".55"/>'
 		. antenniste91_schema_marker( 160, 14, '1' )
 		. antenniste91_schema_marker( 160, 40, '2' )
 		. antenniste91_schema_marker( 145, 95, '3' )
@@ -445,6 +445,19 @@ function antenniste91_service_toc() {
 		array( '#prix', 'Le prix' ),
 		array( '#faq', 'Questions fréquentes' ),
 	);
+}
+
+/** Vraie photo en fond du bandeau d'en-tête, par page produit / géolocalisée. */
+function antenniste91_service_banner_photo( $slug ) {
+	$map = array(
+		'antenne-tv'          => 'antenne-toit.jpg',
+		'antenne-tv-arpajon'  => 'antenne-reglage-apres.jpg',
+		'parabole-satellite'  => 'parabole-toit.jpg',
+		'starlink'            => 'starlink-mur.jpg',
+		'videosurveillance'   => 'camera-interieure.png',
+		'visiophone'          => 'visiophone-entree.jpg',
+	);
+	return isset( $map[ $slug ] ) ? $map[ $slug ] : '';
 }
 
 /**

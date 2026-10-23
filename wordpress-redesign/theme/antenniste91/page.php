@@ -11,19 +11,33 @@ get_header();
 while ( have_posts() ) :
 	the_post();
 	?>
-	<div class="page-banner">
-		<div class="wrap">
-			<p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a> / <?php the_title(); ?></p>
-			<span class="eyebrow"><?php bloginfo( 'name' ); ?></span>
-			<h1><?php the_title(); ?></h1>
-			<?php if ( has_excerpt() ) : ?>
-				<p class="lead"><?php echo esc_html( get_the_excerpt() ); ?></p>
-			<?php endif; ?>
+	<?php
+	$service_slugs = array( 'antenne-tv', 'antenne-tv-arpajon', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' );
+	$is_service    = in_array( get_post_field( 'post_name' ), $service_slugs, true );
+	$banner_photo  = $is_service ? antenniste91_service_banner_photo( get_post_field( 'post_name' ) ) : '';
+	?>
+	<?php if ( $banner_photo ) : ?>
+		<div class="page-banner-photo" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/photos/' . $banner_photo ); ?>');">
+			<div class="wrap">
+				<p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a> / <?php the_title(); ?></p>
+				<span class="eyebrow"><?php bloginfo( 'name' ); ?></span>
+				<h1><?php the_title(); ?></h1>
+			</div>
 		</div>
-	</div>
+	<?php else : ?>
+		<div class="page-banner">
+			<div class="wrap">
+				<p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a> / <?php the_title(); ?></p>
+				<span class="eyebrow"><?php bloginfo( 'name' ); ?></span>
+				<h1><?php the_title(); ?></h1>
+				<?php if ( has_excerpt() ) : ?>
+					<p class="lead"><?php echo esc_html( get_the_excerpt() ); ?></p>
+				<?php endif; ?>
+			</div>
+		</div>
+	<?php endif; ?>
 
-	<?php $service_slugs = array( 'antenne-tv', 'antenne-tv-arpajon', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' ); ?>
-	<?php if ( in_array( get_post_field( 'post_name' ), $service_slugs, true ) ) : ?>
+	<?php if ( $is_service ) : ?>
 		<div class="wrap section-pad">
 			<div class="page-layout">
 				<aside class="toc">

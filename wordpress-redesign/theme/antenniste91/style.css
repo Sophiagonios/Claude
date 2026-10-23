@@ -366,21 +366,25 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 .ba-caption strong{ display:block; font-size:15.5px; font-weight:700; color:var(--text); margin-bottom:3px; }
 .ba-caption span{ display:block; font-size:13.5px; color:var(--text-soft); }
 
-.feat-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin:1.2em 0 2em; }
-@media (max-width:560px){ .feat-grid{ grid-template-columns:1fr; } }
-.feat-card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }
-.feat-icon{ width:52px; height:52px; border-radius:14px; background:var(--accent-tint); color:var(--accent); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+/* Rangée aérée, sans bordure ni case fermée : un badge, un titre, un texte,
+   séparés par de l'espace plutôt que par des cadres empilés sur un fond
+   déjà sombre. */
+.feat-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:28px 24px; margin:1.6em 0 2.2em; }
+@media (max-width:860px){ .feat-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:480px){ .feat-grid{ grid-template-columns:1fr; } }
+.feat-card{ padding:0; }
+.feat-icon{ width:52px; height:52px; border-radius:14px; background:var(--accent-tint); color:var(--accent); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
 .feat-icon svg{ width:24px; height:24px; }
-.feat-card h4{ font-size:16.5px; margin:0 0 6px; font-weight:700; }
-.feat-card p{ font-size:14.5px; color:var(--text-soft); margin:0; line-height:1.5; }
+.feat-card h4{ font-size:16px; margin:0 0 6px; font-weight:700; }
+.feat-card p{ font-size:14px; color:var(--text-soft); margin:0; line-height:1.5; }
 
-.schema-block{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:32px; align-items:center; margin:1.6em 0; background:var(--paper-2); border:1px solid var(--line); border-radius:16px; padding:28px; }
+.schema-block{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:32px; align-items:center; margin:1.6em 0; padding:0; }
 @media (max-width:700px){ .schema-block{ grid-template-columns:1fr; } }
 .schema-visual{ color:var(--text-soft); }
 .schema-visual svg{ width:100%; height:auto; display:block; }
 .schema-legend{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
 .schema-legend li{ display:flex; gap:12px; align-items:flex-start; }
-.schema-legend .num{ flex:none; width:24px; height:24px; border-radius:50%; background:var(--accent); color:#1A1203; font-family:'Montserrat',sans-serif; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
+.schema-legend .num{ flex:none; width:24px; height:24px; border-radius:50%; background:transparent; border:1.5px solid var(--accent); color:var(--accent); font-family:'Montserrat',sans-serif; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; }
 .schema-legend strong{ display:block; font-size:15px; margin-bottom:2px; color:var(--text); }
 .schema-legend p{ margin:0; font-size:13.5px; color:var(--text-soft); }
 
@@ -425,6 +429,15 @@ ul.main svg.caret{ width:13px; height:13px; flex:none; }
 .breadcrumb{ font-size:13px; color:var(--muted); margin-bottom:10px; }
 .breadcrumb a{ text-decoration:none; color:var(--muted); }
 .breadcrumb a:hover{ color:var(--navy); }
+
+/* Bandeau avec grande photo en fond (pages produits et géolocalisées) :
+   un dégradé assure la lisibilité du texte sans assombrir toute la photo. */
+.page-banner-photo{ position:relative; background-size:cover; background-position:center; min-height:380px; display:flex; align-items:flex-end; margin-bottom:8px; }
+.page-banner-photo::before{ content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(8,8,8,.92) 0%, rgba(8,8,8,.55) 50%, rgba(8,8,8,.1) 100%); }
+.page-banner-photo .wrap{ position:relative; z-index:1; padding-block:32px; }
+.page-banner-photo .breadcrumb, .page-banner-photo .breadcrumb a{ color:rgba(255,255,255,.75); }
+.page-banner-photo h1{ color:#fff; }
+@media (max-width:600px){ .page-banner-photo{ min-height:280px; } }
 
 .entry-content{ max-width:760px; margin-inline:auto; padding-block:8px; }
 .entry-content.is-wide{ max-width:1180px; }
