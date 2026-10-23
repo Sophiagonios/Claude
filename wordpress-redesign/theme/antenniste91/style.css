@@ -78,14 +78,15 @@ Text Domain: antenniste91
 html{ scroll-behavior:smooth; overflow-x:hidden; width:100%; }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
 [id]{ scroll-margin-top: 110px; }
-body{ background:var(--paper); color:var(--text); font-family:'Roboto',system-ui,sans-serif; font-size:20px; line-height:1.65; margin:0; overflow-x:hidden; width:100%; overflow-wrap:break-word; }
-@media (max-width:600px){ body{ font-size:17px; } }
+html body{ background:var(--paper); color:var(--text); font-family:'Roboto',system-ui,sans-serif; font-size:20px; line-height:1.65; margin:0; overflow-x:hidden; width:100%; overflow-wrap:break-word; }
+@media (max-width:600px){ html body{ font-size:17px; } }
+html body p, html body li, html body span, html body a, html body button, html body input, html body textarea{ font-family:inherit; }
 
 /* Accessibilité — clientèle senior en priorité : indicateur de focus
    toujours visible au clavier, jamais juste "outline:none". */
 :focus-visible{ outline:3px solid var(--accent-blue); outline-offset:3px; border-radius:4px; }
 a:focus-visible, button:focus-visible, .btn:focus-visible{ outline:3px solid var(--accent-blue); outline-offset:3px; }
-h1,h2,h3,.disp{ font-family:'Montserrat',system-ui,sans-serif; font-weight:800; letter-spacing:-.01em; line-height:1.1; color:var(--text); }
+h1,h2,h3,h4,h5,h6,.disp{ font-family:'Montserrat',system-ui,sans-serif; font-weight:800; letter-spacing:-.01em; line-height:1.1; color:var(--text); }
 h2{ font-size:clamp(24px,2.9vw,34px); }
 h3{ font-size:21px; }
 a{ color:inherit; }
