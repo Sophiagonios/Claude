@@ -44,6 +44,16 @@ function antenniste91_customize_register( $wp_customize ) {
 			'default' => '',
 			'type'    => 'text',
 		),
+		'antenniste91_google_reviews_link' => array(
+			'label'   => __( 'Lien vers votre fiche Google (pour "Voir tous les avis")', 'antenniste91' ),
+			'default' => '',
+			'type'    => 'text',
+		),
+		'antenniste91_reviews_embed' => array(
+			'label'   => __( 'Code d\'intégration avis Google (shortcode d\'un plugin — ex. "Reviews Feed for Google"). Laissez vide pour afficher des exemples en attendant.', 'antenniste91' ),
+			'default' => '',
+			'type'    => 'textarea',
+		),
 		'antenniste91_stat_installs' => array(
 			'label'   => __( 'Nombre d\'installations réalisées (laisser vide pour masquer)', 'antenniste91' ),
 			'default' => '',

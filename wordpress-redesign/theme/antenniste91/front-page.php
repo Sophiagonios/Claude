@@ -55,9 +55,8 @@ get_header();
 
 <div class="stats">
 	<div class="wrap">
-		<div class="stat"><span class="label" style="font-size:14.5px; font-weight:700; color:var(--text);">Diagnostic avant toute intervention</span></div>
-		<div class="stat"><span class="label" style="font-size:14.5px; font-weight:700; color:var(--text);">Un seul interlocuteur, du 1er appel au SAV</span></div>
-		<div class="stat"><span class="label" style="font-size:14.5px; font-weight:700; color:var(--text);">Particuliers, professionnels &amp; collectivités</span></div>
+		<div class="stat"><span class="label">Diagnostic avant toute intervention</span></div>
+		<div class="stat"><span class="label">Particuliers, professionnels &amp; collectivités</span></div>
 	</div>
 </div>
 

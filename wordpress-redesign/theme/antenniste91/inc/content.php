@@ -46,7 +46,7 @@ function antenniste91_photo_placeholder_block( $captions ) {
 	$cols = count( $captions ) >= 2 ? 2 : 1;
 	$html = '<div class="photo-grid cols-' . $cols . '">';
 	foreach ( $captions as $caption ) {
-		$html .= '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — ' . esc_html( $caption ) . '</span></div>';
+		$html .= '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter : ' . esc_html( $caption ) . '</span></div>';
 	}
 	$html .= '</div>';
 	return antenniste91_html_block( $html );
@@ -116,18 +116,11 @@ function antenniste91_button_block( $text, $url, $style = '' ) {
 function antenniste91_chunk_services_grid() {
 	$services = array(
 		array(
-			'title' => "Antenne TV &amp; TNT",
-			'text'  => "Chaînes qui sautent, image pixellisée : on identifie la cause — antenne, câble ou amplificateur — et on répare en une seule visite.",
+			'title' => "Installation d'antenne",
+			'text'  => "Antenne TV, parabole satellite : chaînes qui sautent, image pixellisée, panne après une tempête. On identifie la cause et on répare en une seule visite.",
 			'url'   => home_url( '/services/antenne-tv/' ),
 			'photo' => 'antenne-toit.jpg',
 			'alt'   => "Antenne râteau installée sur un toit, ciel dégagé",
-		),
-		array(
-			'title' => "Parabole &amp; satellite",
-			'text'  => "Parabole mal orientée, panne après une tempête ou envie de bouquets internationaux : installation et réglage précis.",
-			'url'   => home_url( '/services/parabole-satellite/' ),
-			'photo' => 'parabole-toit.jpg',
-			'alt'   => "Parabole satellite fixée en toiture",
 		),
 		array(
 			'title' => 'Internet Starlink',
@@ -160,7 +153,7 @@ function antenniste91_chunk_services_grid() {
 			. '<div class="card-body">'
 			. '<h3>' . $s['title'] . '</h3>'
 			. '<p>' . $s['text'] . '</p>'
-			. '<a class="btn btn-ghost card-cta" href="' . esc_url( $s['url'] ) . '">En savoir plus →</a>'
+			. '<a class="link-arrow" href="' . esc_url( $s['url'] ) . '">En savoir plus →</a>'
 			. '</div></div>';
 	}
 	$html .= '</div>';
@@ -173,7 +166,7 @@ function antenniste91_chunk_expertise() {
 	$icon_chat   = '<path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.6-.8L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.4 8.4 0 0 1 12.6 3a8.5 8.5 0 0 1 8.4 8.5Z"/>';
 	$icon_repeat = '<path d="M17 2.1 21 6l-4 3.9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 21.9 3 18l4-3.9"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>';
 	$items = array(
-		array( $icon_diag,   'Un vrai diagnostic avant le devis', "La cause exacte identifiée avant toute proposition — vous savez toujours pourquoi vous payez." ),
+		array( $icon_diag,   'Un vrai diagnostic avant le devis', "La cause exacte identifiée avant toute proposition, vous savez toujours pourquoi vous payez." ),
 		array( $icon_prix,   'Un prix qui ne bouge pas', "Le montant annoncé au téléphone est celui de la facture, sans surprise le jour de l'intervention." ),
 		array( $icon_chat,   'Un expert qui prend le temps d\'expliquer', "Le technicien montre ce qu'il a fait et répond à toutes vos questions, simplement." ),
 		array( $icon_repeat, 'Toujours le même interlocuteur', "Une question après la pose ? Vous rappelez la même personne, qui connaît déjà votre installation." ),
@@ -188,10 +181,10 @@ function antenniste91_chunk_expertise() {
 
 function antenniste91_chunk_process() {
 	$html = '<div class="band-navy section-pad"><div class="process">'
-		. '<div class="step"><span class="step-num">01 · Appel</span><h4>Diagnostic par téléphone</h4><p>Vous décrivez la panne ou le projet, on cerne ce qui est probablement en cause — gratuitement.</p></div>'
+		. '<div class="step"><span class="step-num">01 · Appel</span><h4>Diagnostic par téléphone</h4><p>Vous décrivez la panne ou le projet, on cerne ce qui est probablement en cause, gratuitement.</p></div>'
 		. '<div class="step"><span class="step-num">02 · Devis</span><h4>Prix ferme, sans surprise</h4><p>Un devis détaillé transmis avant intervention. Rien n\'est engagé tant qu\'il n\'est pas validé.</p></div>'
 		. '<div class="step"><span class="step-num">03 · Pose</span><h4>Installation &amp; tests</h4><p>Chaînes, débit ou image caméra testés en direct avant que le technicien ne reparte.</p></div>'
-		. '<div class="step"><span class="step-num">04 · Suivi</span><h4>Garantie &amp; SAV</h4><p>Un contact direct en cas de question après la pose — vous ne repartez pas de zéro.</p></div>'
+		. '<div class="step"><span class="step-num">04 · Suivi</span><h4>Garantie &amp; SAV</h4><p>Un contact direct en cas de question après la pose : vous ne repartez pas de zéro.</p></div>'
 		. '</div></div>';
 	return antenniste91_html_block( $html );
 }
@@ -228,10 +221,10 @@ function antenniste91_chunk_audience() {
 	$html = '<div class="audience-split">'
 		. '<div class="aud-card"><span class="tag">Maison individuelle</span><h3>Particuliers</h3>'
 		. $render_list( $particulier_items )
-		. '<br/><a class="btn btn-ghost" href="' . esc_url( home_url( '/contact/' ) ) . '">Décrire mon besoin</a></div>'
+		. '<br/><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler pour mon projet</a></div>'
 		. '<div class="aud-card pro"><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3>'
 		. $render_list( $pro_items )
-		. '<br/><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
+		. '<br/><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler pour un devis pro</a></div>'
 		. '</div>';
 	return antenniste91_html_block( $html );
 }
@@ -240,22 +233,21 @@ function antenniste91_reviews_stars() {
 	return '<div class="stars">' . str_repeat( '<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2l-5-4.9 6.9-1Z"/></svg>', 5 ) . '</div>';
 }
 
-/** Un seul avis — étoiles, citation, badge Google — réutilisé partout où des avis s'affichent. */
-function antenniste91_review_card( $featured = false ) {
-	$google_icon = '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.63h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.89c2.27-2.09 3.58-5.17 3.58-8.81Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.92l-3.89-3c-1.08.73-2.46 1.15-4.04 1.15-3.1 0-5.73-2.09-6.67-4.9H1.3v3.09A12 12 0 0 0 12 24Z"/><path fill="#FBBC05" d="M5.33 14.33a7.2 7.2 0 0 1 0-4.66V6.58H1.3a12 12 0 0 0 0 10.84l4.03-3.09Z"/><path fill="#EA4335" d="M12 4.77c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.94 1.19 15.23 0 12 0A12 12 0 0 0 1.3 6.58l4.03 3.09C6.27 6.86 8.9 4.77 12 4.77Z"/></svg>';
-	$class = 'review' . ( $featured ? ' feat' : '' );
-	return '<div class="' . $class . '">' . antenniste91_reviews_stars()
-		. '<p class="ph">« Exemple d\'avis — à remplacer par un vrai retour client. »</p>'
-		. '<div class="who">' . $google_icon . '<span class="ph">Prénom, ville</span></div></div>';
-}
-
+/**
+ * Affiche les vrais avis Google si un plugin est connecté (shortcode saisi
+ * dans Personnaliser > Coordonnées & réglages), sinon un seul bloc d'attente
+ * clairement identifié comme tel — jamais de fausses citations qui
+ * imiteraient de vrais avis.
+ */
 function antenniste91_chunk_reviews_teaser() {
-	$html = '<div class="rating-strip">' . antenniste91_reviews_stars() . '<strong>' . antenniste91_google_rating() . '/5</strong> ' . antenniste91_review_count_label() . '</div>'
-		. '<div class="reviews-grid">'
-		. antenniste91_review_card( false )
-		. antenniste91_review_card( true )
-		. antenniste91_review_card( false )
-		. '</div>';
+	$embed = get_theme_mod( 'antenniste91_reviews_embed', '' );
+	$rating_line = '<div class="rating-strip">' . antenniste91_reviews_stars() . '<strong>' . antenniste91_google_rating() . '/5</strong> ' . antenniste91_review_count_label() . '</div>';
+
+	if ( $embed ) {
+		$html = $rating_line . '<div class="reviews-embed">' . do_shortcode( $embed ) . '</div>';
+	} else {
+		$html = $rating_line . '<div class="reviews-pending"><p>Les avis Google s\'afficheront ici une fois le plugin d\'avis connecté (ex. « Reviews Feed for Google »), via Personnaliser &rarr; Coordonnées &amp; réglages.</p></div>';
+	}
 	return antenniste91_html_block( $html );
 }
 
@@ -277,13 +269,13 @@ function antenniste91_essonne_map_svg() {
 	);
 
 	$svg = '<svg viewBox="0 0 300 260" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" role="img" aria-label="Carte du département de l\'Essonne (91) avec ses principales communes">';
-	$svg .= '<path d="M42 22 112 16 182 10 232 30 262 62 250 102 272 142 230 192 180 232 120 246 70 220 30 180 15 130 26 80Z" fill="var(--navy-tint)" stroke="var(--accent-blue)" stroke-width="2.5"/>';
+	$svg .= '<path d="M42 22 112 16 182 10 232 30 262 62 250 102 272 142 230 192 180 232 120 246 70 220 30 180 15 130 26 80Z" fill="var(--navy-tint)" stroke="var(--navy)" stroke-width="2.5"/>';
 
 	foreach ( $towns as $t ) {
 		list( $x, $y, $label, $is_main ) = $t;
 		if ( $is_main ) {
-			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="6" fill="var(--accent-blue)" stroke="none"/>';
-			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="10" fill="none" stroke="var(--accent-blue)" stroke-width="1.5" opacity=".5"/>';
+			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="6" fill="var(--accent)" stroke="none"/>';
+			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="10" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity=".5"/>';
 			$svg .= '<text x="' . $x . '" y="' . ( $y - 16 ) . '" text-anchor="middle" font-family="Public Sans, sans-serif" font-weight="800" font-size="13" fill="currentColor" stroke="none">' . esc_html( $label ) . '</text>';
 		} else {
 			$svg .= '<circle cx="' . $x . '" cy="' . $y . '" r="3.5" fill="currentColor" stroke="none" opacity=".7"/>';
@@ -318,7 +310,7 @@ function antenniste91_content_home() {
 		. '<span class="eyebrow">Les experts en installation et dépannage</span>'
 		. '<h2>À propos de ' . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . '</h2>'
 		. '<p>' . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . ' installe et dépanne antennes, paraboles, caméras, alarmes et visiophones en Essonne. Notre mission : une connectivité et une sécurité fiables, expliquées simplement, pour les particuliers comme pour les professionnels.</p>'
-		. '<p>Chaque intervention commence par un diagnostic clair et se termine par une explication en face à face — jamais un rapport technique incompréhensible. Notre équipe maintient une note de <strong>' . antenniste91_google_rating() . '/5 sur Google</strong> (' . antenniste91_review_count_label() . '), reflet de la confiance de nos clients.</p>'
+		. '<p>Chaque intervention commence par un diagnostic clair et se termine par une explication en face à face, jamais un rapport technique incompréhensible. Notre équipe maintient une note de <strong>' . antenniste91_google_rating() . '/5 sur Google</strong> (' . antenniste91_review_count_label() . '), reflet de la confiance de nos clients.</p>'
 		. '<div class="hero-ctas" style="margin-top:6px;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 		. '</div><div class="about-photo-grid">'
 		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/starlink-toit.jpg' ) . '" alt="Installation Starlink sur un toit-terrasse" loading="lazy"></div>'
@@ -342,8 +334,9 @@ function antenniste91_content_home() {
 	$c .= antenniste91_heading_block( "Toute l'Essonne (91), sans exception." );
 	$c .= antenniste91_html_block(
 		'<div class="zone-grid"><div>'
-		. '<p>Nous intervenons dans l\'ensemble du département de l\'Essonne et les communes limitrophes — déplacement inclus dans le devis, quelle que soit la commune.</p>'
-		. '<div class="hero-ctas" style="margin-top:22px;"><a class="btn btn-ghost" href="' . esc_url( home_url( '/zone-intervention/' ) ) . '">Voir le détail des secteurs →</a></div>'
+		. '<p>Nous intervenons dans l\'ensemble du département de l\'Essonne et les communes limitrophes, déplacement inclus dans le devis, quelle que soit la commune.</p>'
+		. antenniste91_chunk_zone_chips()
+		. '<a class="link-arrow" href="' . esc_url( home_url( '/zone-intervention/' ) ) . '">Voir le détail des secteurs →</a>'
 		. '</div><div class="zone-map-wrap">' . antenniste91_essonne_map_svg() . '</div></div>'
 	);
 
@@ -451,7 +444,7 @@ function antenniste91_service_page( $args ) {
 function antenniste91_content_service_antenne() {
 	return antenniste91_service_page(
 		array(
-			'hook'     => "Une chaîne qui saute, une image qui se pixellise, une neige persistante à l'écran : dans neuf cas sur dix, le problème vient de l'antenne, du câble ou de l'amplificateur — pas de la télévision. On identifie la cause exacte avant de réparer, pour ne pas payer deux fois.",
+			'hook'     => "Une chaîne qui saute, une image qui se pixellise, une neige persistante à l'écran : dans neuf cas sur dix, le problème vient de l'antenne, du câble ou de l'amplificateur, pas de la télévision. On identifie la cause exacte avant de réparer, pour ne pas payer deux fois.",
 			'signs'    => array(
 				"Certaines chaînes manquent ou disparaissent selon la météo",
 				"L'image se pixellise ou l'écran affiche « signal faible »",
@@ -471,7 +464,7 @@ function antenniste91_content_service_antenne() {
 			'faq'      => array(
 				array(
 					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
-					'a' => "La plupart des pannes viennent d'un câble, d'un connecteur ou d'un amplificateur défectueux — l'antenne elle-même est rarement à remplacer entièrement. Le diagnostic sur place permet de le savoir avant de proposer une solution.",
+					'a' => "La plupart des pannes viennent d'un câble, d'un connecteur ou d'un amplificateur défectueux : l'antenne elle-même est rarement à remplacer entièrement. Le diagnostic sur place permet de le savoir avant de proposer une solution.",
 				),
 				array(
 					'q' => "Vous intervenez aussi en copropriété ?",
@@ -485,7 +478,7 @@ function antenniste91_content_service_antenne() {
 function antenniste91_content_service_parabole() {
 	return antenniste91_service_page(
 		array(
-			'hook'     => "Parabole mal orientée après un coup de vent, envie de recevoir des bouquets internationaux, ou premier équipement : une parabole bien réglée se voit au millimètre — un mauvais alignement suffit à perdre le signal.",
+			'hook'     => "Parabole mal orientée après un coup de vent, envie de recevoir des bouquets internationaux, ou premier équipement : une parabole bien réglée se voit au millimètre : un mauvais alignement suffit à perdre le signal.",
 			'signs'    => array(
 				"Le signal satellite est faible ou instable selon le temps",
 				"La parabole a bougé après une tempête ou des travaux",
@@ -498,7 +491,7 @@ function antenniste91_content_service_parabole() {
 				array( 'Bouquets testés', 'Chaque chaîne reçue est vérifiée sur place.' ),
 				array( 'Câblage protégé', 'Passage propre, à l\'abri des intempéries.' ),
 			),
-			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal — pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
+			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal, pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du support à poser, de la hauteur d'intervention et du nombre de récepteurs à raccorder. Il est annoncé avant toute pose.",
 			'illustration' => 'parabole',
 			'photo1'   => 'parabole fixée et alignée en façade',
@@ -535,7 +528,7 @@ function antenniste91_content_service_starlink() {
 			'faq'      => array(
 				array(
 					'q' => "Fournissez-vous le kit Starlink ou seulement l'installation ?",
-					'a' => "Précisez-nous votre situation au moment de la prise de contact — nous vous indiquerons la formule la plus adaptée.",
+					'a' => "Précisez-nous votre situation au moment de la prise de contact, nous vous indiquerons la formule la plus adaptée.",
 				),
 				array(
 					'q' => "Starlink fonctionne-t-il partout en Essonne ?",
@@ -573,7 +566,7 @@ function antenniste91_content_service_video() {
 				),
 				array(
 					'q' => "Intervenez-vous pour des bâtiments professionnels ou publics ?",
-					'a' => "Oui — hôtels, commerces et collectivités font partie des configurations que nous équipons régulièrement.",
+					'a' => "Oui, hôtels, commerces et collectivités font partie des configurations que nous équipons régulièrement.",
 				),
 			),
 		)
@@ -596,7 +589,7 @@ function antenniste91_content_service_visiophone() {
 				array( 'Couplage alarme possible', 'Visiophone et système d\'alarme reliés sur demande.' ),
 				array( 'Prise en main expliquée', 'Vous repartez en sachant répondre, ouvrir et consulter l\'historique.' ),
 			),
-			'process'  => "Après un repérage de vos accès, la platine et le moniteur (ou l'application mobile) sont installés et raccordés. Chaque fonction — voir, parler, ouvrir à distance — est testée avec vous avant la fin de la visite.",
+			'process'  => "Après un repérage de vos accès, la platine et le moniteur (ou l'application mobile) sont installés et raccordés. Chaque fonction (voir, parler, ouvrir à distance) est testée avec vous avant la fin de la visite.",
 			'pricing'  => "Le tarif dépend du nombre d'accès à équiper, du type de platine choisie et d'un éventuel couplage avec une alarme existante. Il est annoncé avant toute pose.",
 			'illustration' => 'visiophone',
 			'photo1'   => 'visiophone installé à l\'entrée d\'un pavillon',
@@ -629,18 +622,24 @@ function antenniste91_content_zone() {
 function antenniste91_content_avis() {
 	$c  = antenniste91_html_block( antenniste91_chunk_reviews_teaser_raw() );
 	$c .= antenniste91_heading_block( 'Vous êtes déjà client ?', 3 );
-	$c .= antenniste91_paragraph_block( "Un avis met deux minutes à écrire et aide directement les prochains foyers ou établissements qui cherchent un installateur de confiance en Essonne. <span class=\"ph\">Lien vers votre fiche Google à ajouter.</span>" );
+	$link = get_theme_mod( 'antenniste91_google_reviews_link', '' );
+	$c .= antenniste91_paragraph_block(
+		$link
+			? 'Un avis met deux minutes à écrire et aide directement les prochains foyers ou établissements qui cherchent un installateur de confiance en Essonne. <a href="' . esc_url( $link ) . '" target="_blank" rel="noopener">Laisser un avis sur Google</a>.'
+			: "Un avis met deux minutes à écrire et aide directement les prochains foyers ou établissements qui cherchent un installateur de confiance en Essonne. <span class=\"ph\">Lien vers votre fiche Google à ajouter.</span>"
+	);
 	return $c;
 }
 
-/** Same visual block as the homepage teaser, without duplicating the function name. */
+/** Même logique que le résumé d'accueil : vrais avis si connectés, sinon un bloc d'attente honnête. */
 function antenniste91_chunk_reviews_teaser_raw() {
-	$html = '<div class="rating-strip">' . antenniste91_reviews_stars() . '<strong>' . antenniste91_google_rating() . '/5</strong> ' . antenniste91_review_count_label() . '</div>'
-		. '<div class="reviews-grid">';
-	for ( $i = 0; $i < 6; $i++ ) {
-		$html .= antenniste91_review_card( 1 === $i );
+	$embed = get_theme_mod( 'antenniste91_reviews_embed', '' );
+	$html  = '<div class="rating-strip">' . antenniste91_reviews_stars() . '<strong>' . antenniste91_google_rating() . '/5</strong> ' . antenniste91_review_count_label() . '</div>';
+	if ( $embed ) {
+		$html .= '<div class="reviews-embed">' . do_shortcode( $embed ) . '</div>';
+	} else {
+		$html .= '<div class="reviews-pending"><p>Les avis Google s\'afficheront ici une fois le plugin d\'avis connecté (ex. « Reviews Feed for Google »), via Personnaliser &rarr; Coordonnées &amp; réglages.</p></div>';
 	}
-	$html .= '</div>';
 	return $html;
 }
 
@@ -661,7 +660,7 @@ function antenniste91_content_faq() {
 		),
 		'Vidéosurveillance' => array(
 			array( 'q' => "Puis-je voir les caméras depuis mon téléphone ?", 'a' => "Oui, via une application dédiée, avec notifications de mouvement selon le modèle choisi." ),
-			array( 'q' => "L'enregistrement se fait où ?", 'a' => "Localement ou sur le cloud, selon vos préférences et votre budget — on en discute avant la pose." ),
+			array( 'q' => "L'enregistrement se fait où ?", 'a' => "Localement ou sur le cloud, selon vos préférences et votre budget, on en discute avant la pose." ),
 		),
 		'Professionnels &amp; collectivités' => array(
 			array( 'q' => "Travaillez-vous avec des collectivités ?", 'a' => '<span class="ph">Réponse à préciser : références, devis-cadre, facturation administrative, etc.</span>' ),
@@ -680,12 +679,12 @@ function antenniste91_content_faq() {
 }
 
 function antenniste91_content_contact() {
-	$c  = antenniste91_paragraph_block( "La façon la plus rapide d'obtenir une réponse : appeler directement. Décrivez votre besoin, on vous donne un premier avis et, si nécessaire, un créneau d'intervention — gratuitement." );
+	$c  = antenniste91_paragraph_block( "La façon la plus rapide d'obtenir une réponse : appeler directement. Décrivez votre besoin, on vous donne un premier avis et, si nécessaire, un créneau d'intervention, gratuitement." );
 	$c .= antenniste91_html_block(
 		'<div class="contact-phone-card"><span class="tag">Par téléphone</span><h3>' . antenniste91_phone_display() . '</h3><p>Lun–Sam · 8h–19h</p><br/><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 	);
 	$c .= antenniste91_heading_block( 'Ou décrivez votre besoin par écrit', 3 );
-	$c .= antenniste91_paragraph_block( "Le formulaire ci-dessous envoie directement un email — sans passer par un plugin tiers." );
+	$c .= antenniste91_paragraph_block( "Le formulaire ci-dessous envoie directement un email, sans passer par un plugin tiers." );
 	return $c;
 }
 
@@ -697,7 +696,7 @@ function antenniste91_blog_posts() {
 		'title'   => "Pourquoi mon antenne TV perd-elle le signal en hiver ?",
 		'excerpt' => "Vent, gel, givre : les chutes de signal TV sont plus fréquentes en hiver. Voici les causes les plus courantes et comment les repérer avant d'appeler.",
 		'content' =>
-			antenniste91_paragraph_block( "Chaque hiver, le même constat revient chez de nombreux foyers d'Essonne : la télévision « saute » davantage, certaines chaînes disparaissent, l'image se pixellise. Ce n'est pas une coïncidence — le froid et le vent fragilisent des installations qui tenaient très bien le reste de l'année." )
+			antenniste91_paragraph_block( "Chaque hiver, le même constat revient chez de nombreux foyers d'Essonne : la télévision « saute » davantage, certaines chaînes disparaissent, l'image se pixellise. Ce n'est pas une coïncidence : le froid et le vent fragilisent des installations qui tenaient très bien le reste de l'année." )
 			. antenniste91_heading_block( "Le vent déplace l'antenne, même légèrement", 2 )
 			. antenniste91_paragraph_block( "Une antenne orientée au degré près peut perdre une partie du signal après plusieurs jours de vent fort. Le désalignement est parfois invisible à l'œil nu depuis le sol, mais suffisant pour faire chuter la réception." )
 			. antenniste91_heading_block( "Le gel et le givre sur les câbles et connecteurs", 2 )
@@ -710,7 +709,7 @@ function antenniste91_blog_posts() {
 					"Une seule prise est concernée : le souci est souvent localisé sur cette ligne précise",
 				)
 			)
-			. antenniste91_paragraph_block( "Dans le doute, un diagnostic reste la façon la plus rapide de trancher — c'est justement ce qu'on propose avant toute réparation." )
+			. antenniste91_paragraph_block( "Dans le doute, un diagnostic reste la façon la plus rapide de trancher, c'est justement ce qu'on propose avant toute réparation." )
 			. antenniste91_button_block( "Voir la page Antenne TV & TNT →", home_url( '/services/antenne-tv/' ), 'outline-navy' ),
 	);
 
@@ -721,10 +720,10 @@ function antenniste91_blog_posts() {
 		'content' =>
 			antenniste91_paragraph_block( "La question revient souvent, en particulier en copropriété ou en secteur protégé : peut-on installer une parabole librement, ou faut-il une autorisation au préalable ?" )
 			. antenniste91_heading_block( "En maison individuelle", 2 )
-			. antenniste91_paragraph_block( "En règle générale, aucune autorisation n'est nécessaire tant que l'installation reste sur votre propriété et respecte les règles locales d'urbanisme. Dans une zone classée ou protégée, la mairie peut cependant imposer des restrictions — un point à vérifier avant la pose." )
+			. antenniste91_paragraph_block( "En règle générale, aucune autorisation n'est nécessaire tant que l'installation reste sur votre propriété et respecte les règles locales d'urbanisme. Dans une zone classée ou protégée, la mairie peut cependant imposer des restrictions, un point à vérifier avant la pose." )
 			. antenniste91_heading_block( "En copropriété", 2 )
 			. antenniste91_paragraph_block( "La règle de base : chaque copropriétaire a le droit de recevoir la télévision par satellite, mais l'installation doit respecter le règlement de copropriété et, si elle est visible depuis la voie publique, peut nécessiter une déclaration au syndic." )
-			. antenniste91_callout_block( "En cas de doute, on vous indique la marche à suivre selon votre configuration avant toute intervention — mieux vaut vérifier que démonter une parabole mal placée." )
+			. antenniste91_callout_block( "En cas de doute, on vous indique la marche à suivre selon votre configuration avant toute intervention. Mieux vaut vérifier que démonter une parabole mal placée." )
 			. antenniste91_button_block( "Voir la page Parabole & satellite →", home_url( '/services/parabole-satellite/' ), 'outline-navy' ),
 	);
 
@@ -743,7 +742,7 @@ function antenniste91_blog_posts() {
 				)
 			)
 			. antenniste91_heading_block( "Ce qui détermine si ça va fonctionner : le ciel, pas la distance", 2 )
-			. antenniste91_paragraph_block( "Contrairement à une idée reçue, ce n'est pas la localisation géographique qui pose problème en Essonne, mais le dégagement du ciel autour du bâtiment — arbres, toitures voisines, reliefs proches. C'est pour cette raison qu'une étude précède toujours la pose." )
+			. antenniste91_paragraph_block( "Contrairement à une idée reçue, ce n'est pas la localisation géographique qui pose problème en Essonne, mais le dégagement du ciel autour du bâtiment (arbres, toitures voisines, reliefs proches). C'est pour cette raison qu'une étude précède toujours la pose." )
 			. antenniste91_button_block( "Voir la page Internet Starlink →", home_url( '/services/starlink/' ), 'outline-navy' ),
 	);
 
@@ -752,11 +751,11 @@ function antenniste91_blog_posts() {
 		'title'   => "Vidéosurveillance à domicile : ce qu'il faut savoir avant d'installer",
 		'excerpt' => "Nombre de caméras, enregistrement, vie privée du voisinage : les questions à se poser avant d'équiper sa maison.",
 		'content' =>
-			antenniste91_paragraph_block( "Installer des caméras chez soi semble simple sur le papier — en pratique, quelques choix mal anticipés peuvent rendre l'installation inutile ou, pire, problématique sur le plan légal." )
+			antenniste91_paragraph_block( "Installer des caméras chez soi semble simple sur le papier. En pratique, quelques choix mal anticipés peuvent rendre l'installation inutile ou, pire, problématique sur le plan légal." )
 			. antenniste91_heading_block( "Ne filmez pas la voie publique ni le jardin du voisin", 2 )
 			. antenniste91_paragraph_block( "Une caméra orientée sur l'espace privé d'un tiers ou sur la rue peut poser un problème légal, même installée de bonne foi. Le positionnement se réfléchit avant la pose, pas après une plainte." )
 			. antenniste91_heading_block( "Combien de caméras sont vraiment nécessaires ?", 2 )
-			. antenniste91_paragraph_block( "Plus n'est pas toujours mieux. Une entrée principale et un accès secondaire bien couverts valent souvent mieux que cinq caméras mal positionnées. C'est l'objet du diagnostic initial : couvrir l'essentiel sans multiplier le matériel — et le coût — sans raison." )
+			. antenniste91_paragraph_block( "Plus n'est pas toujours mieux. Une entrée principale et un accès secondaire bien couverts valent souvent mieux que cinq caméras mal positionnées. C'est l'objet du diagnostic initial : couvrir l'essentiel sans multiplier le matériel ni le coût, sans raison." )
 			. antenniste91_heading_block( "Cloud ou enregistrement local ?", 2 )
 			. antenniste91_card_list_block(
 				array(
@@ -776,7 +775,7 @@ function antenniste91_blog_posts() {
 			. antenniste91_heading_block( "Un élément commun, une charge commune", 2 )
 			. antenniste91_paragraph_block( "L'antenne collective fait en général partie des parties communes : sa réparation relève donc de la copropriété, financée par les charges, et non d'un copropriétaire en particulier." )
 			. antenniste91_heading_block( "Faut-il attendre l'assemblée générale ?", 2 )
-			. antenniste91_paragraph_block( "Pas nécessairement. Une panne totale de réception peut relever de l'urgence, permettant au syndic de faire intervenir un professionnel sans attendre le prochain vote — à condition de pouvoir justifier la nécessité de l'intervention." )
+			. antenniste91_paragraph_block( "Pas nécessairement. Une panne totale de réception peut relever de l'urgence, permettant au syndic de faire intervenir un professionnel sans attendre le prochain vote, à condition de pouvoir justifier la nécessité de l'intervention." )
 			. antenniste91_callout_block( "On peut établir un diagnostic et un devis rapidement, pour donner au syndic les éléments nécessaires à sa décision." )
 			. antenniste91_button_block( "Demander un diagnostic →", home_url( '/contact/' ), 'outline-navy' ),
 	);
@@ -787,7 +786,7 @@ function antenniste91_blog_posts() {
 function antenniste91_content_confidentialite() {
 	$c  = antenniste91_paragraph_block( "Cette page explique quelles données sont collectées sur ce site, pourquoi, et comment les faire modifier ou supprimer." );
 	$c .= antenniste91_heading_block( 'Responsable du traitement', 2 );
-	$c .= antenniste91_paragraph_block( '<span class="ph">Raison sociale à compléter</span> — contact : ' . antenniste91_phone_display() . ', <span class="ph">email à compléter</span>.' );
+	$c .= antenniste91_paragraph_block( '<span class="ph">Raison sociale à compléter</span>, contact : ' . antenniste91_phone_display() . ', <span class="ph">email à compléter</span>.' );
 	$c .= antenniste91_heading_block( 'Quelles données sont collectées', 2 );
 	$c .= antenniste91_list_block(
 		array(
@@ -804,7 +803,7 @@ function antenniste91_content_confidentialite() {
 	$c .= antenniste91_heading_block( 'Vos droits', 2 );
 	$c .= antenniste91_paragraph_block( "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données. Pour l'exercer, contactez-nous aux coordonnées ci-dessus. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr)." );
 	$c .= antenniste91_heading_block( 'Hébergement', 2 );
-	$c .= antenniste91_paragraph_block( 'Les données transitant par ce site sont hébergées par <span class="ph">Ionos — à confirmer</span>.' );
+	$c .= antenniste91_paragraph_block( 'Les données transitant par ce site sont hébergées par <span class="ph">Ionos (à confirmer)</span>.' );
 	$c .= antenniste91_paragraph_block( '<span class="ph">Cette page doit être relue et validée avec un professionnel du droit avant mise en ligne.</span>' );
 	return $c;
 }
@@ -831,7 +830,7 @@ function antenniste91_content_mentions_legales() {
 	$c  = antenniste91_heading_block( 'Éditeur du site', 3 );
 	$c .= antenniste91_paragraph_block( 'Raison sociale : <span class="ph">à compléter</span><br>Forme juridique : <span class="ph">à compléter</span><br>SIRET : <span class="ph">à compléter</span><br>Adresse : <span class="ph">à compléter</span><br>Téléphone : ' . antenniste91_phone_display() . '<br>Email : <span class="ph">à compléter</span>' );
 	$c .= antenniste91_heading_block( 'Hébergement', 3 );
-	$c .= antenniste91_paragraph_block( 'Le site est hébergé par : <span class="ph">Ionos — coordonnées complètes à ajouter</span>' );
+	$c .= antenniste91_paragraph_block( 'Le site est hébergé par : <span class="ph">Ionos, coordonnées complètes à ajouter</span>' );
 	$c .= antenniste91_heading_block( 'Directeur de la publication', 3 );
 	$c .= antenniste91_paragraph_block( '<span class="ph">Nom à compléter</span>' );
 	$c .= antenniste91_heading_block( 'Données personnelles', 3 );
