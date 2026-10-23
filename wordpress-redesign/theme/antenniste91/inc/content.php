@@ -119,38 +119,44 @@ function antenniste91_chunk_services_grid() {
 			'title' => "Antenne TV &amp; TNT",
 			'text'  => "Chaînes qui sautent, image pixellisée : on identifie la cause — antenne, câble ou amplificateur — et on répare en une seule visite.",
 			'url'   => home_url( '/services/antenne-tv/' ),
-			'photo' => "antenne installée sur un toit",
+			'photo' => 'antenne-toit.jpg',
+			'alt'   => "Antenne râteau installée sur un toit, ciel dégagé",
 		),
 		array(
 			'title' => "Parabole &amp; satellite",
 			'text'  => "Parabole mal orientée, panne après une tempête ou envie de bouquets internationaux : installation et réglage précis.",
 			'url'   => home_url( '/services/parabole-satellite/' ),
-			'photo' => "parabole fixée en façade",
+			'photo' => 'parabole-toit.jpg',
+			'alt'   => "Parabole satellite fixée en toiture",
 		),
 		array(
 			'title' => 'Internet Starlink',
 			'text'  => "Pas de fibre chez vous ? Étude de dégagement du ciel, pose du kit et mise en réseau, pour un débit qui tient dans la durée.",
 			'url'   => home_url( '/services/starlink/' ),
-			'photo' => "kit Starlink installé en toiture",
+			'photo' => 'starlink-mur.jpg',
+			'alt'   => "Antenne Starlink installée sur un mur, en hauteur",
 		),
 		array(
 			'title' => 'Vidéosurveillance',
 			'text'  => "Caméras intérieures et extérieures consultables depuis votre téléphone, pour surveiller votre bien à distance.",
 			'url'   => home_url( '/services/videosurveillance/' ),
-			'photo' => "caméra de vidéosurveillance installée",
+			'photo' => 'camera-interieure.png',
+			'alt'   => "Caméra de vidéosurveillance intérieure",
 		),
 		array(
 			'title' => 'Alarme &amp; visiophone',
 			'text'  => "Voyez qui sonne avant d'ouvrir, même à distance : visiophone et alarme installés et expliqués pour votre maison ou votre établissement.",
 			'url'   => home_url( '/services/visiophone/' ),
-			'photo' => "visiophone installé à l'entrée",
+			'photo' => 'visiophone-combine.jpg',
+			'alt'   => "Visiophone avec écran et combiné, installé près d'une porte",
 		),
 	);
 
+	$assets_uri = get_template_directory_uri() . '/assets/photos/';
 	$html = '<div class="services-grid">';
 	foreach ( $services as $s ) {
 		$html .= '<div class="card">'
-			. '<div class="card-photo photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — ' . esc_html( $s['photo'] ) . '</span></div>'
+			. '<div class="card-photo"><img src="' . esc_url( $assets_uri . $s['photo'] ) . '" alt="' . esc_attr( $s['alt'] ) . '" loading="lazy" width="400" height="280"></div>'
 			. '<div class="card-body">'
 			. '<h3>' . $s['title'] . '</h3>'
 			. '<p>' . $s['text'] . '</p>'
@@ -274,10 +280,10 @@ function antenniste91_content_home() {
 		. '<p>Chaque intervention commence par un diagnostic clair et se termine par une explication en face à face — jamais un rapport technique incompréhensible. Notre équipe maintient une note de <strong>' . antenniste91_google_rating() . '/5 sur Google</strong> (' . antenniste91_review_count_label() . '), reflet de la confiance de nos clients.</p>'
 		. '<div class="hero-ctas" style="margin-top:6px;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 		. '</div><div class="about-photo-grid">'
-		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — une intervention en cours</span></div>'
-		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — l\'équipe sur le terrain</span></div>'
-		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — matériel posé</span></div>'
-		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — avant / après</span></div>'
+		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/starlink-toit.jpg' ) . '" alt="Installation Starlink sur un toit-terrasse" loading="lazy"></div>'
+		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/alarme-pose.jpg' ) . '" alt="Technicien posant un boîtier d\'alarme" loading="lazy"></div>'
+		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/camera-app.png' ) . '" alt="Consultation des caméras depuis une application" loading="lazy"></div>'
+		. '<div class="about-photo"><img src="' . esc_url( get_template_directory_uri() . '/assets/photos/parabole-toit.jpg' ) . '" alt="Parabole et antenne installées en toiture" loading="lazy"></div>'
 		. '</div></div>'
 	);
 
