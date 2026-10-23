@@ -26,12 +26,12 @@ function antenniste91_customize_register( $wp_customize ) {
 		),
 		'antenniste91_phone' => array(
 			'label'   => __( 'Numéro de téléphone (format tel: — ex. 0663806197)', 'antenniste91' ),
-			'default' => '0663806197',
+			'default' => '0658582378',
 			'type'    => 'text',
 		),
 		'antenniste91_phone_display' => array(
 			'label'   => __( 'Numéro affiché (ex. 06 63 80 61 97)', 'antenniste91' ),
-			'default' => '06 63 80 61 97',
+			'default' => '06 58 58 23 78',
 			'type'    => 'text',
 		),
 		'antenniste91_google_rating' => array(
@@ -138,7 +138,7 @@ function antenniste91_phone_href() {
 }
 
 function antenniste91_phone_display() {
-	return esc_html( get_theme_mod( 'antenniste91_phone_display', '06 63 80 61 97' ) );
+	return esc_html( get_theme_mod( 'antenniste91_phone_display', '06 58 58 23 78' ) );
 }
 
 function antenniste91_google_rating() {

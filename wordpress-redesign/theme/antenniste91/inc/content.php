@@ -116,39 +116,46 @@ function antenniste91_button_block( $text, $url, $style = '' ) {
 function antenniste91_chunk_services_grid() {
 	$services = array(
 		array(
-			'icon' => '<rect x="3" y="5" width="18" height="12" rx="2"/><rect x="8" y="19" width="8" height="2" rx="1"/><rect x="6.3" y="1.8" width="2" height="4.4" rx="1" transform="rotate(-25 7.3 4)"/><rect x="15.7" y="1.8" width="2" height="4.4" rx="1" transform="rotate(25 16.7 4)"/>',
 			'title' => "Antenne TV &amp; TNT",
 			'text'  => "Chaînes qui sautent, image pixellisée : on identifie la cause — antenne, câble ou amplificateur — et on répare en une seule visite.",
 			'url'   => home_url( '/services/antenne-tv/' ),
+			'photo' => "antenne installée sur un toit",
 		),
 		array(
-			'icon' => '<path d="M3 16c0-7.2 5.8-13 13-13v3c-5.5 0-10 4.5-10 10H3Z"/><circle cx="19" cy="5" r="1.7"/><rect x="10.5" y="16" width="3" height="5" rx="1"/><rect x="8" y="20" width="8" height="2" rx="1"/>',
 			'title' => "Parabole &amp; satellite",
 			'text'  => "Parabole mal orientée, panne après une tempête ou envie de bouquets internationaux : installation et réglage précis.",
 			'url'   => home_url( '/services/parabole-satellite/' ),
+			'photo' => "parabole fixée en façade",
 		),
 		array(
-			'icon' => '<rect x="5" y="2" width="14" height="9" rx="2" transform="rotate(-15 12 6.5)"/><rect x="11" y="12" width="2" height="7" rx="1"/><rect x="8" y="19" width="8" height="2" rx="1"/>',
 			'title' => 'Internet Starlink',
 			'text'  => "Pas de fibre chez vous ? Étude de dégagement du ciel, pose du kit et mise en réseau, pour un débit qui tient dans la durée.",
 			'url'   => home_url( '/services/starlink/' ),
+			'photo' => "kit Starlink installé en toiture",
 		),
 		array(
-			'icon' => '<rect x="2" y="7" width="14" height="10" rx="3"/><circle cx="9" cy="12" r="2.8" fill="var(--navy)"/><path d="M16 10.5 22 7v10l-6-3.5Z"/>',
 			'title' => 'Vidéosurveillance',
 			'text'  => "Caméras intérieures et extérieures consultables depuis votre téléphone, pour surveiller votre bien à distance.",
 			'url'   => home_url( '/services/videosurveillance/' ),
+			'photo' => "caméra de vidéosurveillance installée",
+		),
+		array(
+			'title' => 'Alarme &amp; visiophone',
+			'text'  => "Voyez qui sonne avant d'ouvrir, même à distance : visiophone et alarme installés et expliqués pour votre maison ou votre établissement.",
+			'url'   => home_url( '/services/visiophone/' ),
+			'photo' => "visiophone installé à l'entrée",
 		),
 	);
 
 	$html = '<div class="services-grid">';
 	foreach ( $services as $s ) {
 		$html .= '<div class="card">'
-			. '<div class="icon-tile"><svg viewBox="0 0 24 24" fill="currentColor">' . $s['icon'] . '</svg></div>'
+			. '<div class="card-photo photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — ' . esc_html( $s['photo'] ) . '</span></div>'
+			. '<div class="card-body">'
 			. '<h3>' . $s['title'] . '</h3>'
 			. '<p>' . $s['text'] . '</p>'
-			. '<a class="go" href="' . esc_url( $s['url'] ) . '">Voir le détail du service →</a>'
-			. '</div>';
+			. '<a class="btn btn-ghost card-cta" href="' . esc_url( $s['url'] ) . '">En savoir plus →</a>'
+			. '</div></div>';
 	}
 	$html .= '</div>';
 	return antenniste91_html_block( $html );
@@ -175,11 +182,11 @@ function antenniste91_chunk_process() {
 }
 
 function antenniste91_chunk_audience() {
-	$icon_tv     = '<rect x="3" y="5" width="18" height="12" rx="2"/><rect x="8" y="19" width="8" height="2" rx="1"/><rect x="6.3" y="1.8" width="2" height="4.4" rx="1" transform="rotate(-25 7.3 4)"/><rect x="15.7" y="1.8" width="2" height="4.4" rx="1" transform="rotate(25 16.7 4)"/>';
-	$icon_star   = '<rect x="5" y="2" width="14" height="9" rx="2" transform="rotate(-15 12 6.5)"/><rect x="11" y="12" width="2" height="7" rx="1"/><rect x="8" y="19" width="8" height="2" rx="1"/>';
-	$icon_cam    = '<rect x="2" y="7" width="14" height="10" rx="3"/><circle cx="9" cy="12" r="2.8" fill="var(--navy-tint)"/><path d="M16 10.5 22 7v10l-6-3.5Z"/>';
-	$icon_house  = '<path d="M12 3 3 10v11h6v-6h6v6h6V10Z"/>';
-	$icon_person = '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7Z"/>';
+	$icon_tv     = antenniste91_mini_icon_paths( 'antenne' );
+	$icon_star   = antenniste91_mini_icon_paths( 'starlink' );
+	$icon_cam    = antenniste91_mini_icon_paths( 'camera' );
+	$icon_house  = antenniste91_mini_icon_paths( 'maison' );
+	$icon_person = antenniste91_mini_icon_paths( 'personne' );
 
 	$particulier_items = array(
 		array( $icon_tv, "Chaînes qui sautent, image pixellisée ou neige à l'écran" ),
@@ -197,17 +204,21 @@ function antenniste91_chunk_audience() {
 	$render_list = function( $items ) {
 		$out = '<ul class="feature-list">';
 		foreach ( $items as $item ) {
-			$out .= '<li><span class="ico"><svg viewBox="0 0 24 24" fill="currentColor">' . $item[0] . '</svg></span><span>' . $item[1] . '</span></li>';
+			$out .= '<li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $item[0] . '</svg></span><span>' . $item[1] . '</span></li>';
 		}
 		$out .= '</ul>';
 		return $out;
 	};
 
-	$html = '<div class="audience-split">'
-		. '<div class="aud-card"><span class="tag">Maison individuelle</span><h3>Particuliers</h3>'
+	$html = '<div class="aud-toggle" role="group" aria-label="Vous êtes...">'
+		. '<button type="button" class="aud-tab" id="aud-tab-part" aria-pressed="true">Particuliers</button>'
+		. '<button type="button" class="aud-tab" id="aud-tab-pro" aria-pressed="false">Professionnels &amp; collectivités</button>'
+		. '</div>'
+		. '<div class="audience-split audience-split-tabbed">'
+		. '<div class="aud-card" id="aud-panel-part"><span class="tag">Maison individuelle</span><h3>Particuliers</h3>'
 		. $render_list( $particulier_items )
 		. '<br/><a class="btn btn-ghost" href="' . esc_url( home_url( '/contact/' ) ) . '">Décrire mon besoin</a></div>'
-		. '<div class="aud-card pro"><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3>'
+		. '<div class="aud-card pro" id="aud-panel-pro" hidden><span class="tag">Hôtels · Commerces · Collectivités</span><h3>Professionnels &amp; collectivités</h3>'
 		. $render_list( $pro_items )
 		. '<br/><a class="btn btn-outline" href="' . esc_url( home_url( '/contact/' ) ) . '">Demander un devis professionnel</a></div>'
 		. '</div>';
@@ -224,8 +235,20 @@ function antenniste91_chunk_reviews_teaser() {
 	return antenniste91_html_block( $html );
 }
 
+/** Carte stylisée (originale, simplifiée) du département de l'Essonne, avec un repère central. */
+function antenniste91_essonne_map_svg() {
+	return '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">'
+		. '<path d="M22 14 52 9 82 22 91 48 76 78 44 92 14 70 8 38Z" fill="var(--navy-tint)" stroke="var(--accent-blue)" stroke-width="2"/>'
+		. '<circle cx="47" cy="50" r="4.5" fill="var(--accent-blue)" stroke="none"/>'
+		. '<circle cx="30" cy="32" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
+		. '<circle cx="66" cy="38" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
+		. '<circle cx="58" cy="68" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
+		. '<circle cx="28" cy="60" r="2.2" fill="currentColor" stroke="none" opacity=".55"/>'
+		. '</svg>';
+}
+
 function antenniste91_chunk_zone_chips() {
-	$towns = array( 'Évry-Courcouronnes', 'Corbeil-Essonnes', 'Massy', 'Palaiseau', 'Étampes', 'Savigny-sur-Orge', 'Sainte-Geneviève-des-Bois', 'Draveil', 'Brétigny-sur-Orge', 'Longjumeau', '+ tout le département (91)' );
+	$towns = array( 'Évry-Courcouronnes', 'Corbeil-Essonnes', 'Massy', 'Palaiseau', 'Étampes', 'Savigny-sur-Orge', 'Sainte-Geneviève-des-Bois', 'Draveil', 'Brétigny-sur-Orge', 'Longjumeau' );
 	$html  = '<ul class="chips">';
 	foreach ( $towns as $t ) {
 		$html .= '<li>' . esc_html( $t ) . '</li>';
@@ -240,9 +263,23 @@ function antenniste91_chunk_zone_chips() {
 
 function antenniste91_content_home() {
 	$c  = antenniste91_html_block( '<span class="eyebrow">Ce que nous installons</span>' );
-	$c .= antenniste91_heading_block( 'Quatre métiers, un seul technicien.' );
-	$c .= antenniste91_paragraph_block( "Installateur antenne TV, parabole satellite, Starlink et vidéosurveillance en Essonne (91) : de l'antenne râteau à la caméra connectée, chaque intervention est diagnostiquée avant devis, pour particuliers, professionnels et collectivités." );
+	$c .= antenniste91_heading_block( 'Cinq métiers, un seul technicien.' );
+	$c .= antenniste91_paragraph_block( "Installateur antenne TV, parabole satellite, Starlink, vidéosurveillance et visiophone en Essonne (91) : de l'antenne râteau au visiophone connecté, chaque intervention est diagnostiquée avant devis, pour particuliers, professionnels et collectivités." );
 	$c .= antenniste91_chunk_services_grid();
+
+	$c .= antenniste91_html_block( '<div class="about-grid"><div>'
+		. '<span class="eyebrow">Les experts en installation et dépannage</span>'
+		. '<h2>À propos de ' . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . '</h2>'
+		. '<p>' . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . ' installe et dépanne antennes, paraboles, caméras, alarmes et visiophones en Essonne. Notre mission : une connectivité et une sécurité fiables, expliquées simplement, pour les particuliers comme pour les professionnels.</p>'
+		. '<p>Chaque intervention commence par un diagnostic clair et se termine par une explication en face à face — jamais un rapport technique incompréhensible. Notre équipe maintient une note de <strong>' . antenniste91_google_rating() . '/5 sur Google</strong> (' . antenniste91_review_count_label() . '), reflet de la confiance de nos clients.</p>'
+		. '<div class="hero-ctas" style="margin-top:6px;"><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
+		. '</div><div class="about-photo-grid">'
+		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — une intervention en cours</span></div>'
+		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — l\'équipe sur le terrain</span></div>'
+		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — matériel posé</span></div>'
+		. '<div class="photo-ph"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="16" height="12" rx="3"/><circle cx="10" cy="13" r="3.2" fill="var(--paper-2)"/><path d="M18 11l4-2.5v9L18 15Z"/></svg><span>Photo à ajouter — avant / après</span></div>'
+		. '</div></div>'
+	);
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Pourquoi nous</span>' );
 	$c .= antenniste91_heading_block( 'Ce qui change, concrètement.' );
@@ -255,9 +292,13 @@ function antenniste91_content_home() {
 	$c .= antenniste91_chunk_audience();
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Zone d\'intervention</span>' );
-	$c .= antenniste91_heading_block( "Une intervention en Essonne, pas un rendez-vous manqué." );
-	$c .= antenniste91_paragraph_block( "Nous intervenons dans tout le département de l'Essonne (91) et les communes limitrophes." );
-	$c .= antenniste91_button_block( "Voir la zone d'intervention →", home_url( '/zone-intervention/' ), 'outline-navy' );
+	$c .= antenniste91_heading_block( "Toute l'Essonne (91), sans exception." );
+	$c .= antenniste91_html_block(
+		'<div class="zone-grid"><div>'
+		. '<p>Nous intervenons dans l\'ensemble du département de l\'Essonne et les communes limitrophes — déplacement inclus dans le devis, quelle que soit la commune.</p>'
+		. '<div class="hero-ctas" style="margin-top:22px;"><a class="btn btn-ghost" href="' . esc_url( home_url( '/zone-intervention/' ) ) . '">Voir le détail des secteurs →</a></div>'
+		. '</div><div class="zone-map-wrap">' . antenniste91_essonne_map_svg() . '</div></div>'
+	);
 
 	$c .= antenniste91_html_block( '<span class="eyebrow">Avis clients</span>' );
 	$c .= antenniste91_heading_block( "Ce qu'en disent les clients." );
@@ -306,8 +347,38 @@ function antenniste91_service_illustration( $key ) {
 		'parabole' => '<ellipse cx="42" cy="42" rx="30" ry="22" transform="rotate(-18 42 42)"/><path d="M42 42 76 24"/><circle cx="76" cy="24" r="4" fill="currentColor" stroke="none"/><path d="M42 64V88"/><path d="M28 88H56"/>',
 		'starlink' => '<rect x="20" y="8" width="54" height="32" rx="5" transform="rotate(-14 47 24)"/><path d="M50 42V86"/><path d="M34 86H66"/>',
 		'camera'   => '<rect x="12" y="32" width="50" height="32" rx="9"/><circle cx="37" cy="48" r="10"/><circle cx="37" cy="48" r="3.5" fill="currentColor" stroke="none"/><path d="M62 40 86 26v44l-24-14Z"/><path d="M22 32V22a6 6 0 0 1 6-6h8"/>',
+		'visiophone' => '<rect x="32" y="10" width="36" height="78" rx="9"/><circle cx="50" cy="30" r="5" fill="currentColor" stroke="none"/><circle cx="50" cy="63" r="9"/><path d="M18 36a28 28 0 0 1 0 28" opacity=".55"/><path d="M10 26a42 42 0 0 1 0 48" opacity=".3"/>',
 	);
 	return isset( $illustrations[ $key ] ) ? $illustrations[ $key ] : '';
+}
+
+/**
+ * Petits pictogrammes (24×24, trait) utilisés partout où une icône de
+ * service apparaît en taille réduite — menu, cartes, listes. Même
+ * vocabulaire visuel que les grandes illustrations ci-dessus (silhouettes
+ * littérales), pour que l'antenne, la parabole, Starlink et la caméra se
+ * reconnaissent au premier coup d'œil même en petit.
+ */
+function antenniste91_mini_icon_paths( $key ) {
+	$icons = array(
+		'antenne'  => '<path d="M3 12h15"/><path d="M6 7v10"/><path d="M8.5 8v8"/><path d="M11 9v6"/><path d="M13.5 9.8v4.4"/><path d="M11 12v8"/><path d="M8.5 20h5"/>',
+		'parabole' => '<ellipse cx="10" cy="10" rx="7" ry="5" transform="rotate(-18 10 10)"/><path d="M10 10 18 6"/><circle cx="18" cy="6" r="1.3" fill="currentColor" stroke="none"/><path d="M10 15v6"/><path d="M7 21h6"/>',
+		'starlink' => '<rect x="4" y="2" width="13" height="7.5" rx="1.3" transform="rotate(-14 10.5 5.5)"/><path d="M11 10v10"/><path d="M8 20h6"/>',
+		'camera'   => '<rect x="2" y="8" width="12" height="8" rx="2.2"/><circle cx="8" cy="12" r="2.5"/><circle cx="8" cy="12" r=".9" fill="currentColor" stroke="none"/><path d="M14 10 20 7v10l-6-3.5Z"/><path d="M5 8V6a1.5 1.5 0 0 1 1.5-1.5H9"/>',
+		'visiophone' => '<rect x="7" y="2" width="10" height="20" rx="2.5"/><circle cx="12" cy="7.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="16" r="2.2"/><path d="M4.5 9a7.5 7.5 0 0 1 0 6" opacity=".6"/>',
+		'maison'   => '<path d="M3 11 12 4l9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/>',
+		'personne' => '<circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/>',
+	);
+	return isset( $icons[ $key ] ) ? $icons[ $key ] : '';
+}
+
+/** Icône 24×24 complète (trait, currentColor), prête à insérer dans le HTML. */
+function antenniste91_mini_icon( $key ) {
+	$paths = antenniste91_mini_icon_paths( $key );
+	if ( ! $paths ) {
+		return '';
+	}
+	return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $paths . '</svg>';
 }
 
 function antenniste91_service_page( $args ) {
@@ -462,12 +533,47 @@ function antenniste91_content_service_video() {
 	);
 }
 
+function antenniste91_content_service_visiophone() {
+	return antenniste91_service_page(
+		array(
+			'hook'     => "Voir qui sonne avant d'ouvrir, depuis son téléphone même en son absence : un visiophone bien installé, couplé si besoin à une alarme, rassure autant les particuliers en pavillon que les professionnels qui gèrent plusieurs accès.",
+			'signs'    => array(
+				"Vous voulez voir qui sonne au portail ou à la porte avant d'ouvrir",
+				"Vous êtes souvent absent et voulez ouvrir à distance depuis votre téléphone",
+				"Votre interphone actuel est en panne ou trop ancien pour être couplé à une caméra",
+				"Un commerce, un hôtel ou une collectivité a besoin de contrôler plusieurs accès",
+			),
+			'included' => array(
+				array( 'Étude de l\'accès', 'Portail, porte ou plusieurs entrées : la solution est adaptée à votre configuration.' ),
+				array( 'Pose soignée', 'Platine extérieure et moniteur ou application posés et câblés proprement.' ),
+				array( 'Couplage alarme possible', 'Visiophone et système d\'alarme reliés sur demande.' ),
+				array( 'Prise en main expliquée', 'Vous repartez en sachant répondre, ouvrir et consulter l\'historique.' ),
+			),
+			'process'  => "Après un repérage de vos accès, la platine et le moniteur (ou l'application mobile) sont installés et raccordés. Chaque fonction — voir, parler, ouvrir à distance — est testée avec vous avant la fin de la visite.",
+			'pricing'  => "Le tarif dépend du nombre d'accès à équiper, du type de platine choisie et d'un éventuel couplage avec une alarme existante. Il est annoncé avant toute pose.",
+			'illustration' => 'visiophone',
+			'photo1'   => 'visiophone installé à l\'entrée d\'un pavillon',
+			'faq'      => array(
+				array(
+					'q' => "Puis-je ouvrir le portail depuis mon téléphone, même à l'extérieur ?",
+					'a' => "Oui, selon le modèle choisi, l'ouverture à distance et la consultation de l'historique des visites sont possibles depuis une application, où que vous soyez.",
+				),
+				array(
+					'q' => "Le visiophone peut-il remplacer mon interphone actuel sans tout refaire ?",
+					'a' => "Dans la majorité des cas, le câblage existant peut être réutilisé. Un diagnostic sur place permet de le confirmer avant de proposer un devis.",
+				),
+			),
+		)
+	);
+}
+
 function antenniste91_content_zone() {
-	$c  = antenniste91_paragraph_block( "Nous intervenons dans tout le département de l'Essonne (91) ainsi que dans les communes limitrophes. Le déplacement est inclus dans le devis pour les secteurs listés ci-dessous." );
+	$c  = antenniste91_html_block( '<div class="zone-map-wrap zone-map-standalone">' . antenniste91_essonne_map_svg() . '</div>' );
+	$c .= antenniste91_paragraph_block( "Nous intervenons dans tout le département de l'Essonne (91), sans exception, ainsi que dans les communes limitrophes. Le déplacement est toujours inclus dans le devis." );
+	$c .= antenniste91_heading_block( 'Quelques communes où nous intervenons régulièrement', 3 );
 	$c .= antenniste91_chunk_zone_chips();
-	$c .= antenniste91_paragraph_block( '<span class="ph">Liste à ajuster selon votre rayon réel d\'intervention.</span>' );
-	$c .= antenniste91_heading_block( "Un secteur qui n'est pas dans la liste ?", 3 );
-	$c .= antenniste91_paragraph_block( "Appelez-nous : la plupart des demandes en dehors de cette liste restent réalisables, avec un délai ou un forfait de déplacement adapté à la distance." );
+	$c .= antenniste91_heading_block( "Votre commune n'apparaît pas dans cette liste ?", 3 );
+	$c .= antenniste91_paragraph_block( "Aucune inquiétude : nous couvrons l'ensemble du département. Appelez-nous directement, nous confirmons l'intervention au téléphone." );
 	$c .= antenniste91_heading_block( "Délai moyen d'intervention", 3 );
 	$c .= antenniste91_paragraph_block( '<span class="ph">Délai à préciser (ex. 24 à 48h selon les secteurs et l\'urgence).</span>' );
 	return $c;
@@ -531,8 +637,7 @@ function antenniste91_content_faq() {
 function antenniste91_content_contact() {
 	$c  = antenniste91_paragraph_block( "La façon la plus rapide d'obtenir une réponse : appeler directement. Décrivez votre besoin, on vous donne un premier avis et, si nécessaire, un créneau d'intervention — gratuitement." );
 	$c .= antenniste91_html_block(
-		'<div class="audience-split"><div class="aud-card"><span class="tag">Par téléphone</span><h3>' . antenniste91_phone_display() . '</h3><p>Lun–Sam · 8h–19h</p><br/><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
-		. '<div class="aud-card"><span class="tag">Par email</span><h3 class="ph">email à renseigner</h3><p>Réponse sous 24 à 48h ouvrées.</p></div></div>'
+		'<div class="contact-phone-card"><span class="tag">Par téléphone</span><h3>' . antenniste91_phone_display() . '</h3><p>Lun–Sam · 8h–19h</p><br/><a class="btn btn-call" href="' . esc_url( antenniste91_phone_href() ) . '">Appeler maintenant</a></div>'
 	);
 	$c .= antenniste91_heading_block( 'Ou décrivez votre besoin par écrit', 3 );
 	$c .= antenniste91_paragraph_block( "Le formulaire ci-dessous envoie directement un email — sans passer par un plugin tiers." );
@@ -662,7 +767,7 @@ function antenniste91_content_confidentialite() {
 function antenniste91_content_cgu() {
 	$c  = antenniste91_paragraph_block( "Les présentes conditions générales d'utilisation régissent l'accès et l'usage de ce site." );
 	$c .= antenniste91_heading_block( "Objet du site", 2 );
-	$c .= antenniste91_paragraph_block( "Ce site présente les services de " . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . " (antenne TV, parabole, Starlink, vidéosurveillance) et permet de demander un devis ou de prendre contact. Les informations qu'il contient (tarifs indicatifs, délais) sont données à titre général et confirmées au cas par cas lors du diagnostic." );
+	$c .= antenniste91_paragraph_block( "Ce site présente les services de " . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . " (antenne TV, parabole, Starlink, vidéosurveillance, visiophone) et permet de demander un devis ou de prendre contact. Les informations qu'il contient (tarifs indicatifs, délais) sont données à titre général et confirmées au cas par cas lors du diagnostic." );
 	$c .= antenniste91_heading_block( "Propriété intellectuelle", 2 );
 	$c .= antenniste91_paragraph_block( "Les textes, images, logo et éléments graphiques de ce site sont la propriété de " . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . ", sauf mention contraire, et ne peuvent être reproduits sans autorisation." );
 	$c .= antenniste91_heading_block( "Disponibilité du site", 2 );

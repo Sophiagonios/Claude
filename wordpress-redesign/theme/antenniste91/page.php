@@ -22,7 +22,7 @@ while ( have_posts() ) :
 		</div>
 	</div>
 
-	<?php $service_slugs = array( 'antenne-tv', 'parabole-satellite', 'starlink', 'videosurveillance' ); ?>
+	<?php $service_slugs = array( 'antenne-tv', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' ); ?>
 	<?php if ( in_array( get_post_field( 'post_name' ), $service_slugs, true ) ) : ?>
 		<div class="wrap section-pad">
 			<div class="page-layout">

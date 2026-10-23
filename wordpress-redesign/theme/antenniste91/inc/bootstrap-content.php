@@ -63,6 +63,7 @@ function antenniste91_bootstrap() {
 	$parabole    = antenniste91_upsert_page( 'parabole-satellite', 'Parabole & satellite', antenniste91_content_service_parabole(), $services_parent );
 	$starlink    = antenniste91_upsert_page( 'starlink', 'Internet Starlink', antenniste91_content_service_starlink(), $services_parent );
 	$video       = antenniste91_upsert_page( 'videosurveillance', 'Vidéosurveillance', antenniste91_content_service_video(), $services_parent );
+	$visiophone  = antenniste91_upsert_page( 'visiophone', 'Alarme & visiophone', antenniste91_content_service_visiophone(), $services_parent );
 
 	$zone        = antenniste91_upsert_page( 'zone-intervention', "Zone d'intervention", antenniste91_content_zone() );
 	$avis        = antenniste91_upsert_page( 'avis-clients', 'Avis clients', antenniste91_content_avis() );
@@ -85,14 +86,14 @@ function antenniste91_bootstrap() {
 
 	antenniste91_seed_blog_posts();
 
-	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $blog, $faq, $contact ) );
+	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $faq, $contact ) );
 
 	update_option( 'antenniste91_bootstrapped', 1 );
 }
 add_action( 'after_switch_theme', 'antenniste91_bootstrap' );
 
 function antenniste91_create_primary_menu( $ids ) {
-	list( $antenne, $parabole, $starlink, $video, $blog, $faq, $contact ) = $ids;
+	list( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $faq, $contact ) = $ids;
 
 	$menu_name = 'Menu principal';
 	$menu      = wp_get_nav_menu_object( $menu_name );
@@ -112,10 +113,11 @@ function antenniste91_create_primary_menu( $ids ) {
 	);
 
 	$children = array(
-		$antenne  => 'Antenne TV & TNT',
-		$parabole => 'Parabole & satellite',
-		$starlink => 'Internet Starlink',
-		$video    => 'Vidéosurveillance',
+		$antenne    => 'Antenne TV & TNT',
+		$parabole   => 'Parabole & satellite',
+		$starlink   => 'Internet Starlink',
+		$video      => 'Vidéosurveillance',
+		$visiophone => 'Alarme & visiophone',
 	);
 	foreach ( $children as $page_id => $label ) {
 		if ( ! $page_id ) {

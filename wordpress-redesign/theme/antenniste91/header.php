@@ -5,9 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<script>
 	(function(){
+		/* Mode sombre mat = thème par défaut du site. Le mode clair n'est
+		   appliqué que si la personne l'a choisi explicitement via le
+		   bouton bascule (jamais selon les préférences système). */
 		try {
 			var t = localStorage.getItem('antenniste91_theme');
-			if ( t === 'dark' ) { document.documentElement.setAttribute('data-theme', 'dark'); }
+			if ( t === 'light' ) { document.documentElement.setAttribute('data-theme', 'light'); }
 		} catch(e) {}
 	})();
 	</script>
@@ -18,9 +21,13 @@
 
 <div class="topstrip">
 	<div class="wrap">
-		<span>
-			📡 Antenne, parabole, Starlink ou caméra : un technicien vous répond en Essonne —
-			<a href="<?php echo esc_url( antenniste91_phone_href() ); ?>">Appelez directement →</a>
+		<span class="hours">
+			<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+			<?php echo esc_html( get_theme_mod( 'antenniste91_hours', 'Lun–Sam · 8h–19h' ) ); ?>
+		</span>
+		<span class="zone">
+			<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.8-7-11a7 7 0 0 1 14 0c0 5.2-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+			<?php echo esc_html( get_theme_mod( 'antenniste91_zone_label', 'Essonne (91) & alentours' ) ); ?>
 		</span>
 	</div>
 </div>

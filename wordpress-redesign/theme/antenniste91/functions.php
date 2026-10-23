@@ -62,36 +62,48 @@ function antenniste91_inline_scripts() {
 		if ( mnav ) { mnav.addEventListener('click', function(e){ if ( e.target === mnav ) { closeNav(); } }); }
 		document.querySelectorAll('.mobile-nav a').forEach(function(a){ a.addEventListener('click', closeNav); });
 
-		var tabPart = document.getElementById('tab-part');
-		var tabPro = document.getElementById('tab-pro');
-		var panelPart = document.getElementById('panel-part');
-		var panelPro = document.getElementById('panel-pro');
-		if ( tabPart && tabPro && panelPart && panelPro ) {
-			var show = function(which){
-				var isPart = which === 'part';
-				panelPart.hidden = !isPart;
-				panelPro.hidden = isPart;
-				tabPart.setAttribute('aria-pressed', String(isPart));
-				tabPro.setAttribute('aria-pressed', String(!isPart));
-			};
-			tabPart.addEventListener('click', function(){ show('part'); });
-			tabPro.addEventListener('click', function(){ show('pro'); });
+		/* Bascule Particulier/Professionnel réutilisée pour tout couple
+		   d'onglets tab-X/tab-Y + panel-X/panel-Y présent sur la page
+		   (hero d'accueil, puis section "Pour qui ?"). */
+		function wireAudienceToggle(tabPartId, tabProId, panelPartId, panelProId){
+			var tabPart = document.getElementById(tabPartId);
+			var tabPro = document.getElementById(tabProId);
+			var panelPart = document.getElementById(panelPartId);
+			var panelPro = document.getElementById(panelProId);
+			if ( tabPart && tabPro && panelPart && panelPro ) {
+				var show = function(which){
+					var isPart = which === 'part';
+					panelPart.hidden = !isPart;
+					panelPro.hidden = isPart;
+					tabPart.setAttribute('aria-pressed', String(isPart));
+					tabPro.setAttribute('aria-pressed', String(!isPart));
+				};
+				tabPart.addEventListener('click', function(){ show('part'); });
+				tabPro.addEventListener('click', function(){ show('pro'); });
+			}
 		}
+		wireAudienceToggle('tab-part', 'tab-pro', 'panel-part', 'panel-pro');
+		wireAudienceToggle('aud-tab-part', 'aud-tab-pro', 'aud-panel-part', 'aud-panel-pro');
 
+		/* Sombre mat = thème par défaut (pas d'attribut data-theme).
+		   Clair = choix explicite de la personne (data-theme="light"). */
 		var toggle = document.getElementById('theme-toggle');
 		if ( toggle ) {
 			var sun = toggle.querySelector('.icon-sun');
 			var moon = toggle.querySelector('.icon-moon');
+			function currentTheme(){
+				return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+			}
 			function paint(theme){
 				var isDark = theme === 'dark';
 				sun.hidden = isDark;
 				moon.hidden = !isDark;
 				toggle.setAttribute('aria-label', isDark ? 'Passer en mode clair' : 'Passer en mode sombre');
 			}
-			paint( document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light' );
+			paint( currentTheme() );
 			toggle.addEventListener('click', function(){
-				var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-				if ( next === 'dark' ) { document.documentElement.setAttribute('data-theme', 'dark'); }
+				var next = currentTheme() === 'dark' ? 'light' : 'dark';
+				if ( next === 'light' ) { document.documentElement.setAttribute('data-theme', 'light'); }
 				else { document.documentElement.removeAttribute('data-theme'); }
 				try { localStorage.setItem('antenniste91_theme', next); } catch(e) {}
 				paint(next);
