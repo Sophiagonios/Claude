@@ -122,11 +122,17 @@ ul.main > li{ position:relative; list-style:none; }
 ul.main a{ text-decoration:none; color:var(--text-soft); display:flex; align-items:center; gap:5px; padding-block:8px; white-space:nowrap; }
 ul.main a:hover{ color:var(--navy); }
 ul.main svg.caret{ width:13px; height:13px; flex:none; }
-.has-sub .submenu{ position:absolute; top:100%; left:0; min-width:230px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius-sm); box-shadow:var(--shadow); padding:8px; display:none; flex-direction:column; gap:2px; z-index:10; margin:0; list-style:none; }
+.has-sub .submenu{ position:absolute; top:100%; left:0; min-width:320px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius-sm); box-shadow:var(--shadow); padding:8px; display:none; flex-direction:column; gap:2px; z-index:10; margin:0; list-style:none; }
 .has-sub:hover .submenu, .has-sub:focus-within .submenu{ display:flex; }
 .submenu li{ list-style:none; }
 .submenu a{ padding:9px 10px; border-radius:7px; font-weight:600; font-size:13.5px; }
 .submenu a:hover{ background:var(--paper-2); color:var(--navy); }
+.mega-item{ display:flex; align-items:flex-start; gap:12px; padding:10px 12px; text-decoration:none; }
+.mega-item .ico{ flex:none; width:36px; height:36px; border-radius:9px; background:var(--accent-tint); color:var(--accent); display:flex; align-items:center; justify-content:center; }
+.mega-item .ico svg{ width:20px; height:20px; }
+.mega-item > span{ display:flex; flex-direction:column; gap:2px; }
+.mega-item strong{ font-size:13.5px; font-weight:700; color:var(--text); }
+.mega-item > span > span{ font-size:12px; font-weight:400; color:var(--muted); white-space:normal; }
 
 .icon-btn{ width:46px; height:46px; border-radius:10px; border:1px solid var(--line); background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--navy); flex:none; text-decoration:none; }
 .icon-btn svg{ width:19px; height:19px; }
