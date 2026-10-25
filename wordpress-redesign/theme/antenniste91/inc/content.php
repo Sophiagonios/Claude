@@ -453,7 +453,7 @@ function antenniste91_blog_banner_photo( $slug ) {
 	$map = array(
 		'antenne-tv-perd-signal-hiver'               => 'antenne-avant.jpg',
 		'autorisation-parabole-satellite'             => 'parabole-toit.jpg',
-		'starlink-essonne-vaut-le-coup'               => 'starlink-mur.jpg',
+		'starlink-essonne-vaut-le-coup'               => 'starlink-toit.jpg',
 		'videosurveillance-domicile-ce-quil-faut-savoir' => 'camera-interieure.png',
 		'copropriete-reparation-antenne-collective'   => 'antenne-apres.jpg',
 	);
