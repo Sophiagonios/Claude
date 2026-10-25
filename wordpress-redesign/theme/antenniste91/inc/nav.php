@@ -55,13 +55,9 @@ function antenniste91_get_menu_tree( $location = 'primary' ) {
  */
 function antenniste91_service_menu_meta( $slug ) {
 	$map = array(
-		'antenne-tv' => array(
+		'antenne-parabole' => array(
 			'icon' => antenniste91_mini_icon( 'antenne' ),
-			'desc' => "Pose, orientation, dépannage de réception",
-		),
-		'parabole-satellite' => array(
-			'icon' => antenniste91_mini_icon( 'parabole' ),
-			'desc' => 'Installation et réglage de parabole',
+			'desc' => "Pose, orientation, dépannage d'antenne et de parabole",
 		),
 		'starlink' => array(
 			'icon' => antenniste91_mini_icon( 'starlink' ),

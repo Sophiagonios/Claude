@@ -16,10 +16,10 @@
 			<div>
 				<h5>Services</h5>
 				<ul>
-					<li><a href="<?php echo esc_url( home_url( '/services/antenne-tv/' ) ); ?>">Antenne TV &amp; TNT</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/services/parabole-satellite/' ) ); ?>">Parabole &amp; satellite</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/services/starlink/' ) ); ?>">Internet Starlink</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/services/videosurveillance/' ) ); ?>">Vidéosurveillance</a></li>
+					<li><a href="<?php echo esc_url( home_url( '/services/antenne-parabole/' ) ); ?>">Installation d'antenne et parabole</a></li>
+					<li><a href="<?php echo esc_url( home_url( '/services/videosurveillance/' ) ); ?>">Installation vidéosurveillance</a></li>
+					<li><a href="<?php echo esc_url( home_url( '/services/visiophone/' ) ); ?>">Installation alarme et visiophone</a></li>
+					<li><a href="<?php echo esc_url( home_url( '/services/starlink/' ) ); ?>">Installation d'antenne Starlink</a></li>
 				</ul>
 			</div>
 			<div>

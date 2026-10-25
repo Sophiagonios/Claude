@@ -204,32 +204,32 @@ function antenniste91_button_block( $text, $url, $style = '' ) {
 function antenniste91_chunk_services_grid() {
 	$services = array(
 		array(
-			'title' => "Installation d'antenne",
+			'title' => "Installation d'antenne et parabole",
 			'text'  => "Antenne TV, parabole satellite : chaînes qui sautent, image pixellisée, panne après une tempête. On identifie la cause et on répare en une seule visite.",
-			'url'   => home_url( '/services/antenne-tv/' ),
+			'url'   => home_url( '/services/antenne-parabole/' ),
 			'photo' => 'antenne-toit.jpg',
 			'alt'   => "Antenne râteau installée sur un toit, ciel dégagé",
 		),
 		array(
-			'title' => 'Internet Starlink',
-			'text'  => "Pas de fibre chez vous ? Étude de dégagement du ciel, pose du kit et mise en réseau, pour un débit qui tient dans la durée.",
-			'url'   => home_url( '/services/starlink/' ),
-			'photo' => 'starlink-mur.jpg',
-			'alt'   => "Antenne Starlink installée sur un mur, en hauteur",
-		),
-		array(
-			'title' => 'Vidéosurveillance',
+			'title' => 'Installation vidéosurveillance',
 			'text'  => "Caméras intérieures et extérieures consultables depuis votre téléphone, pour surveiller votre bien à distance.",
 			'url'   => home_url( '/services/videosurveillance/' ),
 			'photo' => 'camera-interieure.png',
 			'alt'   => "Caméra de vidéosurveillance intérieure",
 		),
 		array(
-			'title' => 'Alarme &amp; visiophone',
+			'title' => 'Installation alarme et visiophone',
 			'text'  => "Voyez qui sonne avant d'ouvrir, même à distance : visiophone et alarme installés et expliqués pour votre maison ou votre établissement.",
 			'url'   => home_url( '/services/visiophone/' ),
 			'photo' => 'visiophone-entree.jpg',
 			'alt'   => "Visiophone installé près d'une porte d'entrée",
+		),
+		array(
+			'title' => "Installation d'antenne Starlink",
+			'text'  => "Pas de fibre chez vous ? Étude de dégagement du ciel, pose du kit et mise en réseau, pour un débit qui tient dans la durée.",
+			'url'   => home_url( '/services/starlink/' ),
+			'photo' => 'starlink-mur.jpg',
+			'alt'   => "Antenne Starlink installée sur un mur, en hauteur",
 		),
 	);
 
@@ -439,9 +439,8 @@ function antenniste91_service_toc() {
 /** Vraie photo en fond du bandeau d'en-tête, par page produit / géolocalisée. */
 function antenniste91_service_banner_photo( $slug ) {
 	$map = array(
-		'antenne-tv'          => 'antenne-reglage-avant.jpg',
+		'antenne-parabole'    => 'antenne-reglage-avant.jpg',
 		'antenne-tv-arpajon'  => 'antenne-reglage-apres.jpg',
-		'parabole-satellite'  => 'parabole-toit.jpg',
 		'starlink'            => 'starlink-mur.jpg',
 		'videosurveillance'   => 'camera-interieure.png',
 		'visiophone'          => 'visiophone-entree.jpg',
@@ -519,24 +518,27 @@ function antenniste91_service_page( $args ) {
 	return $c;
 }
 
+/** Page fusionnée antenne + parabole : les deux services partagent le même diagnostic (réception terrestre ou satellite) et la même intention de recherche "installation d'antenne et parabole". */
 function antenniste91_content_service_antenne() {
 	$c = antenniste91_service_page(
 		array(
-			'hook'     => "Une chaîne qui saute, une image qui se pixellise, une neige persistante à l'écran : dans neuf cas sur dix, le problème vient de l'antenne, du câble ou de l'amplificateur, pas de la télévision. On identifie la cause exacte avant de réparer, pour ne pas payer deux fois.",
+			'hook'     => "Chaîne qui saute, image pixellisée après une tempête, ou parabole à régler au millimètre pour capter de nouveaux bouquets : qu'il s'agisse d'une antenne terrestre ou d'une parabole satellite, on identifie la cause exacte avant d'intervenir, pour ne pas payer deux fois.",
 			'signs'    => array(
 				"Certaines chaînes manquent ou disparaissent selon la météo",
 				"L'image se pixellise ou l'écran affiche « signal faible »",
+				"La parabole a bougé après une tempête ou des travaux",
+				"Vous voulez ajouter un bouquet ou une chaîne étrangère",
 				"Aucune image sur une ou plusieurs prises TV du logement",
-				"L'antenne a été endommagée par le vent ou une tempête",
+				"L'antenne ou la parabole a été endommagée par le vent",
 			),
 			'included' => array(
-				array( 'Diagnostic complet', 'Antenne, câblage, amplificateur et répartiteur vérifiés.' ),
-				array( 'Réparation ciblée', "Réorientation ou remplacement de l'antenne si nécessaire." ),
-				array( 'Toutes les prises testées', 'Chaque prise TV concernée est vérifiée.' ),
+				array( 'Diagnostic complet', 'Antenne, parabole, câblage et amplificateur vérifiés.' ),
+				array( 'Réglage précis', "Orientation d'antenne ou azimut, élévation et polarisation de parabole ajustés au millimètre." ),
+				array( 'Toutes les prises testées', 'Chaque prise TV et chaque bouquet reçu sont vérifiés sur place.' ),
 				array( 'Test en direct', 'Les chaînes sont contrôlées avant la fin de la visite.' ),
 			),
-			'process'  => "Le technicien commence par un diagnostic sur place pour localiser la cause réelle de la panne. Le devis est annoncé avant toute réparation ; l'intervention se termine par un test des chaînes, prise par prise, en votre présence.",
-			'pricing'  => "Le tarif dépend de l'accès au toit, du câblage existant et du nombre de prises à vérifier. Il vous est communiqué avant l'intervention, jamais après.",
+			'process'  => "Le technicien commence par un diagnostic sur place pour identifier la source exacte du problème, qu'elle vienne de l'antenne, du câblage ou d'une parabole mal orientée. Le devis est annoncé avant toute intervention ; qu'il s'agisse d'une réparation d'antenne ou d'un réglage de parabole, la visite se termine toujours par un test des chaînes en votre présence.",
+			'pricing'  => "Le tarif dépend du type d'intervention (antenne ou parabole), de l'accès au toit et du nombre de prises ou de récepteurs à vérifier. Il vous est communiqué avant toute intervention, jamais après.",
 			'photo1_diagram' => true,
 			'avant_apres' => antenniste91_antenne_avant_apres_items(),
 			'faq'      => array(
@@ -545,8 +547,12 @@ function antenniste91_content_service_antenne() {
 					'a' => "La plupart des pannes viennent d'un câble, d'un connecteur ou d'un amplificateur défectueux : l'antenne elle-même est rarement à remplacer entièrement. Le diagnostic sur place permet de le savoir avant de proposer une solution.",
 				),
 				array(
+					'q' => "Faut-il une autorisation pour installer une parabole en copropriété ?",
+					'a' => "Selon la visibilité de l'installation depuis la voie publique, une déclaration au syndic ou à la mairie peut être nécessaire. Nous vous indiquons la marche à suivre avant la pose.",
+				),
+				array(
 					'q' => "Vous intervenez aussi en copropriété ?",
-					'a' => "Oui, sur l'antenne collective comme sur les installations individuelles. Contactez-nous pour évoquer votre configuration.",
+					'a' => "Oui, sur l'antenne ou la parabole collective comme sur les installations individuelles. Contactez-nous pour évoquer votre configuration.",
 				),
 			),
 		)
@@ -589,36 +595,6 @@ function antenniste91_content_geo_antenne_arpajon() {
 				array(
 					'q' => "Faut-il changer toute l'antenne ou peut-on la réparer ?",
 					'a' => "La plupart des pannes viennent d'un câble, d'un connecteur ou d'un amplificateur défectueux : l'antenne elle-même est rarement à remplacer entièrement. Le diagnostic sur place permet de le savoir avant de proposer une solution.",
-				),
-			),
-		)
-	);
-}
-
-function antenniste91_content_service_parabole() {
-	return antenniste91_service_page(
-		array(
-			'hook'     => "Parabole mal orientée après un coup de vent, envie de recevoir des bouquets internationaux, ou premier équipement : une parabole bien réglée se voit au millimètre : un mauvais alignement suffit à perdre le signal.",
-			'signs'    => array(
-				"Le signal satellite est faible ou instable selon le temps",
-				"La parabole a bougé après une tempête ou des travaux",
-				"Vous voulez ajouter un bouquet ou une chaîne étrangère",
-				"Un déménagement nécessite une nouvelle installation",
-			),
-			'included' => array(
-				array( 'Support adapté', 'Fixation choisie selon la façade ou le toit.' ),
-				array( 'Réglage au millimètre', "Azimut, élévation et polarisation ajustés." ),
-				array( 'Bouquets testés', 'Chaque chaîne reçue est vérifiée sur place.' ),
-				array( 'Câblage protégé', 'Passage propre, à l\'abri des intempéries.' ),
-			),
-			'process'  => "Après un premier échange pour cerner le ou les bouquets souhaités, l'installation est réalisée avec un instrument de mesure du signal, pas au jugé. Chaque chaîne est vérifiée avant la fin de la visite.",
-			'pricing'  => "Le tarif dépend du support à poser, de la hauteur d'intervention et du nombre de récepteurs à raccorder. Il est annoncé avant toute pose.",
-			'photo1'      => 'Parabole installée en toiture',
-			'photo1_real' => 'parabole-toit.jpg',
-			'faq'      => array(
-				array(
-					'q' => "Faut-il une autorisation pour installer une parabole en copropriété ?",
-					'a' => "Selon la visibilité de l'installation depuis la voie publique, une déclaration au syndic ou à la mairie peut être nécessaire. Nous vous indiquons la marche à suivre avant la pose.",
 				),
 			),
 		)
@@ -795,7 +771,7 @@ function antenniste91_blog_posts() {
 				)
 			)
 			. antenniste91_paragraph_block( "Dans le doute, un diagnostic reste la façon la plus rapide de trancher, c'est justement ce qu'on propose avant toute réparation." )
-			. antenniste91_button_block( "Voir la page Antenne TV & TNT →", home_url( '/services/antenne-tv/' ), 'outline-navy' ),
+			. antenniste91_button_block( "Voir la page Installation d'antenne et parabole →", home_url( '/services/antenne-parabole/' ), 'outline-navy' ),
 	);
 
 	$posts[] = array(
@@ -809,7 +785,7 @@ function antenniste91_blog_posts() {
 			. antenniste91_heading_block( "En copropriété", 2 )
 			. antenniste91_paragraph_block( "La règle de base : chaque copropriétaire a le droit de recevoir la télévision par satellite, mais l'installation doit respecter le règlement de copropriété et, si elle est visible depuis la voie publique, peut nécessiter une déclaration au syndic." )
 			. antenniste91_callout_block( "En cas de doute, on vous indique la marche à suivre selon votre configuration avant toute intervention. Mieux vaut vérifier que démonter une parabole mal placée." )
-			. antenniste91_button_block( "Voir la page Parabole & satellite →", home_url( '/services/parabole-satellite/' ), 'outline-navy' ),
+			. antenniste91_button_block( "Voir la page Installation d'antenne et parabole →", home_url( '/services/antenne-parabole/' ), 'outline-navy' ),
 	);
 
 	$posts[] = array(

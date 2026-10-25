@@ -2,7 +2,7 @@
 /**
  * Seeds the real site structure once, right after the theme is activated:
  * the homepage, the four service pages (as children of a "Services" page
- * so /services/antenne-tv/ etc. resolve), Zone / Avis / FAQ / Contact /
+ * so /services/antenne-parabole/ etc. resolve), Zone / Avis / FAQ / Contact /
  * Mentions légales, the reading settings, and the primary nav menu.
  *
  * Runs exactly once (guarded by the antenniste91_bootstrapped option) so
@@ -126,12 +126,11 @@ function antenniste91_bootstrap() {
 
 	$services_parent = antenniste91_upsert_page( 'services', 'Services', '' );
 
-	$antenne     = antenniste91_upsert_page( 'antenne-tv', 'Antenne TV & TNT', antenniste91_content_service_antenne(), $services_parent );
+	$antenne     = antenniste91_upsert_page( 'antenne-parabole', "Installation d'antenne et parabole", antenniste91_content_service_antenne(), $services_parent );
 	$antenne_arpajon = antenniste91_upsert_page( 'antenne-tv-arpajon', 'Antenne TV à Arpajon', antenniste91_content_geo_antenne_arpajon(), $services_parent );
-	$parabole    = antenniste91_upsert_page( 'parabole-satellite', 'Parabole & satellite', antenniste91_content_service_parabole(), $services_parent );
-	$starlink    = antenniste91_upsert_page( 'starlink', 'Internet Starlink', antenniste91_content_service_starlink(), $services_parent );
-	$video       = antenniste91_upsert_page( 'videosurveillance', 'Vidéosurveillance', antenniste91_content_service_video(), $services_parent );
-	$visiophone  = antenniste91_upsert_page( 'visiophone', 'Alarme & visiophone', antenniste91_content_service_visiophone(), $services_parent );
+	$starlink    = antenniste91_upsert_page( 'starlink', "Installation d'antenne Starlink", antenniste91_content_service_starlink(), $services_parent );
+	$video       = antenniste91_upsert_page( 'videosurveillance', 'Installation vidéosurveillance', antenniste91_content_service_video(), $services_parent );
+	$visiophone  = antenniste91_upsert_page( 'visiophone', 'Installation alarme et visiophone', antenniste91_content_service_visiophone(), $services_parent );
 
 	$zone        = antenniste91_upsert_page( 'zone-intervention', "Zone d'intervention", antenniste91_content_zone() );
 	$avis        = antenniste91_upsert_page( 'avis-clients', 'Avis clients', antenniste91_content_avis() );
@@ -154,9 +153,8 @@ function antenniste91_bootstrap() {
 	antenniste91_seed_blog_posts();
 
 	$service_pages = array(
-		'antenne-tv'         => $antenne,
+		'antenne-parabole'   => $antenne,
 		'antenne-tv-arpajon' => $antenne_arpajon,
-		'parabole-satellite' => $parabole,
 		'starlink'           => $starlink,
 		'videosurveillance'  => $video,
 		'visiophone'         => $visiophone,
@@ -169,14 +167,14 @@ function antenniste91_bootstrap() {
 	}
 	antenniste91_set_default_thumbnail( $accueil, 'antenne-toit.jpg', 'Antenne et parabole installées sur un toit en Essonne' );
 
-	antenniste91_create_primary_menu( array( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $contact ) );
+	antenniste91_create_primary_menu( array( $antenne, $starlink, $video, $visiophone, $blog, $contact ) );
 
 	update_option( 'antenniste91_bootstrapped', 1 );
 }
 add_action( 'after_switch_theme', 'antenniste91_bootstrap' );
 
 function antenniste91_create_primary_menu( $ids ) {
-	list( $antenne, $parabole, $starlink, $video, $visiophone, $blog, $contact ) = $ids;
+	list( $antenne, $starlink, $video, $visiophone, $blog, $contact ) = $ids;
 
 	$menu_name = 'Menu principal';
 	$menu      = wp_get_nav_menu_object( $menu_name );
@@ -196,11 +194,10 @@ function antenniste91_create_primary_menu( $ids ) {
 	);
 
 	$children = array(
-		$antenne    => 'Antenne TV & TNT',
-		$parabole   => 'Parabole & satellite',
-		$starlink   => 'Internet Starlink',
-		$video      => 'Vidéosurveillance',
-		$visiophone => 'Alarme & visiophone',
+		$antenne    => "Installation d'antenne et parabole",
+		$video      => 'Installation vidéosurveillance',
+		$visiophone => 'Installation alarme et visiophone',
+		$starlink   => "Installation d'antenne Starlink",
 	);
 	foreach ( $children as $page_id => $label ) {
 		if ( ! $page_id ) {

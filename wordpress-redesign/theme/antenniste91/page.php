@@ -12,7 +12,7 @@ while ( have_posts() ) :
 	the_post();
 	?>
 	<?php
-	$service_slugs    = array( 'antenne-tv', 'antenne-tv-arpajon', 'parabole-satellite', 'starlink', 'videosurveillance', 'visiophone' );
+	$service_slugs    = array( 'antenne-parabole', 'antenne-tv-arpajon', 'starlink', 'videosurveillance', 'visiophone' );
 	$is_service       = in_array( get_post_field( 'post_name' ), $service_slugs, true );
 	$banner_photo_url = $is_service ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : '';
 	if ( $is_service && ! $banner_photo_url ) {

@@ -22,8 +22,8 @@ get_header();
 				<h3>Accueil</h3>
 				<p>Retour à la page principale.</p>
 			</a>
-			<a class="card" style="text-decoration:none; display:block;" href="<?php echo esc_url( home_url( '/services/antenne-tv/' ) ); ?>">
-				<h3>Antenne TV &amp; TNT</h3>
+			<a class="card" style="text-decoration:none; display:block;" href="<?php echo esc_url( home_url( '/services/antenne-parabole/' ) ); ?>">
+				<h3>Installation d'antenne et parabole</h3>
 				<p>Voir ce service.</p>
 			</a>
 			<a class="card" style="text-decoration:none; display:block;" href="<?php echo esc_url( home_url( '/blog/' ) ); ?>">
