@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require get_template_directory() . '/inc/content.php';
 
-function antenniste91_upsert_page( $slug, $title, $content, $parent_id = 0 ) {
+function antenniste91_upsert_page( $slug, $title, $content, $parent_id = 0, $excerpt = '' ) {
 	$existing = get_page_by_path( $slug );
 	if ( $existing ) {
 		return $existing->ID;
@@ -26,6 +26,7 @@ function antenniste91_upsert_page( $slug, $title, $content, $parent_id = 0 ) {
 			'post_title'   => $title,
 			'post_name'    => $slug,
 			'post_content' => $content,
+			'post_excerpt' => $excerpt,
 			'post_status'  => 'publish',
 			'post_type'    => 'page',
 			'post_parent'  => $parent_id,
@@ -126,11 +127,11 @@ function antenniste91_bootstrap() {
 
 	$services_parent = antenniste91_upsert_page( 'services', 'Services', '' );
 
-	$antenne     = antenniste91_upsert_page( 'antenne-parabole', "Installation d'antenne et parabole", antenniste91_content_service_antenne(), $services_parent );
-	$antenne_arpajon = antenniste91_upsert_page( 'antenne-tv-arpajon', 'Antenne TV à Arpajon', antenniste91_content_geo_antenne_arpajon(), $services_parent );
-	$starlink    = antenniste91_upsert_page( 'starlink', "Installation d'antenne Starlink", antenniste91_content_service_starlink(), $services_parent );
-	$video       = antenniste91_upsert_page( 'videosurveillance', 'Installation vidéosurveillance', antenniste91_content_service_video(), $services_parent );
-	$visiophone  = antenniste91_upsert_page( 'visiophone', 'Installation alarme et visiophone', antenniste91_content_service_visiophone(), $services_parent );
+	$antenne     = antenniste91_upsert_page( 'antenne-parabole', "Installation d'antenne et parabole", antenniste91_content_service_antenne(), $services_parent, "Installation, réparation et réglage d'antenne TV ou de parabole satellite en Essonne (91). Diagnostic clair, devis gratuit avant intervention." );
+	$antenne_arpajon = antenniste91_upsert_page( 'antenne-tv-arpajon', 'Antenne TV à Arpajon', antenniste91_content_geo_antenne_arpajon(), $services_parent, "Installateur d'antenne TV à Arpajon (91) : diagnostic, réparation et réglage, devis gratuit avant toute intervention." );
+	$starlink    = antenniste91_upsert_page( 'starlink', "Installation d'antenne Starlink", antenniste91_content_service_starlink(), $services_parent, "Installation Starlink en Essonne (91) : étude de dégagement du ciel, pose du kit et mise en réseau, devis avant toute pose." );
+	$video       = antenniste91_upsert_page( 'videosurveillance', 'Installation vidéosurveillance', antenniste91_content_service_video(), $services_parent, "Installation de caméras de vidéosurveillance intérieures et extérieures en Essonne (91), consultables à distance depuis votre smartphone." );
+	$visiophone  = antenniste91_upsert_page( 'visiophone', 'Installation alarme et visiophone', antenniste91_content_service_visiophone(), $services_parent, "Installation d'alarme et de visiophone connecté en Essonne (91) : voyez qui sonne avant d'ouvrir, même à distance." );
 
 	$zone        = antenniste91_upsert_page( 'zone-intervention', "Zone d'intervention", antenniste91_content_zone() );
 	$avis        = antenniste91_upsert_page( 'avis-clients', 'Avis clients', antenniste91_content_avis() );

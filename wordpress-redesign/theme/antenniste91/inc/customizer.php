@@ -71,12 +71,12 @@ function antenniste91_customize_register( $wp_customize ) {
 		),
 		'antenniste91_email' => array(
 			'label'   => __( 'Email de contact', 'antenniste91' ),
-			'default' => '',
+			'default' => 'gn.13@icloud.com',
 			'type'    => 'text',
 		),
 		'antenniste91_address' => array(
 			'label'   => __( 'Adresse postale', 'antenniste91' ),
-			'default' => '',
+			'default' => 'Fleury-Mérogis (91700)',
 			'type'    => 'text',
 		),
 		'antenniste91_siret' => array(

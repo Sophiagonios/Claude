@@ -34,8 +34,8 @@
 				<h5>Contact</h5>
 				<ul>
 					<li><a href="<?php echo esc_url( antenniste91_phone_href() ); ?>"><?php echo antenniste91_phone_display(); ?></a></li>
-					<li><?php $email = get_theme_mod( 'antenniste91_email', '' ); echo $email ? '<a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a>' : '<span class="ph">email à renseigner</span>'; ?></li>
-					<li><?php $addr = get_theme_mod( 'antenniste91_address', '' ); echo $addr ? esc_html( $addr ) : '<span class="ph">adresse à renseigner</span>'; ?></li>
+					<li><?php $email = get_theme_mod( 'antenniste91_email', 'gn.13@icloud.com' ); echo $email ? '<a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a>' : '<span class="ph">email à renseigner</span>'; ?></li>
+					<li><?php $addr = get_theme_mod( 'antenniste91_address', 'Fleury-Mérogis (91700)' ); echo $addr ? esc_html( $addr ) : '<span class="ph">adresse à renseigner</span>'; ?></li>
 				</ul>
 			</div>
 		</div>

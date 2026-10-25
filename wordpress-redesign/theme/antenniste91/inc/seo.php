@@ -59,6 +59,40 @@ function antenniste91_head_meta() {
 add_action( 'wp_head', 'antenniste91_head_meta', 1 );
 
 /**
+ * LocalBusiness structured data — sitewide, from the same Customizer fields
+ * already used on the page (name, phone, email, address, hours, zone).
+ * Helps local search / Google rich results; does not invent any fact not
+ * already entered by the site owner.
+ */
+function antenniste91_local_business_schema() {
+	$name    = get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' );
+	$phone   = get_theme_mod( 'antenniste91_phone', '0663806197' );
+	$email   = get_theme_mod( 'antenniste91_email', 'gn.13@icloud.com' );
+	$address = get_theme_mod( 'antenniste91_address', 'Fleury-Mérogis (91700)' );
+	$zone    = get_theme_mod( 'antenniste91_zone_label', 'Essonne (91) & alentours' );
+
+	$data = array(
+		'@context'          => 'https://schema.org',
+		'@type'             => 'LocalBusiness',
+		'name'              => $name,
+		'telephone'         => '+33' . ltrim( preg_replace( '/[^0-9]/', '', $phone ), '0' ),
+		'email'             => $email,
+		'url'               => home_url( '/' ),
+		'address'           => array(
+			'@type'           => 'PostalAddress',
+			'addressLocality' => $address,
+			'addressRegion'   => 'Île-de-France',
+			'addressCountry'  => 'FR',
+		),
+		'areaServed'        => $zone,
+		'priceRange'        => '€€',
+	);
+
+	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}
+add_action( 'wp_head', 'antenniste91_local_business_schema', 2 );
+
+/**
  * WordPress serves a virtual robots.txt automatically (no file needed) and
  * ships a native XML sitemap at /wp-sitemap.xml since 5.5 — this filter
  * only adds an explicit pointer to it for crawlers that check robots.txt first.

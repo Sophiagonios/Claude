@@ -514,8 +514,30 @@ function antenniste91_service_page( $args ) {
 		foreach ( $args['faq'] as $q ) {
 			$c .= antenniste91_details_block( $q['q'], $q['a'] );
 		}
+		$c .= antenniste91_faq_schema_html( $args['faq'] );
 	}
 	return $c;
+}
+
+/** FAQPage structured data for a service page's FAQ — reuses the same questions/answers shown on the page, nothing extra invented. Enables FAQ rich results in Google search. */
+function antenniste91_faq_schema_html( $faq ) {
+	$items = array();
+	foreach ( $faq as $q ) {
+		$items[] = array(
+			'@type'          => 'Question',
+			'name'           => wp_strip_all_tags( $q['q'] ),
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text'  => wp_strip_all_tags( $q['a'] ),
+			),
+		);
+	}
+	$data = array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => $items,
+	);
+	return antenniste91_html_block( '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' );
 }
 
 /** Page fusionnée antenne + parabole : les deux services partagent le même diagnostic (réception terrestre ou satellite) et la même intention de recherche "installation d'antenne et parabole". */
@@ -847,7 +869,7 @@ function antenniste91_blog_posts() {
 function antenniste91_content_confidentialite() {
 	$c  = antenniste91_paragraph_block( "Cette page explique quelles données sont collectées sur ce site, pourquoi, et comment les faire modifier ou supprimer." );
 	$c .= antenniste91_heading_block( 'Responsable du traitement', 2 );
-	$c .= antenniste91_paragraph_block( '<span class="ph">Raison sociale à compléter</span>, contact : ' . antenniste91_phone_display() . ', <span class="ph">email à compléter</span>.' );
+	$c .= antenniste91_paragraph_block( esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . ' (entreprise individuelle, régime auto-entrepreneur), Fleury-Mérogis (91), contact : ' . antenniste91_phone_display() . ', gn.13@icloud.com.' );
 	$c .= antenniste91_heading_block( 'Quelles données sont collectées', 2 );
 	$c .= antenniste91_list_block(
 		array(
@@ -864,7 +886,7 @@ function antenniste91_content_confidentialite() {
 	$c .= antenniste91_heading_block( 'Vos droits', 2 );
 	$c .= antenniste91_paragraph_block( "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition sur vos données. Pour l'exercer, contactez-nous aux coordonnées ci-dessus. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr)." );
 	$c .= antenniste91_heading_block( 'Hébergement', 2 );
-	$c .= antenniste91_paragraph_block( 'Les données transitant par ce site sont hébergées par <span class="ph">Ionos (à confirmer)</span>.' );
+	$c .= antenniste91_paragraph_block( "Les données transitant par ce site sont hébergées par IONOS. Les coordonnées complètes de l'hébergeur sont disponibles sur ionos.fr." );
 	$c .= antenniste91_paragraph_block( '<span class="ph">Cette page doit être relue et validée avec un professionnel du droit avant mise en ligne.</span>' );
 	return $c;
 }
@@ -889,9 +911,9 @@ function antenniste91_content_cgu() {
 
 function antenniste91_content_mentions_legales() {
 	$c  = antenniste91_heading_block( 'Éditeur du site', 3 );
-	$c .= antenniste91_paragraph_block( 'Raison sociale : <span class="ph">à compléter</span><br>Forme juridique : <span class="ph">à compléter</span><br>SIRET : <span class="ph">à compléter</span><br>Adresse : <span class="ph">à compléter</span><br>Téléphone : ' . antenniste91_phone_display() . '<br>Email : <span class="ph">à compléter</span>' );
+	$c .= antenniste91_paragraph_block( 'Nom commercial : ' . esc_html( get_theme_mod( 'antenniste91_company_name', 'France Technique Antenne' ) ) . '<br>Raison sociale (nom et prénom de l\'exploitant) : <span class="ph">à compléter</span><br>Forme juridique : Entreprise individuelle (régime auto-entrepreneur)<br>SIRET : <span class="ph">à compléter</span><br>Adresse : Fleury-Mérogis (91700) — <span class="ph">adresse complète à ajouter</span><br>Téléphone : ' . antenniste91_phone_display() . '<br>Email : gn.13@icloud.com' );
 	$c .= antenniste91_heading_block( 'Hébergement', 3 );
-	$c .= antenniste91_paragraph_block( 'Le site est hébergé par : <span class="ph">Ionos, coordonnées complètes à ajouter</span>' );
+	$c .= antenniste91_paragraph_block( "Le site est hébergé par IONOS. Les coordonnées complètes de l'hébergeur sont disponibles sur ionos.fr." );
 	$c .= antenniste91_heading_block( 'Directeur de la publication', 3 );
 	$c .= antenniste91_paragraph_block( '<span class="ph">Nom à compléter</span>' );
 	$c .= antenniste91_heading_block( 'Données personnelles', 3 );
